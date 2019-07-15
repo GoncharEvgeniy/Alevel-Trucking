@@ -1,4 +1,4 @@
-package com.alevel.trucking.order;
+package com.alevel.trucking.model.order;
 
 import newpost.model.person.Customer;
 import newpost.model.person.Manager;

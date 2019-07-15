@@ -1,4 +1,4 @@
-package com.alevel.trucking.order;
+package com.alevel.trucking.model.order;
 
 import newpost.model.address.Address;
 

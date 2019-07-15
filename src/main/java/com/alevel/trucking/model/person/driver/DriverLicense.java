@@ -1,4 +1,4 @@
-package com.alevel.trucking.person.driver;
+package com.alevel.trucking.model.person.driver;
 
 import java.util.Date;
 import java.util.Set;

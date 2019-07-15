@@ -1,4 +1,4 @@
-package com.alevel.trucking.order;
+package com.alevel.trucking.model.order;
 
 public class Goods {
     private int weight;

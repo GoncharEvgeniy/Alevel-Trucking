@@ -1,4 +1,4 @@
-package com.alevel.trucking.transport;
+package com.alevel.trucking.model.transport;
 
 public abstract class Transport {
     private TransportType type;

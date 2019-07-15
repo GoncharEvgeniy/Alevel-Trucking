@@ -1,4 +1,4 @@
-package com.alevel.trucking.person;
+package com.alevel.trucking.model.person;
 
 public abstract class Person {
     private Long id;

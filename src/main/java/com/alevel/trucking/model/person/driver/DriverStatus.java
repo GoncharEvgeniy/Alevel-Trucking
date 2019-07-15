@@ -1,4 +1,4 @@
-package com.alevel.trucking.person.driver;
+package com.alevel.trucking.model.person.driver;
 
 public enum DriverStatus {
     IN_ROUTE,

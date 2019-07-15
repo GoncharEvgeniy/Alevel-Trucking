@@ -2,8 +2,11 @@ package com.alevel.trucking.security.services;
 
 import com.alevel.trucking.model.user.Status;
 import com.alevel.trucking.model.user.User;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

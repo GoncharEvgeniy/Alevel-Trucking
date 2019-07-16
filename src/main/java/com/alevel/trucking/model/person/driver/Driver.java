@@ -1,6 +1,6 @@
 package com.alevel.trucking.model.person.driver;
 
-import newpost.model.person.Person;
+import com.alevel.trucking.model.person.Person;
 
 import java.util.Date;
 

@@ -1,6 +1,7 @@
 package com.alevel.trucking.model.person;
 
-import newpost.model.order.Order;
+
+import com.alevel.trucking.model.order.Order;
 
 import java.util.Set;
 

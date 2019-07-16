@@ -6,4 +6,5 @@ public abstract class Transport {
     private TransportType type;
     private TransportStatus status;
     private String licensePlateNumber;
+    private int loadCapacity;
 }

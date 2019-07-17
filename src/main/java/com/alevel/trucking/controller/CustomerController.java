@@ -3,9 +3,11 @@ package com.alevel.trucking.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/customer")
+@RestController
+@RequestMapping("/customer")
 public class CustomerController {
 
     @GetMapping("/all-my-orders")
@@ -13,7 +15,7 @@ public class CustomerController {
         return null;
     }
 
-    @GetMapping("/orders-in-process")
+    @GetMapping("/my-orders-in-process")
     ResponseEntity getOrdersInProcess() {
         return null;
     }

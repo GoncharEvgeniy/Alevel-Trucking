@@ -3,9 +3,11 @@ package com.alevel.trucking.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/manager")
+@RestController
+@RequestMapping("/manager")
 public class ManagerController {
 
     @GetMapping("/all-orders")
@@ -39,7 +41,13 @@ public class ManagerController {
     }
 
     @PostMapping("/new-order")
-    ResponseEntity creatOrder(){
+    ResponseEntity creatNewOrder(){
+        return null;
+    }
+
+
+    @PostMapping("/new-customer")
+    ResponseEntity creatNewCustomer(){
         return null;
     }
 }

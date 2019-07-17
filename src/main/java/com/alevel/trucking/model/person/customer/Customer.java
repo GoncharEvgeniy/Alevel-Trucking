@@ -1,7 +1,8 @@
-package com.alevel.trucking.model.person;
+package com.alevel.trucking.model.person.customer;
 
 
 import com.alevel.trucking.model.order.Order;
+import com.alevel.trucking.model.person.Person;
 
 import java.util.Set;
 

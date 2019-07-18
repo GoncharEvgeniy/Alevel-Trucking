@@ -1,9 +1,12 @@
 package com.alevel.trucking.model.address;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name ="city")
+@NoArgsConstructor
 public class City {
 
     @Id
@@ -14,6 +17,4 @@ public class City {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(mappedBy = "city", cascade = CascadeType.ALL)
-    private Address address;
 }

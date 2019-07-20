@@ -1,64 +1,58 @@
 package com.alevel.trucking.model.user;
 
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
 @Data
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @NotBlank
-    @Size(min = 3, max = 50)
-    @Column(name = "username", unique = true)
-    private String username;
-
-    @NotBlank
-    @Size(min = 6, max = 100)
+    @NotBlank(message = "Password cannot be empty")
     @Column(name = "password")
     private String password;
 
-    @NotBlank
-    @Size(min = 3, max = 50)
-    @Column(name = "first_name")
-    private String firstName;
+    @NotBlank(message = "Username cannot be empty")
+    @Column(name = "username")
+    private String username;
 
-    @NotBlank
-    @Size(min = 3, max = 50)
-    @Column(name = "second_name")
-    private String secondName;
-
-    @NotBlank
-    @Size(min = 3, max = 50)
-    @Column(name = "last_name")
-    private String lastName;
-
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    @Column(name = "email", unique = true)
+    @Email(message = "Email is not correct")
+    @NotBlank(message = "Email cannot be empty")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "phone", unique = true)
-    private String phone;
-
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private Status status;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Role> roles;
+
+    @Column(name = "is_account_non_expired")
+    private boolean isAccountNonExpired = true;
+
+    @Column(name = "is_account_non_locked")
+    private boolean isAccountNonLocked = true;
+
+    @Column(name = "is_credentials_non_expired")
+    private boolean isCredentialsNonExpired = true;
+
+    @Column(name = "is_enabled")
+    private boolean isEnabled;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
 }

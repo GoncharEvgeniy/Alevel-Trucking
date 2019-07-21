@@ -5,8 +5,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
@@ -20,18 +18,22 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Password cannot be empty")
     @Column(name = "password")
     private String password;
 
-    @NotBlank(message = "Username cannot be empty")
     @Column(name = "username")
     private String username;
 
-    @Email(message = "Email is not correct")
-    @NotBlank(message = "Email cannot be empty")
     @Column(name = "email")
     private String email;
+
+    private String firstName;
+
+    private String secondName;
+
+    private String lastName;
+
+    private String phone;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
@@ -48,11 +50,31 @@ public class User implements UserDetails {
     private boolean isCredentialsNonExpired = true;
 
     @Column(name = "is_enabled")
-    private boolean isEnabled;
+    private boolean isEnabled = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }

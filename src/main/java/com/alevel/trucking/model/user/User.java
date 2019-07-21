@@ -27,12 +27,16 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "second_name")
     private String secondName;
 
+    @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "phone")
     private String phone;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -55,26 +59,6 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 
 }

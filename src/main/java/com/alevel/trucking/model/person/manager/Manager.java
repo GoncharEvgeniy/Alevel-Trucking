@@ -1,12 +1,10 @@
 package com.alevel.trucking.model.person.manager;
 
-import com.alevel.trucking.model.person.Person;
+import com.alevel.trucking.model.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Date;
 
-public class Manager extends Person {
+public class Manager extends User {
     private Date startWork;
     private Date birthday;
 }

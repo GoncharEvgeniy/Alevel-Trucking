@@ -1,6 +1,6 @@
 package com.alevel.trucking.model.person.driver;
 
-import com.alevel.trucking.model.person.Person;
+import com.alevel.trucking.model.user.User;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @Table(name = "driver")
 @NoArgsConstructor
-public class Driver extends Person {
+public class Driver extends User {
 
     @Column(name = "start_work")
     private Date startWork;

@@ -11,8 +11,8 @@ CREATE TABLE `driver`
     `status`            VARCHAR(255) NOT NULL,
     `id_driver_license` BIGINT(20)   NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `id_driver_license` (`id_driver_license`),
-    CONSTRAINT `id_driver_license` FOREIGN KEY (`id_driver_license`) REFERENCES `driver_license` (`id`)
+    INDEX `FK_id_driver_license` (`id_driver_license`),
+    CONSTRAINT `FK_id_driver_license` FOREIGN KEY (`id_driver_license`) REFERENCES `driver_license` (`id`)
 )
     COLLATE = 'utf8mb4_0900_ai_ci'
     ENGINE = InnoDB

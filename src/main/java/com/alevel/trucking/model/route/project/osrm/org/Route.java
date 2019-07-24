@@ -1,17 +1,16 @@
-package com.alevel.trucking.model.route.project.osrm.org.implementation;
+package com.alevel.trucking.model.route.project.osrm.org;
 
-import com.alevel.trucking.model.route.project.osrm.org.Distance;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RouteOsrm implements Distance {
+public class Route {
 
     private double distance;
 
-    public RouteOsrm() {
+    public Route() {
     }
 
-    public RouteOsrm(double distance) {
+    public Route(double distance) {
         this.distance = distance;
     }
 

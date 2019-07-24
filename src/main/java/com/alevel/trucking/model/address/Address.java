@@ -1,5 +1,6 @@
 package com.alevel.trucking.model.address;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "address")
 @NoArgsConstructor
+@Getter
 public class Address {
 
     @Id

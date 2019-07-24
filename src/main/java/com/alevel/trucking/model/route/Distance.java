@@ -1,4 +1,4 @@
-package com.alevel.trucking.model.route.project.osrm.org;
+package com.alevel.trucking.model.route;
 
 public interface Distance {
 

@@ -1,19 +1,18 @@
-package com.alevel.trucking.model.route.project.osrm.org.implementation;
+package com.alevel.trucking.model.route.openstreetmap.ru;
 
-import com.alevel.trucking.model.route.project.osrm.org.Coordinate;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MatchesOsm implements Coordinate {
+public class Match {
 
     private double lon;
 
     private double lat;
 
-    public MatchesOsm() {
+    public Match() {
     }
 
-    public MatchesOsm(double lon, double lat) {
+    public Match(double lon, double lat) {
         this.lon = lon;
         this.lat = lat;
     }

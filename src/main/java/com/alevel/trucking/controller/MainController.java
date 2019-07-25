@@ -1,6 +1,6 @@
 package com.alevel.trucking.controller;
 
-import com.alevel.trucking.dto.UserFormRegistration;
+import com.alevel.trucking.dto.RegistrationFormUser;
 import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ public class MainController {
     }
 
     @PostMapping("/reg")
-    public ResponseEntity newUser(@RequestBody UserFormRegistration userDto) {
-        User user = UserFormRegistration.fromUserDto(userDto);
+    public ResponseEntity newUser(@RequestBody RegistrationFormUser userDto) {
+        User user = RegistrationFormUser.fromUserDto(userDto);
         return ResponseEntity.ok(userService.save(user));
     }
 

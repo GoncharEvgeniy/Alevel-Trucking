@@ -4,7 +4,7 @@ import com.alevel.trucking.model.user.User;
 
 import java.io.Serializable;
 
-public class UserFormRegistration implements Serializable {
+public class RegistrationFormUser implements Serializable {
 
     private String username;
 
@@ -20,10 +20,10 @@ public class UserFormRegistration implements Serializable {
 
     private String phone;
 
-    public UserFormRegistration() {
+    public RegistrationFormUser() {
     }
 
-    public UserFormRegistration(String username, String password, String email,
+    public RegistrationFormUser(String username, String password, String email,
                                 String firstName, String secondName, String lastName, String phone) {
         this.username = username;
         this.password = password;
@@ -34,15 +34,15 @@ public class UserFormRegistration implements Serializable {
         this.phone = phone;
     }
 
-    public static User fromUserDto(UserFormRegistration userFormRegistration){
+    public static User fromUserDto(RegistrationFormUser registrationFormUser){
         User user = new User();
-        user.setUsername(userFormRegistration.getUsername());
-        user.setEmail(userFormRegistration.getEmail());
-        user.setPassword(userFormRegistration.getPassword()); // TODO шифр
-        user.setFirstName(userFormRegistration.getFirstName());
-        user.setSecondName(userFormRegistration.getSecondName());
-        user.setLastName(userFormRegistration.getLastName());
-        user.setPhone(userFormRegistration.getPhone());
+        user.setUsername(registrationFormUser.getUsername());
+        user.setEmail(registrationFormUser.getEmail());
+        user.setPassword(registrationFormUser.getPassword());
+        user.setFirstName(registrationFormUser.getFirstName());
+        user.setSecondName(registrationFormUser.getSecondName());
+        user.setLastName(registrationFormUser.getLastName());
+        user.setPhone(registrationFormUser.getPhone());
         return user;
     }
 

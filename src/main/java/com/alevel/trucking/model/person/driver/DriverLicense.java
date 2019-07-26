@@ -27,7 +27,7 @@ public class DriverLicense {
 
     @ElementCollection(targetClass = Category.class)
     @CollectionTable(name = "driver_license_category",
-            joinColumns = @JoinColumn(name = "driver_license_id"))
+            joinColumns = @JoinColumn(name = "id_driver_license"))
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
     private Set<Category> categorys;

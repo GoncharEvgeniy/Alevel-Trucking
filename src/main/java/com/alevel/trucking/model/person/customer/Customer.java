@@ -1,11 +1,20 @@
 package com.alevel.trucking.model.person.customer;
 
 
-import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.user.User;
+import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "customer")
+@NoArgsConstructor
 public class Customer extends User {
-    private Set<Order> orders;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    /*private Set<Order> orders;*/
 }

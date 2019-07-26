@@ -1,8 +1,10 @@
 package com.alevel.trucking.model.goods;
 
+import com.alevel.trucking.model.order.Order;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "goods")
@@ -28,4 +30,7 @@ public class Goods {
 
     @Column(name = "volume")
     private int volume;
+
+    @ManyToMany(mappedBy = "goods")
+    private List<Order> orders;
 }

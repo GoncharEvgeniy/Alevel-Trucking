@@ -18,11 +18,11 @@ public class Address {
     @JoinColumn(name = "id_city")
     private City city;
 
-    @OneToOne(cascade =CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_street")
     private Street street;
 
-    @OneToOne(cascade =CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_building")
     private Building building;
 

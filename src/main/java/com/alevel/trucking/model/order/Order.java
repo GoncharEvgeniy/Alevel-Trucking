@@ -32,8 +32,8 @@ public class Order {
     @JoinColumn(name = "id_manager", referencedColumnName = "id")
     private Manager manager;
 
-    @OneToOne
-    @JoinColumn(name = "id_customer", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "id_customer")
     private Customer customer;
 
     @Enumerated(EnumType.STRING)

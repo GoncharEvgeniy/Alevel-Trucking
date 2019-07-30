@@ -10,11 +10,15 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
+import lombok.Data;
+import javax.persistence.*;
+
 @Entity
 @Table(name = "users")
 @Data
 @Builder
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
 
     @Id
@@ -64,5 +68,4 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
-
 }

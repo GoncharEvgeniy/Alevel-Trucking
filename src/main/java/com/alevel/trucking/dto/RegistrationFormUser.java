@@ -35,14 +35,15 @@ public class RegistrationFormUser implements Serializable {
     }
 
     public static User fromUserDto(RegistrationFormUser registrationFormUser){
-        User user = new User();
-        user.setUsername(registrationFormUser.getUsername());
-        user.setEmail(registrationFormUser.getEmail());
-        user.setPassword(registrationFormUser.getPassword());
-        user.setFirstName(registrationFormUser.getFirstName());
-        user.setSecondName(registrationFormUser.getSecondName());
-        user.setLastName(registrationFormUser.getLastName());
-        user.setPhone(registrationFormUser.getPhone());
+        User user = User.builder()
+                .username(registrationFormUser.getUsername())
+                .email(registrationFormUser.getEmail())
+                .password(registrationFormUser.getPassword())
+                .firstName(registrationFormUser.getFirstName())
+                .secondName(registrationFormUser.getSecondName())
+                .lastName(registrationFormUser.getLastName())
+                .phone(registrationFormUser.getPhone())
+                .build();
         return user;
     }
 

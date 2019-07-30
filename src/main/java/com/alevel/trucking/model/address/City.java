@@ -1,12 +1,16 @@
 package com.alevel.trucking.model.address;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "city")
 @NoArgsConstructor
+@Getter
+@ToString(exclude = "id")
 public class City {
 
     @Id

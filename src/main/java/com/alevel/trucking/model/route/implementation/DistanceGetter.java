@@ -14,15 +14,10 @@ public class DistanceGetter implements Distance {
     public double getDistance(Address addressStart, Address addressEnd) {
         RequestMatches requestMatches = new RequestMatches();
         ResponseMatches responseMatchesStart = requestMatches.request(addressStart);
-        try {
-            sleep(5000);      // TODO сервер вроде банит по частоте
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         ResponseMatches responseMatchesEnd = requestMatches.request(addressEnd);
         RequestRoutes requestRoutes = new RequestRoutes();
         ResponseRoutes responseRoutes = requestRoutes.request(responseMatchesStart.getMatches().get(0),
-                responseMatchesEnd.getMatches().get(0));   // TODO сделать красиво
-        return responseRoutes.getRoutes().get(0).getDistance();  // TODO сделать красиво
+                responseMatchesEnd.getMatches().get(0));
+        return responseRoutes.getRoutes().get(0).getDistance();
     }
 }

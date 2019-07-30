@@ -1,8 +1,10 @@
 package com.alevel.trucking.model.transport;
 
+import com.alevel.trucking.model.order.Order;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "transport")
@@ -42,4 +44,7 @@ public class Transport {
 
     @Column(name = "max_volume_of_goods")
     private int maxVolumeOfGoods;
+
+    @ManyToMany(mappedBy = "transports")
+    private List<Order> orders;
 }

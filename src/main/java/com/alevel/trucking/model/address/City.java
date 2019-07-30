@@ -7,7 +7,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="city")
+@Table(name = "city")
 @NoArgsConstructor
 @Getter
 @ToString(exclude = "id")

@@ -21,4 +21,7 @@ public class Building {
     @Column(name = "number")
     private int number;
 
+    @Column(name = "suffix")
+    private String suffix;
+
 }

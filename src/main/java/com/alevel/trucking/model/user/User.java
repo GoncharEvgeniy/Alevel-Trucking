@@ -1,13 +1,25 @@
 package com.alevel.trucking.model.user;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Set;
+
 import lombok.Data;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 @Data
+@Builder
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +46,7 @@ public class User {
 
     @Column(name = "phone")
     private String phone;
-/*
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -56,6 +68,4 @@ public class User {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
-*/
-
 }

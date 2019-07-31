@@ -4,7 +4,7 @@ CREATE TABLE `manager`
     `birthday`   DATETIME(6) NULL DEFAULT NULL,
     `start_work` DATETIME(6) NULL DEFAULT NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT `FK_user_id` FOREIGN KEY (`id`) REFERENCES `users` (`id`)
+    CONSTRAINT `FK_user_id_manager` FOREIGN KEY (`id`) REFERENCES `users` (`id`)
 )
     COLLATE = 'utf8mb4_0900_ai_ci'
     ENGINE = InnoDB

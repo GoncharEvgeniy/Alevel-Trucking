@@ -1,10 +1,10 @@
 package com.alevel.trucking.dto;
 
-import com.alevel.trucking.model.user.User;
+import com.alevel.trucking.model.person.customer.Customer;
 
 import java.io.Serializable;
 
-public class RegistrationFormUser implements Serializable {
+public class RegistrationForm implements Serializable {
 
     private String username;
 
@@ -20,11 +20,11 @@ public class RegistrationFormUser implements Serializable {
 
     private String phone;
 
-    public RegistrationFormUser() {
+    public RegistrationForm() {
     }
 
-    public RegistrationFormUser(String username, String password, String email,
-                                String firstName, String secondName, String lastName, String phone) {
+    public RegistrationForm(String username, String password, String email,
+                            String firstName, String secondName, String lastName, String phone) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -34,19 +34,22 @@ public class RegistrationFormUser implements Serializable {
         this.phone = phone;
     }
 
-    public static User fromUserDto(RegistrationFormUser registrationFormUser){
-        User user = User.builder()
-                .username(registrationFormUser.getUsername())
-                .email(registrationFormUser.getEmail())
-                .password(registrationFormUser.getPassword())
-                .firstName(registrationFormUser.getFirstName())
-                .secondName(registrationFormUser.getSecondName())
-                .lastName(registrationFormUser.getLastName())
-                .phone(registrationFormUser.getPhone())
+    public static Customer fromDto(RegistrationForm registrationForm) {
+        Customer customer = Customer.customerBuilder()
+                .username(registrationForm.getUsername())
+                .email(registrationForm.getEmail())
+                .password(registrationForm.getPassword())
+                .firstName(registrationForm.getFirstName())
+                .secondName(registrationForm.getSecondName())
+                .lastName(registrationForm.getLastName())
+                .phone(registrationForm.getPhone())
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .build();
-        return user;
+        return customer;
     }
-
 
     public String getUsername() {
         return username;

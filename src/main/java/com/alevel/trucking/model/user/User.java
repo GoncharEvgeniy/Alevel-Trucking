@@ -1,5 +1,6 @@
 package com.alevel.trucking.model.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,14 +11,12 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-import lombok.Data;
-import javax.persistence.*;
-
 @Entity
 @Table(name = "users")
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
 

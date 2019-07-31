@@ -1,8 +1,9 @@
 package com.alevel.trucking.controller;
 
-import com.alevel.trucking.dto.RegistrationFormUser;
-import com.alevel.trucking.model.user.User;
-import com.alevel.trucking.service.UserService;
+import com.alevel.trucking.dto.RegistrationForm;
+import com.alevel.trucking.model.person.customer.Customer;
+import com.alevel.trucking.service.customer.CustomerService;
+import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,15 +14,18 @@ public class MainController {
 
     private final UserService userService;
 
+    private final CustomerService customerService;
+
     @Autowired
-    public MainController(UserService userService) {
+    public MainController(UserService userService, CustomerService customerService) {
         this.userService = userService;
+        this.customerService = customerService;
     }
 
     @PostMapping("/reg")
-    public ResponseEntity newUser(@RequestBody RegistrationFormUser userDto) {
-        User user = RegistrationFormUser.fromUserDto(userDto);
-        return ResponseEntity.ok(userService.save(user));
+    public ResponseEntity newUser(@RequestBody RegistrationForm customerDto) {
+        Customer customer = RegistrationForm.fromDto(customerDto);
+        return ResponseEntity.ok(customerService.save(customer));
     }
 
     //TODO only for test

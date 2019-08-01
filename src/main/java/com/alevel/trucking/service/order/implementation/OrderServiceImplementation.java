@@ -31,11 +31,7 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     public Order save(Order order) {
-        Customer currentCustomer = (Customer) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-        Customer customer = customerService.findByUsername(currentCustomer.getUsername());
+        Customer customer = getCurrentCustomer();
         Set<Order> customerOrders = customer.getOrders();
         if (customerOrders == null) {
             customerOrders = new HashSet<>();
@@ -48,12 +44,23 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrdersByCustomer() {
+    public List<Order> getAllOrdersByCurrentCustomer() {
+        Customer customer = getCurrentCustomer();
+        return orderRepository.findByCustomer(customer);
+    }
+
+    @Override
+    public List<Order> getOrdersByCurrentCustomerAndStatus(String status) {
+        OrderStatus orderStatus = OrderStatus.valueOf(status);
+        Customer customer = getCurrentCustomer();
+        return orderRepository.findByStatusAndCustomer(orderStatus, customer);
+    }
+
+    private Customer getCurrentCustomer() {
         Customer currentCustomer = (Customer) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        Customer customer = customerService.findByUsername(currentCustomer.getUsername());
-        return orderRepository.findByCustomer(customer);
+        return customerService.findByUsername(currentCustomer.getUsername());
     }
 }

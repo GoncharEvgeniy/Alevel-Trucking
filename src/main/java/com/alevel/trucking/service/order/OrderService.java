@@ -8,5 +8,7 @@ public interface OrderService {
 
     Order save(Order order);
 
-    List<Order> getAllOrdersByCustomer();
+    List<Order> getAllOrdersByCurrentCustomer();
+
+    List<Order> getOrdersByCurrentCustomerAndStatus(String status);
 }

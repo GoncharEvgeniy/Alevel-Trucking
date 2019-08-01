@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -22,12 +20,12 @@ public class CustomerController {
 
     @GetMapping("/all-my-orders")
     ResponseEntity getAllOrders() {
-        return ResponseEntity.ok(orderService.getAllOrdersByCustomer());
+        return ResponseEntity.ok(orderService.getAllOrdersByCurrentCustomer());
     }
 
-    @GetMapping("/my-orders-in-process")
-    ResponseEntity getOrdersInProcess() {
-        return null;
+    @GetMapping("/my-orders-by-status/{status}") // TODO
+    ResponseEntity getOrdersByStatus(@PathVariable String status) {
+        return ResponseEntity.ok(orderService.getOrdersByCurrentCustomerAndStatus(status));
     }
 
     @PostMapping("/new-order")

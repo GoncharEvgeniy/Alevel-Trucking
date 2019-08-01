@@ -37,4 +37,9 @@ public class CustomerServiceImplementation implements CustomerService {
         customerRepository.save(customer);
         return true;
     }
+
+    @Override
+    public Customer findByUsername(String username) {
+        return customerRepository.findByUsername(username);
+    }
 }

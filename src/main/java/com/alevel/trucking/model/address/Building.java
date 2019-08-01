@@ -24,4 +24,8 @@ public class Building {
     @Column(name = "suffix")
     private String suffix;
 
+    public Building(int number, String suffix) {
+        this.number = number;
+        this.suffix = suffix;
+    }
 }

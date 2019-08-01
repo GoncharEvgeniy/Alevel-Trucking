@@ -1,6 +1,7 @@
 package com.alevel.trucking.model.transport;
 
 import com.alevel.trucking.model.order.Order;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "transport")
+@Data
 @NoArgsConstructor
 public class Transport {
 

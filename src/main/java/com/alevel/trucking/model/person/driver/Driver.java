@@ -2,6 +2,7 @@ package com.alevel.trucking.model.person.driver;
 
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.user.User;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "driver")
+@Data
 @NoArgsConstructor
 public class Driver extends User {
 

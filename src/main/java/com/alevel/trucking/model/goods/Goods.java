@@ -1,14 +1,20 @@
 package com.alevel.trucking.model.goods;
 
 import com.alevel.trucking.model.order.Order;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Builder
 @Entity
 @Table(name = "goods")
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Goods {
 
     @Id

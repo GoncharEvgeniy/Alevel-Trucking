@@ -6,6 +6,7 @@ import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "customer")
 @Data
+@EqualsAndHashCode(exclude = "orders")
 @NoArgsConstructor
 public class Customer extends User {
 

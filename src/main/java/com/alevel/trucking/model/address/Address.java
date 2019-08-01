@@ -1,14 +1,15 @@
 package com.alevel.trucking.model.address;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Table(name = "address")
+@Data
 @NoArgsConstructor
-@Getter
+@AllArgsConstructor
 public class Address {
 
     @Id

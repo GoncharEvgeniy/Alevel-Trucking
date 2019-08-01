@@ -1,13 +1,19 @@
 package com.alevel.trucking.model.route;
 
 import com.alevel.trucking.model.address.Address;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Table(name = "route")
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Route {
 
     @Id

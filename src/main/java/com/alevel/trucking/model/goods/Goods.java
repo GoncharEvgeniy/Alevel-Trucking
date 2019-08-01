@@ -1,10 +1,8 @@
 package com.alevel.trucking.model.goods;
 
 import com.alevel.trucking.model.order.Order;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "goods")
 @Data
+@EqualsAndHashCode(exclude = "orders")
+@ToString(exclude = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Goods {
@@ -37,6 +37,7 @@ public class Goods {
     @Column(name = "volume")
     private int volume;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "goods")
     private List<Order> orders;
 }

@@ -1,6 +1,7 @@
 package com.alevel.trucking.service.order.implementation;
 
 import com.alevel.trucking.model.order.Order;
+import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.customer.Customer;
 import com.alevel.trucking.repository.OrderRepository;
 import com.alevel.trucking.service.customer.CustomerService;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -40,7 +42,18 @@ public class OrderServiceImplementation implements OrderService {
         }
         customerOrders.add(order);
         customer.setOrders(customerOrders);
+        order.setStatus(OrderStatus.WAITING);
         order.setCustomer(customer);
         return orderRepository.save(order);
+    }
+
+    @Override
+    public List<Order> getAllOrdersByCustomer() {
+        Customer currentCustomer = (Customer) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        Customer customer = customerService.findByUsername(currentCustomer.getUsername());
+        return orderRepository.findByCustomer(customer);
     }
 }

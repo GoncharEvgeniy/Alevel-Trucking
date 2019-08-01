@@ -6,6 +6,7 @@ import com.alevel.trucking.model.person.driver.Driver;
 import com.alevel.trucking.model.person.manager.Manager;
 import com.alevel.trucking.model.route.Route;
 import com.alevel.trucking.model.transport.Transport;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,14 +31,17 @@ public class Order {
     @Column(name = "cost")
     private double cost;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_route", referencedColumnName = "id")
     private Route route;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_manager", referencedColumnName = "id")
     private Manager manager;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer")
     private Customer customer;
@@ -46,6 +50,7 @@ public class Order {
     @Column(name = "status")
     private OrderStatus status;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "order_driver",
             joinColumns = @JoinColumn(name = "id_order"),
@@ -53,6 +58,7 @@ public class Order {
     )
     private List<Driver> drivers;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "order_goods",
             joinColumns = @JoinColumn(name = "id_order"),
@@ -60,6 +66,7 @@ public class Order {
     )
     private List<Goods> goods;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "order_transport",
             joinColumns = @JoinColumn(name = "id_order"),

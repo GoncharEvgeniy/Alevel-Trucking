@@ -4,10 +4,8 @@ package com.alevel.trucking.model.person.customer;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -17,6 +15,7 @@ import java.util.Set;
 @Table(name = "customer")
 @Data
 @EqualsAndHashCode(exclude = "orders")
+@ToString(exclude = "orders")
 @NoArgsConstructor
 public class Customer extends User {
 
@@ -25,6 +24,7 @@ public class Customer extends User {
     @Column(name = "id")
     private Long id;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Order> orders;
 

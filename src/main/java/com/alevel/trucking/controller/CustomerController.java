@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -20,7 +22,7 @@ public class CustomerController {
 
     @GetMapping("/all-my-orders")
     ResponseEntity getAllOrders() {
-        return null;
+        return ResponseEntity.ok(orderService.getAllOrdersByCustomer());
     }
 
     @GetMapping("/my-orders-in-process")

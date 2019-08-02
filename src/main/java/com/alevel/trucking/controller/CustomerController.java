@@ -23,7 +23,7 @@ public class CustomerController {
         return ResponseEntity.ok(orderService.getAllOrdersByCurrentCustomer());
     }
 
-    @GetMapping("/my-orders-by-status/{status}") // TODO
+    @GetMapping("/my-orders-by-status/{status}")
     ResponseEntity getOrdersByStatus(@PathVariable String status) {
         return ResponseEntity.ok(orderService.getOrdersByCurrentCustomerAndStatus(status));
     }
@@ -31,7 +31,6 @@ public class CustomerController {
     @PostMapping("/new-order")
     ResponseEntity newOrder(@RequestBody OrderForm orderForm) {
         Order order = OrderForm.fromDto(orderForm);
-        orderService.save(order);
-        return null;
+        return ResponseEntity.ok(orderService.save(order));
     }
 }

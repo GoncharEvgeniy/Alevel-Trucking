@@ -23,11 +23,6 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public boolean save(User user) {
-        return true; // TODO
-    }
-
-    @Override
     public List<User> getAllUser() {
         return userRepository.findAll();
     }

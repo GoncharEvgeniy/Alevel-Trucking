@@ -1,16 +1,15 @@
 package com.alevel.trucking.model.person.driver;
 
 import com.alevel.trucking.model.order.Order;
+import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "driver")
@@ -31,8 +30,8 @@ public class Driver extends User {
     @Column(name = "birthday")
     private Date birthday;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_driverLicense")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_driver_license")
     private DriverLicense driverLicense;
 
     @Enumerated(EnumType.STRING)
@@ -42,5 +41,44 @@ public class Driver extends User {
     @JsonIgnore
     @ManyToMany(mappedBy = "drivers")
     private List<Order> orders;
+
+    @Builder(builderMethodName = "managerBuilder")
+    public Driver(Long id,
+                  Date startWork,
+                  Date birthday,
+                  DriverLicense driverLicense,
+                  DriverStatus status,
+                  List<Order> orders,
+                  String password,
+                  String username,
+                  String email,
+                  String firstName,
+                  String secondName,
+                  String lastName,
+                  String phone,
+                  Set<Role> roles,
+                  boolean isAccountNonExpired,
+                  boolean isAccountNonLocked,
+                  boolean isCredentialsNonExpired,
+                  boolean isEnabled) {
+        super(id,
+                password,
+                username,
+                email,
+                firstName,
+                secondName,
+                lastName,
+                phone,
+                roles,
+                isAccountNonExpired,
+                isAccountNonLocked,
+                isCredentialsNonExpired,
+                isEnabled);
+        this.startWork = startWork;
+        this.birthday = birthday;
+        this.driverLicense = driverLicense;
+        this.orders = orders;
+        this.status = status;
+    }
 
 }

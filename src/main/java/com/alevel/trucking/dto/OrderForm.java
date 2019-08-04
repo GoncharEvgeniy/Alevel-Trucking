@@ -10,34 +10,34 @@ import java.util.stream.Collectors;
 
 public class OrderForm implements Serializable {
 
-    private RouteDto route;
+    private RouteDto routeDto;
 
-    private List<GoodsDto> goodsList = new ArrayList<>();
+    private List<GoodsDto> goodsDtoList = new ArrayList<>();
 
     public static Order fromDto(OrderForm orderForm) {
-        List<Goods> goods = orderForm.getGoodsList()
+        List<Goods> goods = orderForm.getGoodsDtoList()
                 .stream()
                 .map(GoodsDto::fromDto)
                 .collect(Collectors.toList());
         return Order.builder()
-                .route(RouteDto.fromDto(orderForm.getRoute()))
+                .route(RouteDto.fromDto(orderForm.getRouteDto()))
                 .goods(goods)
                 .build();
     }
 
-    public List<GoodsDto> getGoodsList() {
-        return goodsList;
+    public List<GoodsDto> getGoodsDtoList() {
+        return goodsDtoList;
     }
 
-    public void setGoodsList(List<GoodsDto> goodsList) {
-        this.goodsList = goodsList;
+    public void setGoodsDtoList(List<GoodsDto> goodsDtoList) {
+        this.goodsDtoList = goodsDtoList;
     }
 
-    public RouteDto getRoute() {
-        return route;
+    public RouteDto getRouteDto() {
+        return routeDto;
     }
 
-    public void setRoute(RouteDto route) {
-        this.route = route;
+    public void setRouteDto(RouteDto routeDto) {
+        this.routeDto = routeDto;
     }
 }

@@ -24,7 +24,8 @@ public class OrderServiceImplementation implements OrderService {
     private final CustomerService customerService;
 
     @Autowired
-    public OrderServiceImplementation(OrderRepository orderRepository, CustomerService customerService) {
+    public OrderServiceImplementation(OrderRepository orderRepository,
+                                      CustomerService customerService) {
         this.orderRepository = orderRepository;
         this.customerService = customerService;
     }

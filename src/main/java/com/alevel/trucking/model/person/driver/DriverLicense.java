@@ -1,14 +1,19 @@
 package com.alevel.trucking.model.person.driver;
 
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
+@Builder
 @Entity
 @Table(name = "driver_license")
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString(exclude = "driver")
 public class DriverLicense {
 
     @Id
@@ -30,8 +35,9 @@ public class DriverLicense {
             joinColumns = @JoinColumn(name = "id_driver_license"))
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
-    private Set<Category> categorys;
+    private Set<Category> categories;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "driverLicense")
     private Driver driver;
 }

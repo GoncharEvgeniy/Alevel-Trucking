@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -60,6 +61,17 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public List<Order> getAllOrder() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public List<Order> getOrderByCustomerId(Long id) {
+        Optional<Customer> customer = customerService.getCustomerById(id);
+        return orderRepository.findByCustomer(customer.get());
+    }
+
+    @Override
+    public List<Order> getAllOrdersByStatus(OrderStatus status) {
+        return orderRepository.findByStatus(status);
     }
 
     private Customer getCurrentCustomer() {

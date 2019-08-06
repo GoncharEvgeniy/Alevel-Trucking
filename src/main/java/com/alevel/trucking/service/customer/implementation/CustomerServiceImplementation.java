@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImplementation implements CustomerService {
@@ -47,5 +48,10 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public List<Customer> getAllCustomer() {
         return customerRepository.findAll();
+    }
+
+    @Override
+    public Optional<Customer> getCustomerById(Long id) {
+        return customerRepository.findById(id);
     }
 }

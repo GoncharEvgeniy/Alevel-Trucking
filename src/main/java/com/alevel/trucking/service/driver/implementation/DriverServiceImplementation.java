@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class DriverServiceImplementation implements DriverService {
@@ -41,5 +42,10 @@ public class DriverServiceImplementation implements DriverService {
         driver.setStatus(DriverStatus.IN_BOX);
         driverRepository.save(driver);
         return true;
+    }
+
+    @Override
+    public List<Driver> getAllDriver() {
+        return driverRepository.findAll();
     }
 }

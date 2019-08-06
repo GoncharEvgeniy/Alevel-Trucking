@@ -57,6 +57,11 @@ public class OrderServiceImplementation implements OrderService {
         return orderRepository.findByStatusAndCustomer(orderStatus, customer);
     }
 
+    @Override
+    public List<Order> getAllOrder() {
+        return orderRepository.findAll();
+    }
+
     private Customer getCurrentCustomer() {
         Customer currentCustomer = (Customer) SecurityContextHolder
                 .getContext()

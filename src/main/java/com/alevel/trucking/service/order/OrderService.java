@@ -11,4 +11,6 @@ public interface OrderService {
     List<Order> getAllOrdersByCurrentCustomer();
 
     List<Order> getOrdersByCurrentCustomerAndStatus(String status);
+
+    List<Order> getAllOrder();
 }

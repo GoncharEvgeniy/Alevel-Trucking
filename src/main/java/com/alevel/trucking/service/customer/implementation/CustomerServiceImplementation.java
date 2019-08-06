@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class CustomerServiceImplementation implements CustomerService {
@@ -41,5 +42,10 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Customer findByUsername(String username) {
         return customerRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<Customer> getAllCustomer() {
+        return customerRepository.findAll();
     }
 }

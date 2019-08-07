@@ -1,5 +1,6 @@
 package com.alevel.trucking.controller;
 
+import com.alevel.trucking.dto.TransportDto;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.transport.Transport;
 import com.alevel.trucking.service.customer.CustomerService;
@@ -67,8 +68,8 @@ public class ManagerController {
     }
 
     @PostMapping
-    ResponseEntity addNewTransport(@RequestBody Transport transport) {
-        return ResponseEntity.ok(transportService.save(transport));
+    ResponseEntity addNewTransport(@RequestBody TransportDto transportDto) {
+        return ResponseEntity.ok(transportService.save(TransportDto.fromDto(transportDto)));
     }
 
     @PostMapping("/accept-order")

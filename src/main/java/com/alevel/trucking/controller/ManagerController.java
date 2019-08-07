@@ -1,10 +1,12 @@
 package com.alevel.trucking.controller;
 
 import com.alevel.trucking.model.order.OrderStatus;
+import com.alevel.trucking.model.transport.Transport;
 import com.alevel.trucking.service.customer.CustomerService;
 import com.alevel.trucking.service.driver.DriverService;
 import com.alevel.trucking.service.manager.ManagerService;
 import com.alevel.trucking.service.order.OrderService;
+import com.alevel.trucking.service.transport.TransportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +23,17 @@ public class ManagerController {
 
     private final OrderService orderService;
 
+    private final TransportService transportService;
+
     @Autowired
     public ManagerController(ManagerService managerService, CustomerService customerService,
-                             DriverService driverService, OrderService orderService) {
+                             DriverService driverService, OrderService orderService,
+                             TransportService transportService) {
         this.managerService = managerService;
         this.customerService = customerService;
         this.driverService = driverService;
         this.orderService = orderService;
+        this.transportService = transportService;
     }
 
     @GetMapping("/all-orders")
@@ -60,9 +66,15 @@ public class ManagerController {
         return ResponseEntity.ok(driverService.getAllDriver());
     }
 
+    @PostMapping
+    ResponseEntity addNewTransport(@RequestBody Transport transport) {
+        return ResponseEntity.ok(transportService.save(transport));
+    }
+
     @PostMapping("/accept-order")
-    ResponseEntity acceptOrder() {
-        return null;
+    ResponseEntity acceptOrder(@RequestBody Long orderId) {
+        //todo for test
+        return ResponseEntity.ok(orderService.getOrderById(orderId));
     }
 
 }

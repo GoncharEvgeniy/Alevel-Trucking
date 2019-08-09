@@ -1,4 +1,4 @@
-package com.alevel.trucking.model.route;
+package com.alevel.trucking.service.distance;
 
 import com.alevel.trucking.model.address.Address;
 

@@ -22,6 +22,8 @@ public class TransportDto {
 
     private int maxVolumeOfGoods;
 
+    private double costPerOneKilometer;
+
     public static Transport fromDto(TransportDto transportDto) {
         return Transport.builder()
                 .name(transportDto.getName())
@@ -32,6 +34,7 @@ public class TransportDto {
                 .maxWidthOfGoods(transportDto.getMaxWidthOfGoods())
                 .maxVolumeOfGoods(transportDto.getMaxVolumeOfGoods())
                 .type(transportDto.getType())
+                .costPerOneKilometer(transportDto.getCostPerOneKilometer())
                 .build();
     }
 
@@ -97,5 +100,13 @@ public class TransportDto {
 
     public void setMaxVolumeOfGoods(int maxVolumeOfGoods) {
         this.maxVolumeOfGoods = maxVolumeOfGoods;
+    }
+
+    public double getCostPerOneKilometer() {
+        return costPerOneKilometer;
+    }
+
+    public void setCostPerOneKilometer(double costPerOneKilometer) {
+        this.costPerOneKilometer = costPerOneKilometer;
     }
 }

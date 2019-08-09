@@ -1,4 +1,4 @@
-package com.alevel.trucking.model.route.openstreetmap.ru;
+package com.alevel.trucking.service.distance.openstreetmap.ru;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -1,7 +1,7 @@
-package com.alevel.trucking.model.route.openstreetmap.ru;
+package com.alevel.trucking.service.distance.openstreetmap.ru;
 
 import com.alevel.trucking.model.address.Address;
-import com.alevel.trucking.model.route.util.RestTemplateBuilder;
+import com.alevel.trucking.service.distance.util.RestTemplateBuilder;
 import org.springframework.web.client.RestTemplate;
 
 public class RequestMatches {

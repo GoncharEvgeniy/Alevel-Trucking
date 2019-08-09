@@ -54,4 +54,8 @@ public class Transport {
     @JsonIgnore
     @ManyToMany(mappedBy = "transports")
     private List<Order> orders;
+
+    @Column(name = "cost_per_one_kilometer")
+    private double costPerOneKilometer;
+
 }

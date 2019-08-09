@@ -3,10 +3,12 @@ package com.alevel.trucking.controller;
 import com.alevel.trucking.dto.CustomerRegistrationForm;
 import com.alevel.trucking.dto.UsersBuilder;
 import com.alevel.trucking.model.person.customer.Customer;
+import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.service.customer.CustomerService;
 import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,9 +31,12 @@ public class MainController {
         return ResponseEntity.ok(customerService.save(customer));
     }
 
-    //TODO only for test
     @GetMapping()
     public ResponseEntity getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUser());
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        return ResponseEntity.ok("Hello " + user.getUsername());
     }
 }

@@ -2,7 +2,6 @@ package com.alevel.trucking.controller;
 
 import com.alevel.trucking.dto.TransportDto;
 import com.alevel.trucking.model.order.OrderStatus;
-import com.alevel.trucking.model.transport.Transport;
 import com.alevel.trucking.service.customer.CustomerService;
 import com.alevel.trucking.service.driver.DriverService;
 import com.alevel.trucking.service.manager.ManagerService;
@@ -67,7 +66,7 @@ public class ManagerController {
         return ResponseEntity.ok(driverService.getAllDriver());
     }
 
-    @PostMapping
+    @PostMapping("/new-transport")
     ResponseEntity addNewTransport(@RequestBody TransportDto transportDto) {
         return ResponseEntity.ok(transportService.save(TransportDto.fromDto(transportDto)));
     }

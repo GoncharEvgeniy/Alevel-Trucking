@@ -1,7 +1,9 @@
 package com.alevel.trucking.model.person.manager;
 
+import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,10 @@ public class Manager extends User {
 
     @Column(name = "birthday")
     private Date birthday;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+    private Set<Order> orders;
 
     @Builder(builderMethodName = "managerBuilder")
     public Manager(Long id,

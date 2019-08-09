@@ -1,6 +1,8 @@
 package com.alevel.trucking.model.person.driver;
 
-public enum DriverStatus {
+import java.io.Serializable;
+
+public enum DriverStatus implements Serializable {
     IN_ROUTE,
     IN_BOX;
 }

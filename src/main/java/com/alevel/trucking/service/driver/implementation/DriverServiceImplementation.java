@@ -1,5 +1,6 @@
 package com.alevel.trucking.service.driver.implementation;
 
+import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.person.driver.Driver;
 import com.alevel.trucking.model.person.driver.DriverLicense;
 import com.alevel.trucking.model.person.driver.DriverStatus;
@@ -10,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class DriverServiceImplementation implements DriverService {
@@ -63,5 +61,10 @@ public class DriverServiceImplementation implements DriverService {
     @Override
     public List<Driver> getFreeDrivers() {
         return driverRepository.findAllByStatus(DriverStatus.IN_BOX);
+    }
+
+    @Override
+    public Set<Order> getOrdersByDriver(Long driverId) {
+        return driverRepository.findById(driverId).get().getOrders(); //todo exception
     }
 }

@@ -54,7 +54,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> getOrderByCustomerId(Long id) {
+    public List<Order> getOrdersByCustomerId(Long id) {
         Optional<Customer> customer = customerService.getCustomerById(id);
         return orderRepository.findByCustomer(customer.get()); // Todo exception
     }

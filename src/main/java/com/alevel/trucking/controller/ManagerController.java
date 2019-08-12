@@ -28,8 +28,10 @@ public class ManagerController {
     private final TransportService transportService;
 
     @Autowired
-    public ManagerController(ManagerService managerService, CustomerService customerService,
-                             DriverService driverService, OrderService orderService,
+    public ManagerController(ManagerService managerService,
+                             CustomerService customerService,
+                             DriverService driverService,
+                             OrderService orderService,
                              TransportService transportService) {
         this.managerService = managerService;
         this.customerService = customerService;
@@ -43,14 +45,14 @@ public class ManagerController {
         return ResponseEntity.ok(orderService.getAllOrder());
     }
 
-    @GetMapping("/all-orders-by-customer/{id}")
-    ResponseEntity getAllOrdersByCustomer(@PathVariable Long id) {
-        return ResponseEntity.ok(orderService.getOrderByCustomerId(id));
+    @GetMapping("/all-orders-by-customer/{customerId}")
+    ResponseEntity getAllOrdersByCustomer(@PathVariable Long customerId) {
+        return ResponseEntity.ok(orderService.getOrdersByCustomerId(customerId));
     }
 
-    @GetMapping("/all-orders-by-driver")
-    ResponseEntity getAllOrdersByDriver() {
-        return null;
+    @GetMapping("/all-orders-by-driver/{driverId}")
+    ResponseEntity getAllOrdersByDriver(@PathVariable Long driverId) {
+        return ResponseEntity.ok(driverService.getOrdersByDriver(driverId));
     }
 
     @GetMapping("/all-orders-by-status/{status}")

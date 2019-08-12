@@ -1,9 +1,11 @@
 package com.alevel.trucking.service.transport.implementation;
 
 import com.alevel.trucking.model.goods.Goods;
+import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.transport.Transport;
 import com.alevel.trucking.model.transport.TransportStatus;
 import com.alevel.trucking.repository.TransportRepository;
+import com.alevel.trucking.service.order.OrderService;
 import com.alevel.trucking.service.transport.TransportService;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,11 @@ public class TransportServiceImplementation implements TransportService {
 
     private final TransportRepository transportRepository;
 
-    public TransportServiceImplementation(TransportRepository transportRepository) {
+    private final OrderService orderService;
+
+    public TransportServiceImplementation(TransportRepository transportRepository, OrderService orderService) {
         this.transportRepository = transportRepository;
+        this.orderService = orderService;
     }
 
     @Override
@@ -32,8 +37,10 @@ public class TransportServiceImplementation implements TransportService {
     }
 
     @Override
-    public List<Transport> getValidTransportsForGoods(List<Goods> goods) {
+    public List<Transport> getValidTransportsForOrder(Long orderId) {
+        Order order = orderService.getOrderById(orderId).get(); // Todo exception
         List<Transport> resultTransportList = new ArrayList<>();
+        List<Goods> goods = order.getGoods();
         for (Goods tmpGoods : goods) {
             resultTransportList.add(
                     transportRepository.findAllByMaxWidthOfGoodsGreaterThanAndMaxHeightOfGoodsGreaterThanAndMaxLengthOfGoodsGreaterThanAndLoadCapacityGreaterThanAndStatusOrderByLoadCapacity(

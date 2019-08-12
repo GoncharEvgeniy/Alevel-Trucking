@@ -80,4 +80,14 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.acceptOrder(orderId, transportsId, driversId));
     }
 
+    @GetMapping("/get-valid-transport-for-order/{orderId}")
+    ResponseEntity getValidTransportForOrder(@RequestParam Long orderId) {
+        return ResponseEntity.ok(transportService.getValidTransportsForOrder(orderId));
+    }
+
+    @GetMapping("/get-free-driver")
+    ResponseEntity getFreeDrivers(){
+        return ResponseEntity.ok(driverService.getFreeDrivers());
+    }
+
 }

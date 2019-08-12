@@ -3,7 +3,6 @@ package com.alevel.trucking.service.driver.implementation;
 import com.alevel.trucking.model.person.driver.Driver;
 import com.alevel.trucking.model.person.driver.DriverLicense;
 import com.alevel.trucking.model.person.driver.DriverStatus;
-import com.alevel.trucking.model.transport.Transport;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.DriverRepository;
 import com.alevel.trucking.service.driver.DriverService;
@@ -59,5 +58,10 @@ public class DriverServiceImplementation implements DriverService {
             driverList.add(driver);
         }
         return driverList;
+    }
+
+    @Override
+    public List<Driver> getFreeDrivers() {
+        return driverRepository.findAllByStatus(DriverStatus.IN_BOX);
     }
 }

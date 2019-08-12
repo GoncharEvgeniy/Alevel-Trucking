@@ -11,4 +11,7 @@ public interface DriverService {
     List<Driver> getAllDriver();
 
     List<Driver> getDriversByListId(List<Long> driversId);
+
+    List<Driver> getFreeDrivers();
+
 }

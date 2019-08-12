@@ -9,6 +9,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,7 +43,7 @@ public class Driver extends User {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "drivers")
-    private List<Order> orders;
+    private Set<Order> orders;
 
     @Builder(builderMethodName = "managerBuilder")
     public Driver(Long id,
@@ -50,7 +51,7 @@ public class Driver extends User {
                   Date birthday,
                   DriverLicense driverLicense,
                   DriverStatus status,
-                  List<Order> orders,
+                  Set<Order> orders,
                   String password,
                   String username,
                   String email,
@@ -83,4 +84,10 @@ public class Driver extends User {
         this.status = status;
     }
 
+    public void addOrder(Order order) {
+        if (this.orders == null) {
+            this.orders = new HashSet<>();
+        }
+        orders.add(order);
+    }
 }

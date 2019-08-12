@@ -5,6 +5,7 @@ import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.CustomerRepository;
 import com.alevel.trucking.service.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +54,14 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Optional<Customer> getCustomerById(Long id) {
         return customerRepository.findById(id);
+    }
+
+    @Override
+    public Customer getCurrentCustomer() {
+        Customer currentCustomer = (Customer) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        return customerRepository.findByUsername(currentCustomer.getUsername());
     }
 }

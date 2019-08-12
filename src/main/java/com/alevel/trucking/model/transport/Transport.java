@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Builder
 @Entity
@@ -53,9 +54,15 @@ public class Transport {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "transports")
-    private List<Order> orders;
+    private Set<Order> orders;
 
     @Column(name = "cost_per_one_kilometer")
     private double costPerOneKilometer;
 
+    public void addOrder(Order order) {
+        if (this.orders == null){
+            this.orders = new HashSet<>();
+        }
+        orders.add(order);
+    }
 }

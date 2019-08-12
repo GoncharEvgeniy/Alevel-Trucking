@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/manager")
 public class ManagerController {
@@ -72,9 +74,10 @@ public class ManagerController {
     }
 
     @PostMapping("/accept-order")
-    ResponseEntity acceptOrder(@RequestBody Long orderId) {
-        //todo for test
-        return ResponseEntity.ok(orderService.getOrderById(orderId));
+    ResponseEntity acceptOrder(@RequestBody Long orderId,
+                               @RequestBody List<Long> transportsId,
+                               @RequestBody List<Long> driversId) {
+        return ResponseEntity.ok(managerService.acceptOrder(orderId, transportsId, driversId));
     }
 
 }

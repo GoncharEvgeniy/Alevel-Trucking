@@ -15,4 +15,8 @@ public interface TransportRepository extends JpaRepository<Transport, Long> {
     List<Transport> findAllByMaxWidthOfGoodsGreaterThanAndMaxHeightOfGoodsGreaterThanAndMaxLengthOfGoodsGreaterThanAndLoadCapacityGreaterThanAndStatusOrderByLoadCapacity(
             int width, int height, int length, int loadCapacity, TransportStatus status
     );
+
+    List<Transport> findAllByMaxVolumeOfGoodsGreaterThanEqualAndStatusOrderByLoadCapacity(
+            int volume, TransportStatus status
+    );
 }

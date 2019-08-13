@@ -42,15 +42,24 @@ public class TransportServiceImplementation implements TransportService {
         List<Transport> resultTransportList = new ArrayList<>();
         List<Goods> goods = order.getGoods();
         for (Goods tmpGoods : goods) {
-            resultTransportList.add(
-                    transportRepository.findAllByMaxWidthOfGoodsGreaterThanAndMaxHeightOfGoodsGreaterThanAndMaxLengthOfGoodsGreaterThanAndLoadCapacityGreaterThanAndStatusOrderByLoadCapacity(
-                            tmpGoods.getWidth(),
-                            tmpGoods.getHeight(),
-                            tmpGoods.getLength(),
-                            tmpGoods.getWeight(),
+            if (tmpGoods.getVolume() == 0) {
+                resultTransportList.add(
+                        transportRepository.findAllByMaxWidthOfGoodsGreaterThanAndMaxHeightOfGoodsGreaterThanAndMaxLengthOfGoodsGreaterThanAndLoadCapacityGreaterThanAndStatusOrderByLoadCapacity(
+                                tmpGoods.getWidth(),
+                                tmpGoods.getHeight(),
+                                tmpGoods.getLength(),
+                                tmpGoods.getWeight(),
+                                TransportStatus.IN_BOX
+                        ).get(0)
+                );
+            } else {
+                resultTransportList.add(
+                    transportRepository.findAllByMaxVolumeOfGoodsGreaterThanEqualAndStatusOrderByLoadCapacity(
+                            tmpGoods.getVolume(),
                             TransportStatus.IN_BOX
                     ).get(0)
-            );
+                );
+            }
         }
         return resultTransportList;
     }

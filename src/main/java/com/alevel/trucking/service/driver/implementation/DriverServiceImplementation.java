@@ -8,6 +8,7 @@ import com.alevel.trucking.model.person.driver.DriverStatus;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.DriverRepository;
 import com.alevel.trucking.service.driver.DriverService;
+import com.alevel.trucking.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,12 +22,16 @@ public class DriverServiceImplementation implements DriverService {
 
     private final DriverRepository driverRepository;
 
+    private final OrderService orderService;
+
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public DriverServiceImplementation(DriverRepository driverRepository,
+                                       OrderService orderService,
                                        PasswordEncoder passwordEncoder) {
         this.driverRepository = driverRepository;
+        this.orderService = orderService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -99,11 +104,15 @@ public class DriverServiceImplementation implements DriverService {
 
     @Override
     public Order startOrder(Long orderId) {
-        return null;
+        Order order = orderService.getOrderById(orderId).get(); // exception
+        order.setStatus(OrderStatus.ON_WAY);
+        return orderService.update(order);
     }
 
     @Override
     public Order finishOrder(Long orderId) {
-        return null;
+        Order order = orderService.getOrderById(orderId).get(); // exception
+        order.setStatus(OrderStatus.DONE);
+        return orderService.update(order);
     }
 }

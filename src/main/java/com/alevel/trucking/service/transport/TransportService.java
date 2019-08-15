@@ -11,4 +11,6 @@ public interface TransportService {
     List<Transport> getValidTransportsForOrder(Long orderId);
 
     List<Transport> getTransportByListId(List<Long> listId);
+
+    List<Transport> getAllTransport();
 }

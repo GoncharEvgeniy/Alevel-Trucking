@@ -1,21 +1,34 @@
 package com.alevel.trucking.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 public class CustomerRegistrationForm implements Serializable {
 
+    @NotBlank
+    @Size(min = 4)
     private String username;
 
+    @NotBlank
+    @Size(min = 5)
     private String password;
 
+    @NotBlank
+    @Email
     private String email;
 
+    @NotBlank
     private String firstName;
 
+    @NotBlank
     private String secondName;
 
+    @NotBlank
     private String lastName;
 
+    @NotBlank
     private String phone;
 
     public String getUsername() {

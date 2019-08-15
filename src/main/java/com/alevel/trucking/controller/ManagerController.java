@@ -92,4 +92,10 @@ public class ManagerController {
         return ResponseEntity.ok(driverService.getFreeDrivers());
     }
 
+
+    @GetMapping("/get-all-transport")
+    ResponseEntity getAllTransport(){
+        return ResponseEntity.ok(transportService.getAllTransport());
+    }
+
 }

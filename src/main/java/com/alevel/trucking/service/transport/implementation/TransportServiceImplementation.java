@@ -73,4 +73,9 @@ public class TransportServiceImplementation implements TransportService {
         }
         return transportList;
     }
+
+    @Override
+    public List<Transport> getAllTransport() {
+        return transportRepository.findAll();
+    }
 }

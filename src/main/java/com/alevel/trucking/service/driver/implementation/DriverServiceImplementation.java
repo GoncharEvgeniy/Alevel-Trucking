@@ -42,4 +42,15 @@ public class DriverServiceImplementation implements DriverService {
         driverRepository.save(driver);
         return true;
     }
+
+    @Override
+    public boolean deleteManager(Long id) {
+        Driver driver = driverRepository.findById(id).get(); //TODO exception
+        driver.setAccountNonLocked(false);
+        driver.setEnabled(false);
+        driverRepository.save(driver);
+        return true;
+    }
+
+
 }

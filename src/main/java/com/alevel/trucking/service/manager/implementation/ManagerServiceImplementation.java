@@ -37,4 +37,13 @@ public class ManagerServiceImplementation implements ManagerService {
         managerRepository.save(manager);
         return true;
     }
+
+    @Override
+    public boolean deleteManager(Long id) {
+        Manager manager = managerRepository.findById(id).get(); //TODO exception
+        manager.setAccountNonLocked(false);
+        manager.setEnabled(false);
+        managerRepository.save(manager);
+        return true;
+    }
 }

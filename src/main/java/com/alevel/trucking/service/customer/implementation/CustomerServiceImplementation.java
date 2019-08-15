@@ -1,6 +1,7 @@
 package com.alevel.trucking.service.customer.implementation;
 
 import com.alevel.trucking.model.person.customer.Customer;
+import com.alevel.trucking.model.person.manager.Manager;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.CustomerRepository;
 import com.alevel.trucking.service.customer.CustomerService;
@@ -41,5 +42,14 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Customer findByUsername(String username) {
         return customerRepository.findByUsername(username);
+    }
+
+    @Override
+    public boolean deleteCustomer(Long id) {
+        Customer customer = customerRepository.findById(id).get(); //TODO exception
+        customer.setAccountNonLocked(false);
+        customer.setEnabled(false);
+        customerRepository.save(customer);
+        return true;
     }
 }

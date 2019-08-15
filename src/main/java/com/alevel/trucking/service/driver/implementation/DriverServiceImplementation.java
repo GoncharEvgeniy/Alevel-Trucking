@@ -9,6 +9,7 @@ import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.DriverRepository;
 import com.alevel.trucking.service.driver.DriverService;
 import com.alevel.trucking.service.order.OrderService;
+import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,20 +27,22 @@ public class DriverServiceImplementation implements DriverService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final UserService userService;
+
     @Autowired
     public DriverServiceImplementation(DriverRepository driverRepository,
                                        OrderService orderService,
-                                       PasswordEncoder passwordEncoder) {
+                                       PasswordEncoder passwordEncoder,
+                                       UserService userService) {
         this.driverRepository = driverRepository;
         this.orderService = orderService;
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @Override
     public boolean save(Driver driver) {
-        Driver driverFromDbByName = driverRepository.findByUsername(driver.getUsername());
-        Driver driverFromBbByEmail = driverRepository.findByEmail(driver.getEmail());
-        if (driverFromDbByName != null || driverFromBbByEmail != null) {
+        if (userService.isExist(driver.getUsername(), driver.getEmail())) {
             return false;
         }
         driver.setPassword(passwordEncoder.encode(driver.getPassword()));
@@ -115,4 +118,15 @@ public class DriverServiceImplementation implements DriverService {
         order.setStatus(OrderStatus.DONE);
         return orderService.update(order);
     }
+
+    @Override
+    public boolean deleteManager(Long id) {
+        Driver driver = driverRepository.findById(id).get(); //TODO exception
+        driver.setAccountNonLocked(false);
+        driver.setEnabled(false);
+        driverRepository.save(driver);
+        return true;
+    }
+
+
 }

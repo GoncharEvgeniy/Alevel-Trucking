@@ -28,4 +28,6 @@ public interface DriverService {
     Order startOrder(Long orderId);
 
     Order finishOrder(Long orderId);
+
+    boolean deleteManager(Long id);
 }

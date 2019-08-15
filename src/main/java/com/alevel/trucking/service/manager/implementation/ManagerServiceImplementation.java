@@ -12,6 +12,7 @@ import com.alevel.trucking.service.cost.CostCalculator;
 import com.alevel.trucking.service.distance.Distance;
 import com.alevel.trucking.service.driver.DriverService;
 import com.alevel.trucking.service.manager.ManagerService;
+import com.alevel.trucking.service.user.UserService;
 import com.alevel.trucking.service.order.OrderService;
 import com.alevel.trucking.service.transport.TransportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +41,17 @@ public class ManagerServiceImplementation implements ManagerService {
 
     private final DriverService driverService;
 
+    private final UserService userService;
+
     @Autowired
     public ManagerServiceImplementation(ManagerRepository managerRepository,
-                                        PasswordEncoder passwordEncoder,
                                         OrderService orderService,
                                         Distance distance,
                                         CostCalculator costCalculator,
                                         TransportService transportService,
-                                        DriverService driverService) {
+                                        DriverService driverService,
+                                        PasswordEncoder passwordEncoder,
+                                        UserService userService) {
         this.managerRepository = managerRepository;
         this.passwordEncoder = passwordEncoder;
         this.orderService = orderService;
@@ -55,13 +59,12 @@ public class ManagerServiceImplementation implements ManagerService {
         this.costCalculator = costCalculator;
         this.transportService = transportService;
         this.driverService = driverService;
+        this.userService = userService;
     }
 
     @Override
     public boolean save(Manager manager) {
-        Manager managerFromDbByName = managerRepository.findByUsername(manager.getUsername());
-        Manager managerFromBbByEmail = managerRepository.findByEmail(manager.getEmail());
-        if (managerFromDbByName != null || managerFromBbByEmail != null) {
+        if (userService.isExist(manager.getUsername(), manager.getEmail())) {
             return false;
         }
         manager.setPassword(passwordEncoder.encode(manager.getPassword()));
@@ -96,5 +99,14 @@ public class ManagerServiceImplementation implements ManagerService {
                 .getAuthentication()
                 .getPrincipal();
         return managerRepository.findByUsername(currentManager.getUsername());
+    }
+
+    @Override
+    public boolean deleteManager(Long id) {
+        Manager manager = managerRepository.findById(id).get(); //TODO exception
+        manager.setAccountNonLocked(false);
+        manager.setEnabled(false);
+        managerRepository.save(manager);
+        return true;
     }
 }

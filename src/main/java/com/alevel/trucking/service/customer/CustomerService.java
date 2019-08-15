@@ -17,4 +17,6 @@ public interface CustomerService {
 
     Customer getCurrentCustomer();
 
+
+    boolean deleteCustomer(Long id);
 }

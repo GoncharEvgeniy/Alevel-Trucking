@@ -4,6 +4,7 @@ import com.alevel.trucking.model.person.manager.Manager;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.ManagerRepository;
 import com.alevel.trucking.service.manager.ManagerService;
+import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,18 +19,21 @@ public class ManagerServiceImplementation implements ManagerService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final UserService userService;
+
     @Autowired
     public ManagerServiceImplementation(ManagerRepository managerRepository,
-                                        PasswordEncoder passwordEncoder) {
+                                        PasswordEncoder passwordEncoder,
+                                        UserService userService) {
         this.managerRepository = managerRepository;
         this.passwordEncoder = passwordEncoder;
+
+        this.userService = userService;
     }
 
     @Override
     public boolean save(Manager manager) {
-        Manager managerFromDbByName = managerRepository.findByUsername(manager.getUsername());
-        Manager managerFromBbByEmail = managerRepository.findByEmail(manager.getEmail());
-        if (managerFromDbByName != null || managerFromBbByEmail != null) {
+        if (userService.isExist(manager.getUsername(), manager.getEmail())) {
             return false;
         }
         manager.setPassword(passwordEncoder.encode(manager.getPassword()));

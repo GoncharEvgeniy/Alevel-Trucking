@@ -1,10 +1,10 @@
 package com.alevel.trucking.service.customer.implementation;
 
 import com.alevel.trucking.model.person.customer.Customer;
-import com.alevel.trucking.model.person.manager.Manager;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.CustomerRepository;
 import com.alevel.trucking.service.customer.CustomerService;
+import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,18 +19,20 @@ public class CustomerServiceImplementation implements CustomerService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final UserService userService;
+
     @Autowired
     public CustomerServiceImplementation(CustomerRepository customerRepository,
-                                         PasswordEncoder passwordEncoder) {
+                                         PasswordEncoder passwordEncoder,
+                                         UserService userService) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @Override
     public boolean save(Customer customer) {
-        Customer customerFromDbByName = customerRepository.findByUsername(customer.getUsername());
-        Customer customerFromBbByEmail = customerRepository.findByEmail(customer.getEmail());
-        if (customerFromDbByName != null || customerFromBbByEmail != null) {
+        if (userService.isExist(customer.getUsername(), customer.getEmail())) {
             return false;
         }
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -32,13 +34,13 @@ public class AdminController {
     }
 
     @PostMapping("/new-manager")
-    ResponseEntity createNewManager(@RequestBody ManagerRegistrationForm managerRegistrationForm) {
+    ResponseEntity createNewManager(@RequestBody @Valid ManagerRegistrationForm managerRegistrationForm) {
         Manager manager = UsersBuilder.fromDto(managerRegistrationForm);
         return ResponseEntity.ok(managerService.save(manager));
     }
 
     @PostMapping("/new-driver")
-    ResponseEntity createNewDriver(@RequestBody DriverRegistrationForm driverRegistrationForm) {
+    ResponseEntity createNewDriver(@RequestBody @Valid DriverRegistrationForm driverRegistrationForm) {
         Driver driver = UsersBuilder.fromDto(driverRegistrationForm);
         return ResponseEntity.ok(driverService.save(driver));
     }

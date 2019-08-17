@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -29,7 +31,7 @@ public class CustomerController {
     }
 
     @PostMapping("/new-order")
-    ResponseEntity newOrder(@RequestBody OrderForm orderForm) {
+    ResponseEntity newOrder(@RequestBody @Valid OrderForm orderForm) {
         Order order = OrderForm.fromDto(orderForm);
         return ResponseEntity.ok(orderService.saveNewOrder(order));
     }

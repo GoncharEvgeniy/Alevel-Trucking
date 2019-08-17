@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/")
 public class MainController {
@@ -26,7 +28,7 @@ public class MainController {
     }
 
     @PostMapping("/reg")
-    public ResponseEntity newUser(@RequestBody CustomerRegistrationForm customerDto) {
+    public ResponseEntity newUser(@RequestBody @Valid CustomerRegistrationForm customerDto) {
         Customer customer = UsersBuilder.fromDto(customerDto);
         return ResponseEntity.ok(customerService.save(customer));
     }

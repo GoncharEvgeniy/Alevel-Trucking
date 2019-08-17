@@ -21,7 +21,7 @@ public class DriverRegistrationForm extends CustomerRegistrationForm {
     private Date startWork;
 
     @NotEmpty
-    private DriverLicenseDto driverLicenseDto;
+    private DriverLicenseDto driverLicense;
 
     public Date getBirthday() {
         return birthday;
@@ -39,11 +39,11 @@ public class DriverRegistrationForm extends CustomerRegistrationForm {
         this.startWork = startWork;
     }
 
-    public DriverLicenseDto getDriverLicenseDto() {
-        return driverLicenseDto;
+    public DriverLicenseDto getDriverLicense() {
+        return driverLicense;
     }
 
-    public void setDriverLicenseDto(DriverLicenseDto driverLicenseDto) {
-        this.driverLicenseDto = driverLicenseDto;
+    public void setDriverLicense(DriverLicenseDto driverLicense) {
+        this.driverLicense = driverLicense;
     }
 }

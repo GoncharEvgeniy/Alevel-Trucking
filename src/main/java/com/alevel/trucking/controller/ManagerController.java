@@ -77,25 +77,25 @@ public class ManagerController {
     }
 
     @PostMapping("/accept-order")
-    ResponseEntity acceptOrder(@RequestBody Long orderId,
+    ResponseEntity acceptOrder(@RequestBody Long orderId, // TODO need @PathVariable
                                @RequestBody List<Long> transportsId,
                                @RequestBody List<Long> driversId) {
         return ResponseEntity.ok(managerService.acceptOrder(orderId, transportsId, driversId));
     }
 
     @GetMapping("/get-valid-transport-for-order/{orderId}")
-    ResponseEntity getValidTransportForOrder(@RequestParam Long orderId) {
+    ResponseEntity getValidTransportForOrder(@PathVariable Long orderId) {
         return ResponseEntity.ok(transportService.getValidTransportsForOrder(orderId));
     }
 
     @GetMapping("/get-free-driver")
-    ResponseEntity getFreeDrivers(){
+    ResponseEntity getFreeDrivers() {
         return ResponseEntity.ok(driverService.getFreeDrivers());
     }
 
 
     @GetMapping("/get-all-transport")
-    ResponseEntity getAllTransport(){
+    ResponseEntity getAllTransport() {
         return ResponseEntity.ok(transportService.getAllTransport());
     }
 

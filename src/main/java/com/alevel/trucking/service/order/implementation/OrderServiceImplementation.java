@@ -1,5 +1,7 @@
 package com.alevel.trucking.service.order.implementation;
 
+import com.alevel.trucking.error.exception.CustomerNotFoundException;
+import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.customer.Customer;
@@ -55,8 +57,14 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     public List<Order> getOrdersByCustomerId(Long id) {
-        Optional<Customer> customer = customerService.getCustomerById(id);
-        return orderRepository.findByCustomer(customer.get()); // Todo exception
+        Optional<Customer> customerOptional = customerService.getCustomerById(id);
+        Customer customer = customerOptional.orElseThrow(() -> new CustomerNotFoundException(id));
+        List<Order> orders = orderRepository.findByCustomer(customer);
+        if (orders.size() == 0) {
+            throw new OrderNotFoundException();
+        } else {
+            return orders;
+        }
     }
 
     @Override

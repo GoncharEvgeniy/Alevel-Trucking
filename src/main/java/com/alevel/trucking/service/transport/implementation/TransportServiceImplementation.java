@@ -1,5 +1,6 @@
 package com.alevel.trucking.service.transport.implementation;
 
+import com.alevel.trucking.error.exception.TransportNotFoundException;
 import com.alevel.trucking.model.goods.Goods;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.transport.Transport;
@@ -50,7 +51,9 @@ public class TransportServiceImplementation implements TransportService {
     public List<Transport> getTransportByListId(List<Long> listId) {
         List<Transport> transportList = new ArrayList<>();
         for (Long id : listId) {
-            Transport transport = transportRepository.findById(id).get(); //Todo exception
+            Transport transport = transportRepository
+                    .findById(id)
+                    .orElseThrow(() -> new TransportNotFoundException(id));
             transportList.add(transport);
         }
         return transportList;
@@ -58,23 +61,38 @@ public class TransportServiceImplementation implements TransportService {
 
     @Override
     public List<Transport> getAllTransport() {
-        return transportRepository.findAll();
+        List<Transport> transports = transportRepository.findAll();
+        if (transports.size() == 0) {
+            throw new TransportNotFoundException();
+        } else {
+            return transports;
+        }
     }
 
     private Transport getTransportForGoods(Goods goods) {
         if (goods.getVolume() == 0) {
-            return transportRepository.findAllByMaxWidthOfGoodsGreaterThanAndMaxHeightOfGoodsGreaterThanAndMaxLengthOfGoodsGreaterThanAndLoadCapacityGreaterThanAndStatusOrderByLoadCapacity(
+            List<Transport> transports = transportRepository.findAllByMaxWidthOfGoodsGreaterThanAndMaxHeightOfGoodsGreaterThanAndMaxLengthOfGoodsGreaterThanAndLoadCapacityGreaterThanAndStatusOrderByLoadCapacity(
                     goods.getWidth(),
                     goods.getHeight(),
                     goods.getLength(),
                     goods.getWeight(),
                     TransportStatus.IN_BOX
-            ).get(0);
+            );
+            if (transports.size() == 0) {
+                throw new TransportNotFoundException();
+            } else {
+                return transports.get(0);
+            }
         } else {
-            return transportRepository.findAllByMaxVolumeOfGoodsGreaterThanEqualAndStatusOrderByLoadCapacity(
+            List<Transport> transports = transportRepository.findAllByMaxVolumeOfGoodsGreaterThanEqualAndStatusOrderByLoadCapacity(
                     goods.getVolume(),
                     TransportStatus.IN_BOX
-            ).get(0);
+            );
+            if (transports.size() == 0) {
+                throw new TransportNotFoundException();
+            } else {
+                return transports.get(0);
+            }
         }
     }
 }

@@ -77,7 +77,12 @@ public class CustomerServiceImplementation implements CustomerService {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        return customerRepository.findByUsername(currentCustomer.getUsername());
+        Customer customer = customerRepository.findByUsername(currentCustomer.getUsername());
+        if (customer == null) {
+            throw new CustomerNotFoundException(currentCustomer.getUsername());
+        } else {
+            return customer;
+        }
     }
 
     @Override

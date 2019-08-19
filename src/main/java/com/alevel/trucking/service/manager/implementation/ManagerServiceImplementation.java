@@ -1,5 +1,6 @@
 package com.alevel.trucking.service.manager.implementation;
 
+import com.alevel.trucking.error.exception.ManagerNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.driver.Driver;
@@ -98,12 +99,19 @@ public class ManagerServiceImplementation implements ManagerService {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        return managerRepository.findByUsername(currentManager.getUsername()); //TODO exception
+        Manager manager = managerRepository.findByUsername(currentManager.getUsername());
+        if (manager == null) {
+            throw new ManagerNotFoundException(currentManager.getUsername());
+        } else {
+            return manager;
+        }
     }
 
     @Override
     public boolean deleteManager(Long id) {
-        Manager manager = managerRepository.findById(id).get(); //TODO exception
+        Manager manager = managerRepository
+                .findById(id)
+                .orElseThrow(() -> new ManagerNotFoundException(id));
         manager.setAccountNonLocked(false);
         manager.setEnabled(false);
         managerRepository.save(manager);

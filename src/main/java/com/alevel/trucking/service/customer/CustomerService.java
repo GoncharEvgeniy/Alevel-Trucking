@@ -13,7 +13,7 @@ public interface CustomerService {
 
     List<Customer>  getAllCustomer();
 
-    Optional<Customer> getCustomerById(Long id);
+    Customer getCustomerById(Long id);
 
     Customer getCurrentCustomer();
 

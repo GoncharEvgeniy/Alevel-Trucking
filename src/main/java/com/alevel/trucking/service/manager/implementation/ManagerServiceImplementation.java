@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.manager.implementation;
 
-import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.driver.Driver;
@@ -13,9 +12,9 @@ import com.alevel.trucking.service.cost.CostCalculator;
 import com.alevel.trucking.service.distance.Distance;
 import com.alevel.trucking.service.driver.DriverService;
 import com.alevel.trucking.service.manager.ManagerService;
-import com.alevel.trucking.service.user.UserService;
 import com.alevel.trucking.service.order.OrderService;
 import com.alevel.trucking.service.transport.TransportService;
+import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -76,9 +75,7 @@ public class ManagerServiceImplementation implements ManagerService {
 
     @Override
     public Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId) {
-        Order order = orderService
-                .getOrderById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(orderId));
+        Order order = orderService.getOrderById(orderId);
         Route route = order.getRoute();
         double routeDistance = distance.getDistance(route.getStart(), route.getEnd());
         route.setDistance(routeDistance);
@@ -101,7 +98,7 @@ public class ManagerServiceImplementation implements ManagerService {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        return managerRepository.findByUsername(currentManager.getUsername());
+        return managerRepository.findByUsername(currentManager.getUsername()); //TODO exception
     }
 
     @Override

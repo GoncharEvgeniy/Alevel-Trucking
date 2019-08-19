@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.order.implementation;
 
-import com.alevel.trucking.error.exception.CustomerNotFoundException;
 import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderServiceImplementation implements OrderService {
@@ -67,8 +65,7 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     public List<Order> getOrdersByCustomerId(Long id) {
-        Optional<Customer> customerOptional = customerService.getCustomerById(id);
-        Customer customer = customerOptional.orElseThrow(() -> new CustomerNotFoundException(id));
+        Customer customer = customerService.getCustomerById(id);
         List<Order> orders = orderRepository.findByCustomer(customer);
         if (orders.size() == 0) {
             throw new OrderNotFoundException();
@@ -88,8 +85,10 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Optional<Order> getOrderById(Long orderId) {
-        return orderRepository.findById(orderId);
+    public Order getOrderById(Long orderId) {
+        return orderRepository
+                .findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(orderId));
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.transport.implementation;
 
-import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.goods.Goods;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.transport.Transport;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransportServiceImplementation implements TransportService {
@@ -39,38 +39,17 @@ public class TransportServiceImplementation implements TransportService {
 
     @Override
     public List<Transport> getValidTransportsForOrder(Long orderId) {
-        Order order = orderService
-                .getOrderById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(orderId)); // Todo exception
-        List<Transport> resultTransportList = new ArrayList<>();
+        Order order = orderService.getOrderById(orderId);
         List<Goods> goods = order.getGoods();
-        for (Goods tmpGoods : goods) {
-            if (tmpGoods.getVolume() == 0) {
-                resultTransportList.add(
-                        transportRepository.findAllByMaxWidthOfGoodsGreaterThanAndMaxHeightOfGoodsGreaterThanAndMaxLengthOfGoodsGreaterThanAndLoadCapacityGreaterThanAndStatusOrderByLoadCapacity(
-                                tmpGoods.getWidth(),
-                                tmpGoods.getHeight(),
-                                tmpGoods.getLength(),
-                                tmpGoods.getWeight(),
-                                TransportStatus.IN_BOX
-                        ).get(0)
-                );
-            } else {
-                resultTransportList.add(
-                    transportRepository.findAllByMaxVolumeOfGoodsGreaterThanEqualAndStatusOrderByLoadCapacity(
-                            tmpGoods.getVolume(),
-                            TransportStatus.IN_BOX
-                    ).get(0)
-                );
-            }
-        }
-        return resultTransportList;
+        return goods.stream()
+                .map(this::getTransportForGoods)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Transport> getTransportByListId(List<Long> listId) {
         List<Transport> transportList = new ArrayList<>();
-        for (Long id: listId) {
+        for (Long id : listId) {
             Transport transport = transportRepository.findById(id).get(); //Todo exception
             transportList.add(transport);
         }
@@ -80,5 +59,22 @@ public class TransportServiceImplementation implements TransportService {
     @Override
     public List<Transport> getAllTransport() {
         return transportRepository.findAll();
+    }
+
+    private Transport getTransportForGoods(Goods goods) {
+        if (goods.getVolume() == 0) {
+            return transportRepository.findAllByMaxWidthOfGoodsGreaterThanAndMaxHeightOfGoodsGreaterThanAndMaxLengthOfGoodsGreaterThanAndLoadCapacityGreaterThanAndStatusOrderByLoadCapacity(
+                    goods.getWidth(),
+                    goods.getHeight(),
+                    goods.getLength(),
+                    goods.getWeight(),
+                    TransportStatus.IN_BOX
+            ).get(0);
+        } else {
+            return transportRepository.findAllByMaxVolumeOfGoodsGreaterThanEqualAndStatusOrderByLoadCapacity(
+                    goods.getVolume(),
+                    TransportStatus.IN_BOX
+            ).get(0);
+        }
     }
 }

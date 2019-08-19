@@ -20,7 +20,7 @@ public interface OrderService {
 
     List<Order> getAllOrdersByStatus(OrderStatus status);
 
-    Optional<Order> getOrderById(Long orderId);
+    Order getOrderById(Long orderId);
 
     Order update(Order order);
 }

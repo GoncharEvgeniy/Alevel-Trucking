@@ -1,6 +1,6 @@
 package com.alevel.trucking.service.driver.implementation;
 
-import com.alevel.trucking.error.exception.OrderNotFoundException;
+import com.alevel.trucking.error.exception.DriverNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.driver.Driver;
@@ -57,14 +57,21 @@ public class DriverServiceImplementation implements DriverService {
 
     @Override
     public List<Driver> getAllDriver() {
-        return driverRepository.findAll();
+        List<Driver> drivers = driverRepository.findAll();
+        if (drivers.size() == 0) {
+            throw new DriverNotFoundException();
+        } else {
+            return drivers;
+        }
     }
 
     @Override
     public List<Driver> getDriversByListId(List<Long> listId) {
         List<Driver> driverList = new ArrayList<>();
         for (Long id : listId) {
-            Driver driver = driverRepository.findById(id).get(); //Todo exception
+            Driver driver = driverRepository
+                    .findById(id)
+                    .orElseThrow(() -> new DriverNotFoundException(id));
             driverList.add(driver);
         }
         return driverList;
@@ -72,18 +79,25 @@ public class DriverServiceImplementation implements DriverService {
 
     @Override
     public List<Driver> getFreeDrivers() {
-        return driverRepository.findAllByStatus(DriverStatus.IN_BOX);
+        List<Driver> drivers = driverRepository.findAllByStatus(DriverStatus.IN_BOX);
+        if (drivers.size() == 0) {
+            throw new DriverNotFoundException(DriverStatus.IN_BOX);
+        }
+        return drivers;
     }
 
     @Override
     public Set<Order> getOrdersByDriver(Long driverId) {
-        return driverRepository.findById(driverId).get().getOrders(); //todo exception
+        Driver driver = driverRepository
+                .findById(driverId)
+                .orElseThrow(() -> new DriverNotFoundException(driverId));
+        return driver.getOrders(); // todo exception??
     }
 
     @Override
     public Set<Order> getOrdersByCurrentDriver() {
         Driver driver = getCurrentDriver();
-        return driver.getOrders();
+        return driver.getOrders(); // todo exception??
     }
 
     @Override
@@ -94,7 +108,7 @@ public class DriverServiceImplementation implements DriverService {
                 .stream()
                 .filter(order -> order.getStatus() == status)
                 .collect(Collectors.toSet());
-        return ordersByStatus;
+        return ordersByStatus;   // todo exception??
     }
 
     @Override
@@ -103,30 +117,32 @@ public class DriverServiceImplementation implements DriverService {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        return driverRepository.findByUsername(currentDriver.getUsername());
+        Driver driver = driverRepository.findByUsername(currentDriver.getUsername());
+        if (driver == null) {
+            throw new DriverNotFoundException(currentDriver.getUsername());
+        }
+        return driver;
     }
 
     @Override
     public Order startOrder(Long orderId) {
-        Order order = orderService
-                .getOrderById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(orderId));
+        Order order = orderService.getOrderById(orderId);
         order.setStatus(OrderStatus.ON_WAY);
         return orderService.update(order);
     }
 
     @Override
     public Order finishOrder(Long orderId) {
-        Order order = orderService
-                .getOrderById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(orderId));
+        Order order = orderService.getOrderById(orderId);
         order.setStatus(OrderStatus.DONE);
         return orderService.update(order);
     }
 
     @Override
     public boolean deleteManager(Long id) {
-        Driver driver = driverRepository.findById(id).get(); //TODO exception
+        Driver driver = driverRepository
+                .findById(id)
+                .orElseThrow(() -> new DriverNotFoundException(id));
         driver.setAccountNonLocked(false);
         driver.setEnabled(false);
         driverRepository.save(driver);

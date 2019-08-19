@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerServiceImplementation implements CustomerService {
@@ -47,22 +46,34 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Override
     public Customer findByUsername(String username) {
-        return customerRepository.findByUsername(username);
+        Customer customer = customerRepository.findByUsername(username);
+        if (customer == null) {
+            throw new CustomerNotFoundException(username);
+        } else {
+            return customer;
+        }
     }
 
     @Override
     public List<Customer> getAllCustomer() {
-        return customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAll();
+        if (customers.size() == 0) {
+            throw new CustomerNotFoundException();
+        } else {
+            return customers;
+        }
     }
 
     @Override
-    public Optional<Customer> getCustomerById(Long id) {
-        return customerRepository.findById(id);
+    public Customer getCustomerById(Long id) {
+        return customerRepository
+                .findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
     @Override
     public Customer getCurrentCustomer() {
-        Customer currentCustomer = (Customer) SecurityContextHolder // TODO exception
+        Customer currentCustomer = (Customer) SecurityContextHolder // TODO exception???
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();

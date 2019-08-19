@@ -47,12 +47,22 @@ public class OrderServiceImplementation implements OrderService {
     public List<Order> getOrdersByCurrentCustomerAndStatus(String status) {
         OrderStatus orderStatus = OrderStatus.valueOf(status);
         Customer customer = customerService.getCurrentCustomer();
-        return orderRepository.findByStatusAndCustomer(orderStatus, customer);
+        List<Order> orders = orderRepository.findByStatusAndCustomer(orderStatus, customer);
+        if (orders.size() == 0) {
+            throw new OrderNotFoundException();
+        } else {
+            return orders;
+        }
     }
 
     @Override
     public List<Order> getAllOrder() {
-        return orderRepository.findAll();
+        List<Order> orders = orderRepository.findAll();
+        if (orders.size() == 0) {
+            throw new OrderNotFoundException();
+        } else {
+            return orders;
+        }
     }
 
     @Override
@@ -69,7 +79,12 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     public List<Order> getAllOrdersByStatus(OrderStatus status) {
-        return orderRepository.findByStatus(status);
+        List<Order> orders = orderRepository.findByStatus(status);
+        if (orders.size() == 0) {
+            throw new OrderNotFoundException();
+        } else {
+            return orders;
+        }
     }
 
     @Override

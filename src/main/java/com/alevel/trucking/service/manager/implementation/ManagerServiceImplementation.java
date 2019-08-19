@@ -1,5 +1,6 @@
 package com.alevel.trucking.service.manager.implementation;
 
+import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.driver.Driver;
@@ -75,7 +76,9 @@ public class ManagerServiceImplementation implements ManagerService {
 
     @Override
     public Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId) {
-        Order order = orderService.getOrderById(orderId).get(); // TODO Exception
+        Order order = orderService
+                .getOrderById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(orderId));
         Route route = order.getRoute();
         double routeDistance = distance.getDistance(route.getStart(), route.getEnd());
         route.setDistance(routeDistance);

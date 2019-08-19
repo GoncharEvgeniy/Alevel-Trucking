@@ -1,5 +1,6 @@
 package com.alevel.trucking.service.driver.implementation;
 
+import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.driver.Driver;
@@ -107,14 +108,18 @@ public class DriverServiceImplementation implements DriverService {
 
     @Override
     public Order startOrder(Long orderId) {
-        Order order = orderService.getOrderById(orderId).get(); // exception
+        Order order = orderService
+                .getOrderById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(orderId));
         order.setStatus(OrderStatus.ON_WAY);
         return orderService.update(order);
     }
 
     @Override
     public Order finishOrder(Long orderId) {
-        Order order = orderService.getOrderById(orderId).get(); // exception
+        Order order = orderService
+                .getOrderById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(orderId));
         order.setStatus(OrderStatus.DONE);
         return orderService.update(order);
     }

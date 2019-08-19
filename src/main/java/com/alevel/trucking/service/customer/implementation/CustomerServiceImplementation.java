@@ -1,5 +1,6 @@
 package com.alevel.trucking.service.customer.implementation;
 
+import com.alevel.trucking.error.exception.CustomerNotFoundException;
 import com.alevel.trucking.model.person.customer.Customer;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.CustomerRepository;
@@ -61,7 +62,7 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Override
     public Customer getCurrentCustomer() {
-        Customer currentCustomer = (Customer) SecurityContextHolder
+        Customer currentCustomer = (Customer) SecurityContextHolder // TODO exception
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
@@ -70,7 +71,9 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Override
     public boolean deleteCustomer(Long id) {
-        Customer customer = customerRepository.findById(id).get(); //TODO exception
+        Customer customer = customerRepository
+                .findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
         customer.setAccountNonLocked(false);
         customer.setEnabled(false);
         customerRepository.save(customer);

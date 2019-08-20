@@ -2,7 +2,6 @@ package com.alevel.trucking.controller;
 
 import com.alevel.trucking.dto.DriverRegistrationForm;
 import com.alevel.trucking.dto.ManagerRegistrationForm;
-import com.alevel.trucking.dto.UsersBuilder;
 import com.alevel.trucking.model.person.driver.Driver;
 import com.alevel.trucking.model.person.manager.Manager;
 import com.alevel.trucking.service.customer.CustomerService;
@@ -35,13 +34,13 @@ public class AdminController {
 
     @PostMapping("/new-manager")
     ResponseEntity createNewManager(@RequestBody @Valid ManagerRegistrationForm managerRegistrationForm) {
-        Manager manager = UsersBuilder.fromDto(managerRegistrationForm);
+        Manager manager = ManagerRegistrationForm.fromDto(managerRegistrationForm);
         return ResponseEntity.ok(managerService.save(manager));
     }
 
     @PostMapping("/new-driver")
     ResponseEntity createNewDriver(@RequestBody @Valid DriverRegistrationForm driverRegistrationForm) {
-        Driver driver = UsersBuilder.fromDto(driverRegistrationForm);
+        Driver driver = DriverRegistrationForm.fromDto(driverRegistrationForm);
         return ResponseEntity.ok(driverService.save(driver));
     }
 

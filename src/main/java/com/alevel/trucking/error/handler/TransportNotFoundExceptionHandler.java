@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class TransportNotFoundExceptionHandler  {
+public class TransportNotFoundExceptionHandler {
 
     @ExceptionHandler(TransportNotFoundException.class)
     public ResponseEntity<Message> handleTransportNotFoundException(TransportNotFoundException e) {

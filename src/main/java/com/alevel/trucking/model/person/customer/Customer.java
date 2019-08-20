@@ -6,7 +6,6 @@ import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.HashSet;

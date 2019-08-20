@@ -2,7 +2,6 @@ package com.alevel.trucking.dto;
 
 import com.alevel.trucking.model.goods.Goods;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
@@ -24,7 +23,7 @@ public class GoodsDto implements Serializable {
     @PositiveOrZero
     private int volume;
 
-    public static Goods fromDto(GoodsDto goodsDto){
+    public static Goods fromDto(GoodsDto goodsDto) {
         return Goods.builder()
                 .height(goodsDto.getHeight())
                 .length(goodsDto.getLength())

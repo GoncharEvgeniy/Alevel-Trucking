@@ -60,7 +60,7 @@ public class Transport {
     private double costPerOneKilometer;
 
     public void addOrder(Order order) {
-        if (this.orders == null){
+        if (this.orders == null) {
             this.orders = new HashSet<>();
         }
         orders.add(order);

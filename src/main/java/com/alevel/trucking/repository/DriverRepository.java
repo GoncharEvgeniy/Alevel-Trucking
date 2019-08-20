@@ -13,5 +13,5 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     Driver findByEmail(String email);
 
     List<Driver> findAllByStatus(DriverStatus status);
-    
+
 }

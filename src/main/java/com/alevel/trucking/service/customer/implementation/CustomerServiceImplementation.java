@@ -8,7 +8,6 @@ import com.alevel.trucking.repository.CustomerRepository;
 import com.alevel.trucking.service.customer.CustomerService;
 import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

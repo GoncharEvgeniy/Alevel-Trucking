@@ -4,7 +4,6 @@ import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OrderService {
 

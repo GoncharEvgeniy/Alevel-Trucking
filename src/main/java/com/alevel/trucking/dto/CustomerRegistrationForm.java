@@ -1,8 +1,11 @@
 package com.alevel.trucking.dto;
 
+import com.alevel.trucking.model.person.customer.Customer;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
 import java.io.Serializable;
 
 public class CustomerRegistrationForm implements Serializable {
@@ -30,6 +33,22 @@ public class CustomerRegistrationForm implements Serializable {
 
     @NotBlank
     private String phone;
+
+    public static Customer fromDto(CustomerRegistrationForm customerRegistrationForm) {
+        return Customer.customerBuilder()
+                .username(customerRegistrationForm.getUsername())
+                .email(customerRegistrationForm.getEmail())
+                .password(customerRegistrationForm.getPassword())
+                .firstName(customerRegistrationForm.getFirstName())
+                .secondName(customerRegistrationForm.getSecondName())
+                .lastName(customerRegistrationForm.getLastName())
+                .phone(customerRegistrationForm.getPhone())
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
+                .build();
+    }
 
     public String getUsername() {
         return username;

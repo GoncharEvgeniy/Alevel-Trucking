@@ -4,7 +4,9 @@ import com.alevel.trucking.model.person.driver.Category;
 import com.alevel.trucking.model.person.driver.DriverLicense;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -35,7 +37,7 @@ public class DriverLicenseDto implements Serializable {
                 .build();
     }
 
-   public Date getDateOfRegistration() {
+    public Date getDateOfRegistration() {
         return dateOfRegistration;
     }
 

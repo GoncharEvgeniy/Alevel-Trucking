@@ -13,4 +13,6 @@ public interface UserService {
     User findByEmail(String email);
 
     boolean isExist(String username, String email);
+
+    User getCurrentUser();
 }

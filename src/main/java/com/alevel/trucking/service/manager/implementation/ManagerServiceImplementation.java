@@ -8,6 +8,7 @@ import com.alevel.trucking.model.person.manager.Manager;
 import com.alevel.trucking.model.route.Route;
 import com.alevel.trucking.model.transport.Transport;
 import com.alevel.trucking.model.user.Role;
+import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.repository.ManagerRepository;
 import com.alevel.trucking.service.cost.CostCalculator;
 import com.alevel.trucking.service.distance.Distance;
@@ -95,13 +96,10 @@ public class ManagerServiceImplementation implements ManagerService {
 
     @Override
     public Manager getCurrentManager() {
-        Manager currentManager = (Manager) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-        Manager manager = managerRepository.findByUsername(currentManager.getUsername());
+        User currentUser = userService.getCurrentUser();
+        Manager manager = managerRepository.findByUsername(currentUser.getUsername());
         if (manager == null) {
-            throw new ManagerNotFoundException(currentManager.getUsername());
+            throw new ManagerNotFoundException(currentUser.getUsername());
         } else {
             return manager;
         }

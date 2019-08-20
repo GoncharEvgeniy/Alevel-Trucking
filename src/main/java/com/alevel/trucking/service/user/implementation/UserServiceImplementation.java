@@ -4,7 +4,7 @@ import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.repository.UserRepository;
 import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,12 +14,9 @@ public class UserServiceImplementation implements UserService {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
-
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImplementation(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -46,5 +43,14 @@ public class UserServiceImplementation implements UserService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public User getCurrentUser() {
+        User currentUser = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        return currentUser;
     }
 }

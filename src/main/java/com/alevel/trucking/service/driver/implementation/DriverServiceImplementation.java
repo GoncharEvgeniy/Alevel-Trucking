@@ -8,6 +8,7 @@ import com.alevel.trucking.model.person.driver.Driver;
 import com.alevel.trucking.model.person.driver.DriverLicense;
 import com.alevel.trucking.model.person.driver.DriverStatus;
 import com.alevel.trucking.model.user.Role;
+import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.repository.DriverRepository;
 import com.alevel.trucking.service.driver.DriverService;
 import com.alevel.trucking.service.order.OrderService;
@@ -128,15 +129,13 @@ public class DriverServiceImplementation implements DriverService {
 
     @Override
     public Driver getCurrentDriver() {
-        Driver currentDriver = (Driver) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-        Driver driver = driverRepository.findByUsername(currentDriver.getUsername());
+        User currentUser = userService.getCurrentUser();
+        Driver driver = driverRepository.findByUsername(currentUser.getUsername());
         if (driver == null) {
-            throw new DriverNotFoundException(currentDriver.getUsername());
+            throw new DriverNotFoundException(currentUser.getUsername());
+        } else {
+            return driver;
         }
-        return driver;
     }
 
     @Override

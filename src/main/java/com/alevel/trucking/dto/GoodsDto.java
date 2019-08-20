@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class GoodsDto implements Serializable {
 
     @Positive
-    @NotBlank
     private int weight;
 
     @PositiveOrZero

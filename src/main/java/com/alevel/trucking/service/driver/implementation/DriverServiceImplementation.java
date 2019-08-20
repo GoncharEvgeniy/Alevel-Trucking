@@ -1,6 +1,7 @@
 package com.alevel.trucking.service.driver.implementation;
 
 import com.alevel.trucking.error.exception.DriverNotFoundException;
+import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.driver.Driver;
@@ -91,24 +92,38 @@ public class DriverServiceImplementation implements DriverService {
         Driver driver = driverRepository
                 .findById(driverId)
                 .orElseThrow(() -> new DriverNotFoundException(driverId));
-        return driver.getOrders(); // todo exception??
+        Set<Order> orders = driver.getOrders();
+        if (orders == null || orders.size() == 0) {
+            throw new OrderNotFoundException();
+        }
+        return orders;
     }
 
     @Override
     public Set<Order> getOrdersByCurrentDriver() {
         Driver driver = getCurrentDriver();
-        return driver.getOrders(); // todo exception??
+        Set<Order> orders = driver.getOrders();
+        if (orders == null || orders.size() == 0) {
+            throw new OrderNotFoundException();
+        }
+        return orders;
     }
 
     @Override
     public Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status) {
         Driver driver = getCurrentDriver();
         Set<Order> allOrders = driver.getOrders();
+        if (allOrders == null || allOrders.size() == 0) {
+            throw new OrderNotFoundException();
+        }
         Set<Order> ordersByStatus = allOrders
                 .stream()
                 .filter(order -> order.getStatus() == status)
                 .collect(Collectors.toSet());
-        return ordersByStatus;   // todo exception??
+        if (ordersByStatus.size() == 0) {
+            throw new OrderNotFoundException(status);
+        }
+        return ordersByStatus;
     }
 
     @Override
@@ -139,7 +154,7 @@ public class DriverServiceImplementation implements DriverService {
     }
 
     @Override
-    public boolean deleteManager(Long id) {
+    public boolean deleteDriver(Long id) {
         Driver driver = driverRepository
                 .findById(id)
                 .orElseThrow(() -> new DriverNotFoundException(id));

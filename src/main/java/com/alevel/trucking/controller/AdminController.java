@@ -52,7 +52,7 @@ public class AdminController {
 
     @DeleteMapping("/delete-driver/{id}")
     ResponseEntity deleteDriver(@PathVariable Long id) {
-        return ResponseEntity.ok(driverService.deleteManager(id));
+        return ResponseEntity.ok(driverService.deleteDriver(id));
     }
 
     @DeleteMapping("/delete-customer/{id}")

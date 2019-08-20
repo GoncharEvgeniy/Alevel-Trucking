@@ -77,7 +77,7 @@ public class ManagerController {
     }
 
     @PostMapping("/accept-order")
-    ResponseEntity acceptOrder(@RequestBody Long orderId, // TODO need @PathVariable
+    ResponseEntity acceptOrder(@PathVariable Long orderId,
                                @RequestBody List<Long> transportsId,
                                @RequestBody List<Long> driversId) {
         return ResponseEntity.ok(managerService.acceptOrder(orderId, transportsId, driversId));

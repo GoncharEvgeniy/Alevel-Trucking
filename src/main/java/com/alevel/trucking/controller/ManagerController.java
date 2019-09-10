@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/manager")
@@ -80,13 +79,15 @@ public class ManagerController {
 
     @PatchMapping("/accept-order/{orderId}")
     ResponseEntity acceptOrder(@PathVariable Long orderId,
-                               @RequestBody AcceptOrderDto acceptOrderDto) throws ManagerNotFoundException, DriverNotFoundException, OrderNotFoundException, TransportNotFoundException {
+                               @RequestBody AcceptOrderDto acceptOrderDto)
+            throws ManagerNotFoundException, DriverNotFoundException, OrderNotFoundException, TransportNotFoundException {
         return ResponseEntity.ok(managerService.acceptOrder(orderId,
                 acceptOrderDto.getTransportsId(), acceptOrderDto.getDriversId()));
     }
 
     @GetMapping("/get-valid-transport-for-order/{orderId}")
-    ResponseEntity getValidTransportForOrder(@PathVariable Long orderId) throws OrderNotFoundException, TransportNotFoundException {
+    ResponseEntity getValidTransportForOrder(@PathVariable Long orderId)
+            throws OrderNotFoundException, TransportNotFoundException {
         return ResponseEntity.ok(transportService.getValidTransportsForOrder(orderId));
     }
 

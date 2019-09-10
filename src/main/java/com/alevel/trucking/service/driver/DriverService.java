@@ -25,7 +25,8 @@ public interface DriverService {
 
     Set<Order> getOrdersByCurrentDriver() throws OrderNotFoundException, DriverNotFoundException;
 
-    Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status) throws OrderNotFoundException, DriverNotFoundException;
+    Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status)
+            throws OrderNotFoundException, DriverNotFoundException;
 
     Driver getCurrentDriver() throws DriverNotFoundException;
 
@@ -35,5 +36,5 @@ public interface DriverService {
 
     boolean deleteDriver(Long id) throws DriverNotFoundException;
 
-    String  backToBox();
+    String backToBox();
 }

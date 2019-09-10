@@ -25,7 +25,8 @@ public class MainController {
     }
 
     @PostMapping("/reg")
-    public ResponseEntity newUser(@RequestBody @Valid CustomerRegistrationForm customerDto) throws UsernameExistException, UserEmailExistException {
+    public ResponseEntity newUser(@RequestBody @Valid CustomerRegistrationForm customerDto)
+            throws UsernameExistException, UserEmailExistException {
         Customer customer = CustomerRegistrationForm.fromDto(customerDto);
         return ResponseEntity.ok(customerService.save(customer));
     }

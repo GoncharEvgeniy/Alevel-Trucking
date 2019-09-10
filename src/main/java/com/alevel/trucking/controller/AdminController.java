@@ -34,13 +34,15 @@ public class AdminController {
     }
 
     @PostMapping("/new-manager")
-    ResponseEntity createNewManager(@RequestBody @Valid ManagerRegistrationForm managerRegistrationForm) throws UsernameExistException, UserEmailExistException {
+    ResponseEntity createNewManager(@RequestBody @Valid ManagerRegistrationForm managerRegistrationForm)
+            throws UsernameExistException, UserEmailExistException {
         Manager manager = ManagerRegistrationForm.fromDto(managerRegistrationForm);
         return ResponseEntity.ok(managerService.save(manager));
     }
 
     @PostMapping("/new-driver")
-    ResponseEntity createNewDriver(@RequestBody @Valid DriverRegistrationForm driverRegistrationForm) throws UsernameExistException, UserEmailExistException {
+    ResponseEntity createNewDriver(@RequestBody @Valid DriverRegistrationForm driverRegistrationForm)
+            throws UsernameExistException, UserEmailExistException {
         Driver driver = DriverRegistrationForm.fromDto(driverRegistrationForm);
         return ResponseEntity.ok(driverService.save(driver));
     }

@@ -10,7 +10,11 @@ public interface ManagerService {
 
     boolean save(Manager manager) throws UsernameExistException, UserEmailExistException;
 
-    Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId) throws DriverNotFoundException, ManagerNotFoundException, OrderNotFoundException, TransportNotFoundException;
+    Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId)
+            throws DriverNotFoundException,
+                    ManagerNotFoundException,
+                    OrderNotFoundException,
+                    TransportNotFoundException;
 
     Manager getCurrentManager() throws ManagerNotFoundException;
 

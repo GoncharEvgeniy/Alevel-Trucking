@@ -45,7 +45,7 @@ public class DriverController {
     }
 
     @PatchMapping("/back-to-box")
-    ResponseEntity backToBox(){
+    ResponseEntity backToBox() {
         return ResponseEntity.ok(driverService.backToBox()); // Todo not done
     }
 }

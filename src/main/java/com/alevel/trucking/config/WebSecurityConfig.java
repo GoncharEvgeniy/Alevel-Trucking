@@ -30,20 +30,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/reg").permitAll()
-                    .antMatchers("/customer/**").hasAuthority("CUSTOMER")
-                    .antMatchers("/manager/**").hasAuthority("MANAGER")
-                    .antMatchers("/driver/**").hasAuthority("DRIVER")
-                    .antMatchers("/admin/**").hasAuthority("ADMIN")
-                    .anyRequest().authenticated()
+                .antMatchers("/", "/reg").permitAll()
+                .antMatchers("/customer/**").hasAuthority("CUSTOMER")
+                .antMatchers("/manager/**").hasAuthority("MANAGER")
+                .antMatchers("/driver/**").hasAuthority("DRIVER")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated()
                 .and()
-                    .formLogin().permitAll()
+                .formLogin().permitAll()
                 .and()
-                    .rememberMe()
+                .rememberMe()
                 .and()
-                    .logout().permitAll()
+                .logout().permitAll()
                 .and()
-                    .csrf().disable();
+                .csrf().disable();
     }
 
     @Override

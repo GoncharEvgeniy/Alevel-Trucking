@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class RequestRoutes {
 
-    private String url = "http://router.project-osrm.org/route/v1/driving/";
+    private final static String url = "http://router.project-osrm.org/route/v1/driving/";
 
     public ResponseRoutes request(Match matchStart, Match matchEnd) {
         RestTemplate restTemplate = RestTemplateBuilder.build();

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TransportServiceImplementation implements TransportService {
@@ -41,7 +40,8 @@ public class TransportServiceImplementation implements TransportService {
     }
 
     @Override
-    public List<Transport> getValidTransportsForOrder(Long orderId) throws OrderNotFoundException, TransportNotFoundException {
+    public List<Transport> getValidTransportsForOrder(Long orderId)
+            throws OrderNotFoundException, TransportNotFoundException {
         Order order = orderService.getOrderById(orderId);
         List<Goods> goods = order.getGoods();
         List<Transport> list = new ArrayList<>();

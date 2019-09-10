@@ -1,7 +1,6 @@
 package com.alevel.trucking.error.handler;
 
 import com.alevel.trucking.error.exception.TransportExistException;
-import com.alevel.trucking.error.exception.TransportNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;

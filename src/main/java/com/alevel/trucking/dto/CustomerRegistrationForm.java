@@ -5,7 +5,6 @@ import com.alevel.trucking.model.person.customer.Customer;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
 import java.io.Serializable;
 
 public class CustomerRegistrationForm implements Serializable {

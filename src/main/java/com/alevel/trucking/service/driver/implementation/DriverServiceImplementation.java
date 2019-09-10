@@ -115,7 +115,8 @@ public class DriverServiceImplementation implements DriverService {
     }
 
     @Override
-    public Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status) throws OrderNotFoundException, DriverNotFoundException {
+    public Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status)
+            throws OrderNotFoundException, DriverNotFoundException {
         Driver driver = getCurrentDriver();
         Set<Order> allOrders = driver.getOrders();
         if (allOrders == null || allOrders.size() == 0) {

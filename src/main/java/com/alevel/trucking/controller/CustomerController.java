@@ -28,7 +28,8 @@ public class CustomerController {
     }
 
     @GetMapping("/my-orders-by-status/{status}")
-    ResponseEntity getOrdersByStatus(@PathVariable String status) throws CustomerNotFoundException, OrderNotFoundException {
+    ResponseEntity getOrdersByStatus(@PathVariable String status)
+            throws CustomerNotFoundException, OrderNotFoundException {
         return ResponseEntity.ok(orderService.getOrdersByCurrentCustomerAndStatus(status));
     }
 

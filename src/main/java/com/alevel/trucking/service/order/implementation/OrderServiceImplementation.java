@@ -43,7 +43,8 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> getOrdersByCurrentCustomerAndStatus(String status) throws CustomerNotFoundException, OrderNotFoundException {
+    public List<Order> getOrdersByCurrentCustomerAndStatus(String status)
+            throws CustomerNotFoundException, OrderNotFoundException {
         OrderStatus orderStatus = OrderStatus.valueOf(status);
         Customer customer = customerService.getCurrentCustomer();
         List<Order> orders = orderRepository.findByStatusAndCustomer(orderStatus, customer);

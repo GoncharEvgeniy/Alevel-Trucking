@@ -13,7 +13,8 @@ public interface OrderService {
 
     List<Order> getAllOrdersByCurrentCustomer() throws CustomerNotFoundException;
 
-    List<Order> getOrdersByCurrentCustomerAndStatus(String status) throws CustomerNotFoundException, OrderNotFoundException;
+    List<Order> getOrdersByCurrentCustomerAndStatus(String status)
+            throws CustomerNotFoundException, OrderNotFoundException;
 
     List<Order> getAllOrder() throws OrderNotFoundException;
 

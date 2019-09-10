@@ -33,16 +33,6 @@ public class MainController {
 
     @GetMapping()
     public ResponseEntity getMainPage() {
-        User user = (User) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal(); // todo
-        String visitor;
-        if (user == null) {
-            visitor = "guest";
-        } else {
-            visitor = user.getUsername();
-        }
-        return ResponseEntity.ok("Hello " + visitor + "!");
+        return ResponseEntity.ok("Main page");
     }
 }

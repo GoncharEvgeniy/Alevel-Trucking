@@ -2,11 +2,15 @@ package com.alevel.trucking.dto;
 
 import com.alevel.trucking.model.goods.Goods;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 
 public class GoodsDto implements Serializable {
+
+    @NotBlank
+    private String name;
 
     @Positive
     private int weight;
@@ -25,12 +29,21 @@ public class GoodsDto implements Serializable {
 
     public static Goods fromDto(GoodsDto goodsDto) {
         return Goods.builder()
+                .name(goodsDto.getName())
                 .height(goodsDto.getHeight())
                 .length(goodsDto.getLength())
                 .volume(goodsDto.getVolume())
                 .weight(goodsDto.getWeight())
                 .width(goodsDto.getWidth())
                 .build();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getWeight() {

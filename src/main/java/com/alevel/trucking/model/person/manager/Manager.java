@@ -4,9 +4,7 @@ import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +14,8 @@ import java.util.Set;
 @Table(name = "manager")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "orders")
+@ToString(exclude = "orders")
 public class Manager extends User {
 
     @Id

@@ -35,14 +35,15 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public boolean isExist(String username, String email) {
+    public boolean isUsernameExist(String username) {
         User userFromDbByName = userRepository.findByUsername(username);
+        return userFromDbByName != null;
+    }
+
+    @Override
+    public boolean isEmailExist(String email) {
         User userFromBbByEmail = userRepository.findByEmail(email);
-        if (userFromDbByName != null || userFromBbByEmail != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return userFromBbByEmail != null;
     }
 
     @Override
@@ -51,6 +52,6 @@ public class UserServiceImplementation implements UserService {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        return currentUser;
+        return currentUser; //todo
     }
 }

@@ -1,12 +1,14 @@
 package com.alevel.trucking.service.manager.implementation;
 
-import com.alevel.trucking.error.exception.ManagerNotFoundException;
+import com.alevel.trucking.error.exception.*;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.driver.Driver;
+import com.alevel.trucking.model.person.driver.DriverStatus;
 import com.alevel.trucking.model.person.manager.Manager;
 import com.alevel.trucking.model.route.Route;
 import com.alevel.trucking.model.transport.Transport;
+import com.alevel.trucking.model.transport.TransportStatus;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.repository.ManagerRepository;
@@ -64,9 +66,12 @@ public class ManagerServiceImplementation implements ManagerService {
     }
 
     @Override
-    public boolean save(Manager manager) {
-        if (userService.isExist(manager.getUsername(), manager.getEmail())) {
-            return false;
+    public boolean save(Manager manager) throws UsernameExistException, UserEmailExistException {
+        if (userService.isUsernameExist(manager.getUsername())) {
+            throw new UsernameExistException(manager.getUsername());
+        }
+        if (userService.isEmailExist(manager.getEmail())) {
+            throw new UserEmailExistException(manager.getEmail());
         }
         manager.setPassword(passwordEncoder.encode(manager.getPassword()));
         manager.setRoles(new HashSet<>(Collections.singleton(Role.MANAGER)));
@@ -75,16 +80,18 @@ public class ManagerServiceImplementation implements ManagerService {
     }
 
     @Override
-    public Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId) {
+    public Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId) throws DriverNotFoundException, ManagerNotFoundException, OrderNotFoundException, TransportNotFoundException {
         Order order = orderService.getOrderById(orderId);
         Route route = order.getRoute();
         double routeDistance = distance.getDistance(route.getStart(), route.getEnd());
         route.setDistance(routeDistance);
         List<Driver> driverList = driverService.getDriversByListId(driversId);
         driverList.forEach(driver -> driver.addOrder(order));
+        driverList.forEach(driver -> driver.setStatus(DriverStatus.IN_ROUTE));
         order.setDrivers(driverList);
         List<Transport> transportList = transportService.getTransportByListId(transportsId);
         transportList.forEach(transport -> transport.addOrder(order));
+        transportList.forEach(transport -> transport.setStatus(TransportStatus.IN_ROUTE));
         order.setTransports(transportList);
         double cost = costCalculator.getCost(order);
         order.setCost(cost);
@@ -94,7 +101,7 @@ public class ManagerServiceImplementation implements ManagerService {
     }
 
     @Override
-    public Manager getCurrentManager() {
+    public Manager getCurrentManager() throws ManagerNotFoundException {
         User currentUser = userService.getCurrentUser();
         Manager manager = managerRepository.findByUsername(currentUser.getUsername());
         if (manager == null) {
@@ -105,7 +112,7 @@ public class ManagerServiceImplementation implements ManagerService {
     }
 
     @Override
-    public boolean deleteManager(Long id) {
+    public boolean deleteManager(Long id) throws ManagerNotFoundException {
         Manager manager = managerRepository
                 .findById(id)
                 .orElseThrow(() -> new ManagerNotFoundException(id));

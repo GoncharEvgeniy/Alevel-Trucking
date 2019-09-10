@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class CostCalculatorImplementation implements CostCalculator {
 
+    private final static int CONVERT_TO_KM = 1000;
+
     @Override
     public double getCost(Order order) {
         double sumCostPerOneKilometer = order.getTransports()
                 .stream()
                 .mapToDouble(Transport::getCostPerOneKilometer)
                 .sum();
-        return sumCostPerOneKilometer * order.getRoute().getDistance();
+        return sumCostPerOneKilometer * order.getRoute().getDistance() / CONVERT_TO_KM;
     }
 }

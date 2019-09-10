@@ -1,6 +1,8 @@
 package com.alevel.trucking.controller;
 
 import com.alevel.trucking.dto.CustomerRegistrationForm;
+import com.alevel.trucking.error.exception.UserEmailExistException;
+import com.alevel.trucking.error.exception.UsernameExistException;
 import com.alevel.trucking.model.person.customer.Customer;
 import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.service.customer.CustomerService;
@@ -23,7 +25,7 @@ public class MainController {
     }
 
     @PostMapping("/reg")
-    public ResponseEntity newUser(@RequestBody @Valid CustomerRegistrationForm customerDto) {
+    public ResponseEntity newUser(@RequestBody @Valid CustomerRegistrationForm customerDto) throws UsernameExistException, UserEmailExistException {
         Customer customer = CustomerRegistrationForm.fromDto(customerDto);
         return ResponseEntity.ok(customerService.save(customer));
     }
@@ -33,7 +35,7 @@ public class MainController {
         User user = (User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
-                .getPrincipal();
+                .getPrincipal(); // todo
         String visitor;
         if (user == null) {
             visitor = "guest";

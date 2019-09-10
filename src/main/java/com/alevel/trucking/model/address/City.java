@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "city")
 @NoArgsConstructor
 @Getter
-@ToString(exclude = "id")
+@ToString(exclude = {"id", "addresses"})
 public class City {
 
     @Id

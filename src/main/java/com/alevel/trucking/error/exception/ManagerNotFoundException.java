@@ -1,6 +1,6 @@
 package com.alevel.trucking.error.exception;
 
-public class ManagerNotFoundException extends RuntimeException {
+public class ManagerNotFoundException extends Exception {
 
     public ManagerNotFoundException() {
         super("Manager not found");

@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "street")
 @NoArgsConstructor
 @Getter
-@ToString(exclude = "id")
+@ToString(exclude = {"id", "addresses"})
 public class Street {
 
     @Id
@@ -30,4 +30,5 @@ public class Street {
     public Street(String name) {
         this.name = name;
     }
-}
+
+ }

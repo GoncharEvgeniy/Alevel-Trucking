@@ -1,6 +1,6 @@
 package com.alevel.trucking.error.exception;
 
-public class TransportNotFoundException extends RuntimeException {
+public class TransportNotFoundException extends Exception {
 
     public TransportNotFoundException() {
         super("Transport not found");

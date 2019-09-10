@@ -1,5 +1,7 @@
 package com.alevel.trucking.service.transport.implementation;
 
+import com.alevel.trucking.error.exception.OrderNotFoundException;
+import com.alevel.trucking.error.exception.TransportExistException;
 import com.alevel.trucking.error.exception.TransportNotFoundException;
 import com.alevel.trucking.model.goods.Goods;
 import com.alevel.trucking.model.order.Order;
@@ -27,11 +29,11 @@ public class TransportServiceImplementation implements TransportService {
     }
 
     @Override
-    public boolean save(Transport transport) {
+    public boolean save(Transport transport) throws TransportExistException {
         Transport transportFromDb = transportRepository
                 .findByLicensePlateNumber(transport.getLicensePlateNumber());
         if (transportFromDb != null) {
-            return false;
+            throw new TransportExistException(transport.getLicensePlateNumber());
         }
         transport.setStatus(TransportStatus.IN_BOX);
         transportRepository.save(transport);
@@ -39,16 +41,19 @@ public class TransportServiceImplementation implements TransportService {
     }
 
     @Override
-    public List<Transport> getValidTransportsForOrder(Long orderId) {
+    public List<Transport> getValidTransportsForOrder(Long orderId) throws OrderNotFoundException, TransportNotFoundException {
         Order order = orderService.getOrderById(orderId);
         List<Goods> goods = order.getGoods();
-        return goods.stream()
-                .map(this::getTransportForGoods)
-                .collect(Collectors.toList());
+        List<Transport> list = new ArrayList<>();
+        for (Goods good : goods) {
+            Transport transportForGoods = getTransportForGoods(good);
+            list.add(transportForGoods);
+        }
+        return list;
     }
 
     @Override
-    public List<Transport> getTransportByListId(List<Long> listId) {
+    public List<Transport> getTransportByListId(List<Long> listId) throws TransportNotFoundException {
         List<Transport> transportList = new ArrayList<>();
         for (Long id : listId) {
             Transport transport = transportRepository
@@ -60,7 +65,7 @@ public class TransportServiceImplementation implements TransportService {
     }
 
     @Override
-    public List<Transport> getAllTransport() {
+    public List<Transport> getAllTransport() throws TransportNotFoundException {
         List<Transport> transports = transportRepository.findAll();
         if (transports.size() == 0) {
             throw new TransportNotFoundException();
@@ -69,7 +74,7 @@ public class TransportServiceImplementation implements TransportService {
         }
     }
 
-    private Transport getTransportForGoods(Goods goods) {
+    private Transport getTransportForGoods(Goods goods) throws TransportNotFoundException {
         if (goods.getVolume() == 0) {
             List<Transport> transports = transportRepository.findAllByMaxWidthOfGoodsGreaterThanAndMaxHeightOfGoodsGreaterThanAndMaxLengthOfGoodsGreaterThanAndLoadCapacityGreaterThanAndStatusOrderByLoadCapacity(
                     goods.getWidth(),

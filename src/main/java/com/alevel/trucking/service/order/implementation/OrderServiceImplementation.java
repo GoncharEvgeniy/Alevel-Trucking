@@ -1,5 +1,6 @@
 package com.alevel.trucking.service.order.implementation;
 
+import com.alevel.trucking.error.exception.CustomerNotFoundException;
 import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
@@ -27,7 +28,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Order saveNewOrder(Order order) {
+    public Order saveNewOrder(Order order) throws CustomerNotFoundException {
         Customer customer = customerService.getCurrentCustomer();
         customer.addOrder(order);
         order.setStatus(OrderStatus.WAITING);
@@ -36,13 +37,13 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrdersByCurrentCustomer() {
+    public List<Order> getAllOrdersByCurrentCustomer() throws CustomerNotFoundException {
         Customer customer = customerService.getCurrentCustomer();
         return orderRepository.findByCustomer(customer);
     }
 
     @Override
-    public List<Order> getOrdersByCurrentCustomerAndStatus(String status) {
+    public List<Order> getOrdersByCurrentCustomerAndStatus(String status) throws CustomerNotFoundException, OrderNotFoundException {
         OrderStatus orderStatus = OrderStatus.valueOf(status);
         Customer customer = customerService.getCurrentCustomer();
         List<Order> orders = orderRepository.findByStatusAndCustomer(orderStatus, customer);
@@ -54,7 +55,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrder() {
+    public List<Order> getAllOrder() throws OrderNotFoundException {
         List<Order> orders = orderRepository.findAll();
         if (orders.size() == 0) {
             throw new OrderNotFoundException();
@@ -64,7 +65,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> getOrdersByCustomerId(Long id) {
+    public List<Order> getOrdersByCustomerId(Long id) throws CustomerNotFoundException, OrderNotFoundException {
         Customer customer = customerService.getCustomerById(id);
         List<Order> orders = orderRepository.findByCustomer(customer);
         if (orders.size() == 0) {
@@ -75,7 +76,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrdersByStatus(OrderStatus status) {
+    public List<Order> getAllOrdersByStatus(OrderStatus status) throws OrderNotFoundException {
         List<Order> orders = orderRepository.findByStatus(status);
         if (orders.size() == 0) {
             throw new OrderNotFoundException();
@@ -85,7 +86,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Order getOrderById(Long orderId) {
+    public Order getOrderById(Long orderId) throws OrderNotFoundException {
         return orderRepository
                 .findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(orderId));

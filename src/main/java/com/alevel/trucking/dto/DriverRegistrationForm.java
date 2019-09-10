@@ -3,7 +3,7 @@ package com.alevel.trucking.dto;
 import com.alevel.trucking.model.person.driver.Driver;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
@@ -18,7 +18,7 @@ public class DriverRegistrationForm extends CustomerRegistrationForm {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date startWork;
 
-    @NotEmpty
+    @NotNull
     private DriverLicenseDto driverLicense;
 
     public static Driver fromDto(DriverRegistrationForm driverRegistrationForm) {

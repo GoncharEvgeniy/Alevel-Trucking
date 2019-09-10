@@ -13,6 +13,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "driver")
 @ToString(exclude = "driver")
 public class DriverLicense {
 

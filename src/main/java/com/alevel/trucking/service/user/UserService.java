@@ -1,4 +1,4 @@
-package com.alevel.trucking.service;
+package com.alevel.trucking.service.user;
 
 import com.alevel.trucking.model.user.User;
 

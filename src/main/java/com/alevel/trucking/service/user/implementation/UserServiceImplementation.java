@@ -1,15 +1,12 @@
-package com.alevel.trucking.service.implementation;
+package com.alevel.trucking.service.user.implementation;
 
-import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.repository.UserRepository;
-import com.alevel.trucking.service.UserService;
+import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -27,15 +24,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public boolean save(User user) {
-        User userFromDbByName = userRepository.findByUsername(user.getUsername());
-        User userFromBbByEmail = userRepository.findByEmail(user.getEmail());
-        if (userFromDbByName != null || userFromBbByEmail != null) {
-            return false;
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>(Collections.singleton(Role.CUSTOMER))); //TODO подумать
-        userRepository.save(user);
-        return true;
+        return true; // TODO
     }
 
     @Override

@@ -5,3 +5,4 @@ out
 !.mvn/wrapper/maven-wrapper.jar
 *.iws
 *.ipr
+/src/main/resources/banner.txt

@@ -5,8 +5,10 @@ import com.alevel.trucking.model.person.driver.Driver;
 import com.alevel.trucking.model.person.driver.DriverLicense;
 import com.alevel.trucking.model.person.driver.DriverStatus;
 import com.alevel.trucking.model.user.Role;
+import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.repository.DriverRepository;
 import com.alevel.trucking.service.driver.DriverService;
+import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,18 +22,20 @@ public class DriverServiceImplementation implements DriverService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final UserService userService;
+
     @Autowired
     public DriverServiceImplementation(DriverRepository driverRepository,
-                                       PasswordEncoder passwordEncoder) {
+                                       PasswordEncoder passwordEncoder,
+                                       UserService userService) {
         this.driverRepository = driverRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @Override
     public boolean save(Driver driver) {
-        Driver driverFromDbByName = driverRepository.findByUsername(driver.getUsername());
-        Driver driverFromBbByEmail = driverRepository.findByEmail(driver.getEmail());
-        if (driverFromDbByName != null || driverFromBbByEmail != null) {
+        if (userService.isExist(driver.getUsername(), driver.getEmail())) {
             return false;
         }
         driver.setPassword(passwordEncoder.encode(driver.getPassword()));
@@ -44,6 +48,7 @@ public class DriverServiceImplementation implements DriverService {
     }
 
     @Override
+
     public List<Driver> getAllDriver() {
         return driverRepository.findAll();
     }
@@ -67,4 +72,13 @@ public class DriverServiceImplementation implements DriverService {
     public Set<Order> getOrdersByDriver(Long driverId) {
         return driverRepository.findById(driverId).get().getOrders(); //todo exception
     }
+
+    public boolean deleteDriver(Long id) {
+        Driver driver = driverRepository.findById(id).get(); //TODO exception
+        driver.setAccountNonLocked(false);
+        driver.setEnabled(false);
+        driverRepository.save(driver);
+        return true;
+    }
+
 }

@@ -17,4 +17,7 @@ public interface DriverService {
     List<Driver> getFreeDrivers();
 
     Set<Order> getOrdersByDriver(Long driverId);
+
+    boolean deleteDriver(Long id);
+
 }

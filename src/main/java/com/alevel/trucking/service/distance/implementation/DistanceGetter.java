@@ -1,14 +1,14 @@
-package com.alevel.trucking.model.route.implementation;
+package com.alevel.trucking.service.distance.implementation;
 
 import com.alevel.trucking.model.address.Address;
-import com.alevel.trucking.model.route.Distance;
-import com.alevel.trucking.model.route.openstreetmap.ru.RequestMatches;
-import com.alevel.trucking.model.route.openstreetmap.ru.ResponseMatches;
-import com.alevel.trucking.model.route.project.osrm.org.RequestRoutes;
-import com.alevel.trucking.model.route.project.osrm.org.ResponseRoutes;
+import com.alevel.trucking.service.distance.Distance;
+import com.alevel.trucking.service.distance.openstreetmap.ru.RequestMatches;
+import com.alevel.trucking.service.distance.openstreetmap.ru.ResponseMatches;
+import com.alevel.trucking.service.distance.project.osrm.org.RequestRoutes;
+import com.alevel.trucking.service.distance.project.osrm.org.ResponseRoutes;
+import org.springframework.stereotype.Component;
 
-import static java.lang.Thread.sleep;
-
+@Component
 public class DistanceGetter implements Distance {
     @Override
     public double getDistance(Address addressStart, Address addressEnd) {

@@ -1,4 +1,4 @@
-package com.alevel.trucking.model.route.util;
+package com.alevel.trucking.service.distance.util;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

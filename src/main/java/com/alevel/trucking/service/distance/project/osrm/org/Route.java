@@ -1,4 +1,4 @@
-package com.alevel.trucking.model.route.project.osrm.org;
+package com.alevel.trucking.service.distance.project.osrm.org;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

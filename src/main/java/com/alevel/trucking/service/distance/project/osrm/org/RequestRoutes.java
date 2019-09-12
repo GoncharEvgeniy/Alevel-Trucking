@@ -1,7 +1,7 @@
-package com.alevel.trucking.model.route.project.osrm.org;
+package com.alevel.trucking.service.distance.project.osrm.org;
 
-import com.alevel.trucking.model.route.util.RestTemplateBuilder;
-import com.alevel.trucking.model.route.openstreetmap.ru.Match;
+import com.alevel.trucking.service.distance.util.RestTemplateBuilder;
+import com.alevel.trucking.service.distance.openstreetmap.ru.Match;
 import org.springframework.web.client.RestTemplate;
 
 public class RequestRoutes {

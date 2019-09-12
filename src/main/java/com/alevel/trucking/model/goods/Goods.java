@@ -22,6 +22,9 @@ public class Goods {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "weight")
     private int weight;
 

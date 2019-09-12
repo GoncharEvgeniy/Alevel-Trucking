@@ -2,7 +2,7 @@ package com.alevel.trucking.controller;
 
 import com.alevel.trucking.dto.DriverRegistrationForm;
 import com.alevel.trucking.dto.ManagerRegistrationForm;
-import com.alevel.trucking.dto.UsersBuilder;
+import com.alevel.trucking.error.exception.*;
 import com.alevel.trucking.model.person.driver.Driver;
 import com.alevel.trucking.model.person.manager.Manager;
 import com.alevel.trucking.service.customer.CustomerService;
@@ -34,29 +34,31 @@ public class AdminController {
     }
 
     @PostMapping("/new-manager")
-    ResponseEntity createNewManager(@RequestBody @Valid ManagerRegistrationForm managerRegistrationForm) {
-        Manager manager = UsersBuilder.fromDto(managerRegistrationForm);
+    ResponseEntity createNewManager(@RequestBody @Valid ManagerRegistrationForm managerRegistrationForm)
+            throws UsernameExistException, UserEmailExistException {
+        Manager manager = ManagerRegistrationForm.fromDto(managerRegistrationForm);
         return ResponseEntity.ok(managerService.save(manager));
     }
 
     @PostMapping("/new-driver")
-    ResponseEntity createNewDriver(@RequestBody @Valid DriverRegistrationForm driverRegistrationForm) {
-        Driver driver = UsersBuilder.fromDto(driverRegistrationForm);
+    ResponseEntity createNewDriver(@RequestBody @Valid DriverRegistrationForm driverRegistrationForm)
+            throws UsernameExistException, UserEmailExistException {
+        Driver driver = DriverRegistrationForm.fromDto(driverRegistrationForm);
         return ResponseEntity.ok(driverService.save(driver));
     }
 
     @DeleteMapping("/delete-manager/{id}")
-    ResponseEntity deleteManager(@PathVariable Long id) {
+    ResponseEntity deleteManager(@PathVariable Long id) throws ManagerNotFoundException {
         return ResponseEntity.ok(managerService.deleteManager(id));
     }
 
     @DeleteMapping("/delete-driver/{id}")
-    ResponseEntity deleteDriver(@PathVariable Long id) {
+    ResponseEntity deleteDriver(@PathVariable Long id) throws DriverNotFoundException {
         return ResponseEntity.ok(driverService.deleteDriver(id));
     }
 
     @DeleteMapping("/delete-customer/{id}")
-    ResponseEntity deleteCustomer(@PathVariable Long id) {
+    ResponseEntity deleteCustomer(@PathVariable Long id) throws CustomerNotFoundException {
         return ResponseEntity.ok(customerService.deleteCustomer(id));
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class OrderNotFoundExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(OrderNotFoundException.class)
-    public ResponseEntity<Message> handleCustomerNotFoundException(OrderNotFoundException e) {
+    public ResponseEntity<Message> handleOrderNotFoundException(OrderNotFoundException e) {
         return new ResponseEntity<>(new Message(e.getMessage()), HttpStatus.NOT_FOUND);
     }
 

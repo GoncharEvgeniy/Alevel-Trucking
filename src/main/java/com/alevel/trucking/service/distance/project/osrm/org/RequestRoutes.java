@@ -1,12 +1,12 @@
 package com.alevel.trucking.service.distance.project.osrm.org;
 
-import com.alevel.trucking.service.distance.util.RestTemplateBuilder;
 import com.alevel.trucking.service.distance.openstreetmap.ru.Match;
+import com.alevel.trucking.service.distance.util.RestTemplateBuilder;
 import org.springframework.web.client.RestTemplate;
 
 public class RequestRoutes {
 
-    private String url = "http://router.project-osrm.org/route/v1/driving/";
+    private final static String url = "http://router.project-osrm.org/route/v1/driving/";
 
     public ResponseRoutes request(Match matchStart, Match matchEnd) {
         RestTemplate restTemplate = RestTemplateBuilder.build();

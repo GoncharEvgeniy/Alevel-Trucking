@@ -1,6 +1,6 @@
 package com.alevel.trucking.error.exception;
 
-public class CustomerNotFoundException extends RuntimeException {
+public class CustomerNotFoundException extends Exception {
 
     public CustomerNotFoundException(String username) {
         super("Customer " + username + " not found");

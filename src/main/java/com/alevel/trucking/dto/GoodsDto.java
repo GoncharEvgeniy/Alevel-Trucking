@@ -9,6 +9,9 @@ import java.io.Serializable;
 
 public class GoodsDto implements Serializable {
 
+    @NotBlank
+    private String name;
+
     @Positive
     private int weight;
 
@@ -24,14 +27,23 @@ public class GoodsDto implements Serializable {
     @PositiveOrZero
     private int volume;
 
-    public static Goods fromDto(GoodsDto goodsDto){
+    public static Goods fromDto(GoodsDto goodsDto) {
         return Goods.builder()
+                .name(goodsDto.getName())
                 .height(goodsDto.getHeight())
                 .length(goodsDto.getLength())
                 .volume(goodsDto.getVolume())
                 .weight(goodsDto.getWeight())
                 .width(goodsDto.getWidth())
                 .build();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getWeight() {

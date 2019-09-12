@@ -1,9 +1,9 @@
 package com.alevel.trucking.dto;
 
+import com.alevel.trucking.model.person.driver.Driver;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
@@ -18,8 +18,27 @@ public class DriverRegistrationForm extends CustomerRegistrationForm {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date startWork;
 
-    @NotEmpty
+    @NotNull
     private DriverLicenseDto driverLicense;
+
+    public static Driver fromDto(DriverRegistrationForm driverRegistrationForm) {
+        return Driver.managerBuilder()
+                .username(driverRegistrationForm.getUsername())
+                .email(driverRegistrationForm.getEmail())
+                .password(driverRegistrationForm.getPassword())
+                .firstName(driverRegistrationForm.getFirstName())
+                .secondName(driverRegistrationForm.getSecondName())
+                .lastName(driverRegistrationForm.getLastName())
+                .phone(driverRegistrationForm.getPhone())
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
+                .birthday(driverRegistrationForm.getBirthday())
+                .startWork(driverRegistrationForm.getStartWork())
+                .driverLicense(DriverLicenseDto.fromDto(driverRegistrationForm.getDriverLicense()))
+                .build();
+    }
 
     public Date getBirthday() {
         return birthday;

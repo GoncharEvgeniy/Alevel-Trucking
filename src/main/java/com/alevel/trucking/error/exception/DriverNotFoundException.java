@@ -2,7 +2,7 @@ package com.alevel.trucking.error.exception;
 
 import com.alevel.trucking.model.person.driver.DriverStatus;
 
-public class DriverNotFoundException extends RuntimeException {
+public class DriverNotFoundException extends Exception {
 
     public DriverNotFoundException() {
         super("Driver not found");

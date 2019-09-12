@@ -1,6 +1,8 @@
 package com.alevel.trucking.controller;
 
+import com.alevel.trucking.dto.AcceptOrderDto;
 import com.alevel.trucking.dto.TransportDto;
+import com.alevel.trucking.error.exception.*;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.service.customer.CustomerService;
 import com.alevel.trucking.service.driver.DriverService;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/manager")
@@ -43,60 +44,62 @@ public class ManagerController {
     }
 
     @GetMapping("/all-orders")
-    ResponseEntity getAllOrders() {
+    ResponseEntity getAllOrders() throws OrderNotFoundException {
         return ResponseEntity.ok(orderService.getAllOrder());
     }
 
     @GetMapping("/all-orders-by-customer/{customerId}")
-    ResponseEntity getAllOrdersByCustomer(@PathVariable Long customerId) {
+    ResponseEntity getAllOrdersByCustomer(@PathVariable Long customerId) throws CustomerNotFoundException, OrderNotFoundException {
         return ResponseEntity.ok(orderService.getOrdersByCustomerId(customerId));
     }
 
     @GetMapping("/all-orders-by-driver/{driverId}")
-    ResponseEntity getAllOrdersByDriver(@PathVariable Long driverId) {
+    ResponseEntity getAllOrdersByDriver(@PathVariable Long driverId) throws OrderNotFoundException, DriverNotFoundException {
         return ResponseEntity.ok(driverService.getOrdersByDriver(driverId));
     }
 
     @GetMapping("/all-orders-by-status/{status}")
-    ResponseEntity getAllOrdersByStatus(@PathVariable String status) {
+    ResponseEntity getAllOrdersByStatus(@PathVariable String status) throws OrderNotFoundException {
         return ResponseEntity.ok(orderService.getAllOrdersByStatus(OrderStatus.valueOf(status)));
     }
 
     @GetMapping("/all-customer")
-    ResponseEntity getAllCustomer() {
+    ResponseEntity getAllCustomer() throws CustomerNotFoundException {
         return ResponseEntity.ok(customerService.getAllCustomer());
     }
 
     @GetMapping("/all-driver")
-    ResponseEntity getAllDriver() {
+    ResponseEntity getAllDriver() throws DriverNotFoundException {
         return ResponseEntity.ok(driverService.getAllDriver());
     }
 
     @PostMapping("/new-transport")
-    ResponseEntity addNewTransport(@RequestBody @Valid TransportDto transportDto) {
+    ResponseEntity addNewTransport(@RequestBody @Valid TransportDto transportDto) throws TransportExistException {
         return ResponseEntity.ok(transportService.save(TransportDto.fromDto(transportDto)));
     }
 
-    @PostMapping("/accept-order")
+    @PatchMapping("/accept-order/{orderId}")
     ResponseEntity acceptOrder(@PathVariable Long orderId,
-                               @RequestBody List<Long> transportsId,
-                               @RequestBody List<Long> driversId) {
-        return ResponseEntity.ok(managerService.acceptOrder(orderId, transportsId, driversId));
+                               @RequestBody AcceptOrderDto acceptOrderDto)
+            throws ManagerNotFoundException, DriverNotFoundException, OrderNotFoundException, TransportNotFoundException {
+        return ResponseEntity.ok(managerService.acceptOrder(orderId,
+                acceptOrderDto.getTransportsId(), acceptOrderDto.getDriversId()));
     }
 
     @GetMapping("/get-valid-transport-for-order/{orderId}")
-    ResponseEntity getValidTransportForOrder(@PathVariable Long orderId) {
+    ResponseEntity getValidTransportForOrder(@PathVariable Long orderId)
+            throws OrderNotFoundException, TransportNotFoundException {
         return ResponseEntity.ok(transportService.getValidTransportsForOrder(orderId));
     }
 
     @GetMapping("/get-free-driver")
-    ResponseEntity getFreeDrivers() {
+    ResponseEntity getFreeDrivers() throws DriverNotFoundException {
         return ResponseEntity.ok(driverService.getFreeDrivers());
     }
 
 
     @GetMapping("/get-all-transport")
-    ResponseEntity getAllTransport() {
+    ResponseEntity getAllTransport() throws TransportNotFoundException {
         return ResponseEntity.ok(transportService.getAllTransport());
     }
 

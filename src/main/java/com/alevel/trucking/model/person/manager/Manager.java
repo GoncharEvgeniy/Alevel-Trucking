@@ -1,13 +1,14 @@
 package com.alevel.trucking.model.person.manager;
 
+import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "manager")
@@ -25,4 +26,37 @@ public class Manager extends User {
 
     @Column(name = "birthday")
     private Date birthday;
+
+    @Builder(builderMethodName = "managerBuilder")
+    public Manager(Long id,
+                    Date startWork,
+                    Date birthday,
+                    String password,
+                    String username,
+                    String email,
+                    String firstName,
+                    String secondName,
+                    String lastName,
+                    String phone,
+                    Set<Role> roles,
+                    boolean isAccountNonExpired,
+                    boolean isAccountNonLocked,
+                    boolean isCredentialsNonExpired,
+                    boolean isEnabled) {
+        super(id,
+                password,
+                username,
+                email,
+                firstName,
+                secondName,
+                lastName,
+                phone,
+                roles,
+                isAccountNonExpired,
+                isAccountNonLocked,
+                isCredentialsNonExpired,
+                isEnabled);
+        this.startWork = startWork;
+        this.birthday = birthday;
+    }
 }

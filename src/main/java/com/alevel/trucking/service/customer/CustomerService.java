@@ -7,4 +7,6 @@ public interface CustomerService {
     boolean save(Customer customer);
 
     Customer findByUsername(String username);
+
+    boolean deleteCustomer(Long id);
 }

@@ -26,4 +26,25 @@ public class UserServiceImplementation implements UserService {
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public boolean isExist(String username, String email) {
+        User userFromDbByName = userRepository.findByUsername(username);
+        User userFromBbByEmail = userRepository.findByEmail(email);
+        if (userFromDbByName != null || userFromBbByEmail != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

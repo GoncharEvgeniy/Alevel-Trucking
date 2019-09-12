@@ -1,10 +1,8 @@
 package com.alevel.trucking.dto;
 
-import com.alevel.trucking.model.person.customer.Customer;
-
 import java.io.Serializable;
 
-public class RegistrationForm implements Serializable {
+public class CustomerRegistrationForm implements Serializable {
 
     private String username;
 
@@ -19,22 +17,6 @@ public class RegistrationForm implements Serializable {
     private String lastName;
 
     private String phone;
-
-    public static Customer fromDto(RegistrationForm registrationForm) {
-        return Customer.customerBuilder()
-                .username(registrationForm.getUsername())
-                .email(registrationForm.getEmail())
-                .password(registrationForm.getPassword())
-                .firstName(registrationForm.getFirstName())
-                .secondName(registrationForm.getSecondName())
-                .lastName(registrationForm.getLastName())
-                .phone(registrationForm.getPhone())
-                .isAccountNonExpired(true)
-                .isAccountNonLocked(true)
-                .isCredentialsNonExpired(true)
-                .isEnabled(true)
-                .build();
-    }
 
     public String getUsername() {
         return username;

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class DriverServiceImplementation implements DriverService {
@@ -48,13 +49,17 @@ public class DriverServiceImplementation implements DriverService {
     }
 
     @Override
-    public boolean deleteManager(Long id) {
+
+    public List<Driver> getAllDriver() {
+        return driverRepository.findAll();
+    }
+
+    public boolean deleteDriver(Long id) {
         Driver driver = driverRepository.findById(id).get(); //TODO exception
         driver.setAccountNonLocked(false);
         driver.setEnabled(false);
         driverRepository.save(driver);
         return true;
     }
-
 
 }

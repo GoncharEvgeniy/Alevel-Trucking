@@ -4,6 +4,7 @@ import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class Driver extends User {
     @Column(name = "birthday")
     private Date birthday;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_driver_license")
     private DriverLicense driverLicense;

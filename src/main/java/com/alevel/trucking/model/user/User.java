@@ -1,5 +1,6 @@
 package com.alevel.trucking.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 

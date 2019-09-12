@@ -37,8 +37,8 @@ public class Order {
     private Route route;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_manager", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_manager")
     private Manager manager;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

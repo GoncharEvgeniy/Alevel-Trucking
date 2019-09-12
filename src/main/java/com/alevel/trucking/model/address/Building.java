@@ -1,10 +1,12 @@
 package com.alevel.trucking.model.address;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "building")
@@ -23,6 +25,10 @@ public class Building {
 
     @Column(name = "suffix")
     private String suffix;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    private List<Address> addresses;
 
     public Building(int number, String suffix) {
         this.number = number;

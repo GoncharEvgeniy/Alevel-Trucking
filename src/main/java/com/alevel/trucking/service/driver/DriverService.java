@@ -30,4 +30,5 @@ public interface DriverService {
     Order finishOrder(Long orderId);
 
     boolean deleteDriver(Long id);
+
 }

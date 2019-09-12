@@ -14,4 +14,5 @@ public interface ManagerService {
     Manager getCurrentManager();
 
     boolean deleteManager(Long id);
+
 }

@@ -21,7 +21,7 @@ public class UsersBuilder {
                 .isEnabled(true)
                 .birthday(driverRegistrationForm.getBirthday())
                 .startWork(driverRegistrationForm.getStartWork())
-                .driverLicense(DriverLicenseDto.fromDto(driverRegistrationForm.getDriverLicenseDto()))
+                .driverLicense(DriverLicenseDto.fromDto(driverRegistrationForm.getDriverLicense()))
                 .build();
     }
 

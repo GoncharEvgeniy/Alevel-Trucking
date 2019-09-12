@@ -34,7 +34,6 @@ public class ManagerServiceImplementation implements ManagerService {
 
     private final PasswordEncoder passwordEncoder;
 
-
     private final OrderService orderService;
 
     private final Distance distance;
@@ -50,6 +49,11 @@ public class ManagerServiceImplementation implements ManagerService {
 
     @Autowired
     public ManagerServiceImplementation(ManagerRepository managerRepository,
+                                        OrderService orderService,
+                                        Distance distance,
+                                        CostCalculator costCalculator,
+                                        TransportService transportService,
+                                        DriverService driverService,
                                         PasswordEncoder passwordEncoder,
                                         OrderService orderService,
                                         Distance distance,
@@ -64,10 +68,7 @@ public class ManagerServiceImplementation implements ManagerService {
         this.costCalculator = costCalculator;
         this.transportService = transportService;
         this.driverService = driverService;
-        this.managerRepository = managerRepository;
-        this.passwordEncoder = passwordEncoder;
         this.userService = userService;
-
     }
 
     @Override
@@ -108,7 +109,7 @@ public class ManagerServiceImplementation implements ManagerService {
                 .getPrincipal();
         return managerRepository.findByUsername(currentManager.getUsername());
     }
-  
+
     @Override
     public boolean deleteManager(Long id) {
         Manager manager = managerRepository.findById(id).get(); //TODO exception

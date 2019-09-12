@@ -2,12 +2,15 @@ package com.alevel.trucking.dto;
 
 import com.alevel.trucking.model.route.Route;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class RouteDto implements Serializable {
 
+    @NotNull
     private AddressDto start;
 
+    @NotNull
     private AddressDto end;
 
     public static Route fromDto(RouteDto routeDto) {

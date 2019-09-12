@@ -2,17 +2,26 @@ package com.alevel.trucking.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
 public class DriverRegistrationForm extends CustomerRegistrationForm {
 
+    @NotBlank
+    @Past
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date birthday;
 
+    @NotBlank
+    @PastOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date startWork;
 
-    private DriverLicenseDto driverLicenseDto;
+    @NotEmpty
+    private DriverLicenseDto driverLicense;
 
     public Date getBirthday() {
         return birthday;
@@ -30,11 +39,11 @@ public class DriverRegistrationForm extends CustomerRegistrationForm {
         this.startWork = startWork;
     }
 
-    public DriverLicenseDto getDriverLicenseDto() {
-        return driverLicenseDto;
+    public DriverLicenseDto getDriverLicense() {
+        return driverLicense;
     }
 
-    public void setDriverLicenseDto(DriverLicenseDto driverLicenseDto) {
-        this.driverLicenseDto = driverLicenseDto;
+    public void setDriverLicense(DriverLicenseDto driverLicense) {
+        this.driverLicense = driverLicense;
     }
 }

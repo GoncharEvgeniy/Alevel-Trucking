@@ -4,21 +4,26 @@ import com.alevel.trucking.model.person.driver.Category;
 import com.alevel.trucking.model.person.driver.DriverLicense;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 public class DriverLicenseDto implements Serializable {
 
+    @PastOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date dateOfRegistration;
 
+    @PastOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date dateOfFirstRegistration;
 
+    @Future
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date validity;
 
+    @NotNull
     private Set<Category> categories;
 
     public static DriverLicense fromDto(DriverLicenseDto driverLicenseDto) {

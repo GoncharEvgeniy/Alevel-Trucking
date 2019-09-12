@@ -4,24 +4,38 @@ package com.alevel.trucking.dto;
 import com.alevel.trucking.model.transport.Transport;
 import com.alevel.trucking.model.transport.TransportType;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+
 public class TransportDto {
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private TransportType type;
 
+    @NotBlank
     private String licensePlateNumber;
 
+    @NotBlank
+    @Positive
     private int loadCapacity;
 
+    @PositiveOrZero
     private int maxLengthOfGoods;
 
+    @PositiveOrZero
     private int maxWidthOfGoods;
 
+    @PositiveOrZero
     private int maxHeightOfGoods;
 
+    @PositiveOrZero
     private int maxVolumeOfGoods;
 
+    @Positive
     private double costPerOneKilometer;
 
     public static Transport fromDto(TransportDto transportDto) {

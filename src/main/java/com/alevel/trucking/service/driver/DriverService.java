@@ -19,7 +19,6 @@ public interface DriverService {
 
     Set<Order> getOrdersByDriver(Long driverId);
 
-
     Set<Order> getOrdersByCurrentDriver();
 
     Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status);

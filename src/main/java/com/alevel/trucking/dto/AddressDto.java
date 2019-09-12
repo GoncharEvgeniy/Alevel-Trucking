@@ -5,15 +5,19 @@ import com.alevel.trucking.model.address.Building;
 import com.alevel.trucking.model.address.City;
 import com.alevel.trucking.model.address.Street;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 
 public class AddressDto implements Serializable {
 
+    @NotBlank
     private String  city;
 
+    @NotBlank
     private String street;
 
+    @NotBlank
     private int building;
 
     private String suffix;

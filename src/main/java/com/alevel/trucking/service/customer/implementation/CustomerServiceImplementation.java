@@ -50,7 +50,6 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
-
     public List<Customer> getAllCustomer() {
         return customerRepository.findAll();
     }
@@ -68,7 +67,8 @@ public class CustomerServiceImplementation implements CustomerService {
                 .getPrincipal();
         return customerRepository.findByUsername(currentCustomer.getUsername());
     }
-  
+
+    @Override
     public boolean deleteCustomer(Long id) {
         Customer customer = customerRepository.findById(id).get(); //TODO exception
         customer.setAccountNonLocked(false);

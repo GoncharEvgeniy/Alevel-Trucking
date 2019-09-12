@@ -6,18 +6,13 @@ import com.alevel.trucking.model.person.customer.Customer;
 import com.alevel.trucking.repository.OrderRepository;
 import com.alevel.trucking.service.customer.CustomerService;
 import com.alevel.trucking.service.order.OrderService;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
-@Log4j2
 public class OrderServiceImplementation implements OrderService {
 
     private final OrderRepository orderRepository;
@@ -32,14 +27,9 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Order save(Order order) {
-        Customer customer = getCurrentCustomer();
-        Set<Order> customerOrders = customer.getOrders();
-        if (customerOrders == null) {
-            customerOrders = new HashSet<>();
-        }
-        customerOrders.add(order);
-        customer.setOrders(customerOrders);
+    public Order saveNewOrder(Order order) {
+        Customer customer = customerService.getCurrentCustomer();
+        customer.addOrder(order);
         order.setStatus(OrderStatus.WAITING);
         order.setCustomer(customer);
         return orderRepository.save(order);
@@ -47,14 +37,14 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     public List<Order> getAllOrdersByCurrentCustomer() {
-        Customer customer = getCurrentCustomer();
+        Customer customer = customerService.getCurrentCustomer();
         return orderRepository.findByCustomer(customer);
     }
 
     @Override
     public List<Order> getOrdersByCurrentCustomerAndStatus(String status) {
         OrderStatus orderStatus = OrderStatus.valueOf(status);
-        Customer customer = getCurrentCustomer();
+        Customer customer = customerService.getCurrentCustomer();
         return orderRepository.findByStatusAndCustomer(orderStatus, customer);
     }
 
@@ -64,9 +54,9 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> getOrderByCustomerId(Long id) {
+    public List<Order> getOrdersByCustomerId(Long id) {
         Optional<Customer> customer = customerService.getCustomerById(id);
-        return orderRepository.findByCustomer(customer.get());
+        return orderRepository.findByCustomer(customer.get()); // Todo exception
     }
 
     @Override
@@ -79,11 +69,9 @@ public class OrderServiceImplementation implements OrderService {
         return orderRepository.findById(orderId);
     }
 
-    private Customer getCurrentCustomer() {
-        Customer currentCustomer = (Customer) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-        return customerService.findByUsername(currentCustomer.getUsername());
+    @Override
+    public Order update(Order order) {
+        return orderRepository.save(order);
     }
+
 }

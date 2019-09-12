@@ -9,6 +9,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -57,5 +58,12 @@ public class Customer extends User {
                 isCredentialsNonExpired,
                 isEnabled);
         this.orders = orders;
+    }
+
+    public void addOrder(Order order) {
+        if (this.orders == null) {
+            this.orders = new HashSet<>();
+        }
+        this.orders.add(order);
     }
 }

@@ -6,6 +6,7 @@ import com.alevel.trucking.repository.CustomerRepository;
 import com.alevel.trucking.service.customer.CustomerService;
 import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,12 +60,21 @@ public class CustomerServiceImplementation implements CustomerService {
         return customerRepository.findById(id);
     }
 
+    @Override
+    public Customer getCurrentCustomer() {
+        Customer currentCustomer = (Customer) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        return customerRepository.findByUsername(currentCustomer.getUsername());
+    }
+  
     public boolean deleteCustomer(Long id) {
         Customer customer = customerRepository.findById(id).get(); //TODO exception
         customer.setAccountNonLocked(false);
         customer.setEnabled(false);
         customerRepository.save(customer);
         return true;
-
     }
+  
 }

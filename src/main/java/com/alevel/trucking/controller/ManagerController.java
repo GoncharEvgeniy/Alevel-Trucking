@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/manager")
 public class ManagerController {
@@ -26,8 +28,10 @@ public class ManagerController {
     private final TransportService transportService;
 
     @Autowired
-    public ManagerController(ManagerService managerService, CustomerService customerService,
-                             DriverService driverService, OrderService orderService,
+    public ManagerController(ManagerService managerService,
+                             CustomerService customerService,
+                             DriverService driverService,
+                             OrderService orderService,
                              TransportService transportService) {
         this.managerService = managerService;
         this.customerService = customerService;
@@ -41,14 +45,14 @@ public class ManagerController {
         return ResponseEntity.ok(orderService.getAllOrder());
     }
 
-    @GetMapping("/all-orders-by-customer/{id}")
-    ResponseEntity getAllOrdersByCustomer(@PathVariable Long id) {
-        return ResponseEntity.ok(orderService.getOrderByCustomerId(id));
+    @GetMapping("/all-orders-by-customer/{customerId}")
+    ResponseEntity getAllOrdersByCustomer(@PathVariable Long customerId) {
+        return ResponseEntity.ok(orderService.getOrdersByCustomerId(customerId));
     }
 
-    @GetMapping("/all-orders-by-driver")
-    ResponseEntity getAllOrdersByDriver() {
-        return null;
+    @GetMapping("/all-orders-by-driver/{driverId}")
+    ResponseEntity getAllOrdersByDriver(@PathVariable Long driverId) {
+        return ResponseEntity.ok(driverService.getOrdersByDriver(driverId));
     }
 
     @GetMapping("/all-orders-by-status/{status}")
@@ -72,9 +76,26 @@ public class ManagerController {
     }
 
     @PostMapping("/accept-order")
-    ResponseEntity acceptOrder(@RequestBody Long orderId) {
-        //todo for test
-        return ResponseEntity.ok(orderService.getOrderById(orderId));
+    ResponseEntity acceptOrder(@RequestBody Long orderId,
+                               @RequestBody List<Long> transportsId,
+                               @RequestBody List<Long> driversId) {
+        return ResponseEntity.ok(managerService.acceptOrder(orderId, transportsId, driversId));
+    }
+
+    @GetMapping("/get-valid-transport-for-order/{orderId}")
+    ResponseEntity getValidTransportForOrder(@RequestParam Long orderId) {
+        return ResponseEntity.ok(transportService.getValidTransportsForOrder(orderId));
+    }
+
+    @GetMapping("/get-free-driver")
+    ResponseEntity getFreeDrivers(){
+        return ResponseEntity.ok(driverService.getFreeDrivers());
+    }
+
+
+    @GetMapping("/get-all-transport")
+    ResponseEntity getAllTransport(){
+        return ResponseEntity.ok(transportService.getAllTransport());
     }
 
 }

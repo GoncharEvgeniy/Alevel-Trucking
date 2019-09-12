@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface OrderService {
 
-    Order save(Order order);
+    Order saveNewOrder(Order order);
 
     List<Order> getAllOrdersByCurrentCustomer();
 
@@ -16,9 +16,11 @@ public interface OrderService {
 
     List<Order> getAllOrder();
 
-    List<Order> getOrderByCustomerId(Long id);
+    List<Order> getOrdersByCustomerId(Long customerId);
 
     List<Order> getAllOrdersByStatus(OrderStatus status);
 
     Optional<Order> getOrderById(Long orderId);
+
+    Order update(Order order);
 }

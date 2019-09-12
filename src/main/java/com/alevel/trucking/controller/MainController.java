@@ -32,7 +32,8 @@ public class MainController {
     }
 
     @GetMapping()
-    public ResponseEntity getAllUsers() {
+    //todo for test
+    public ResponseEntity getMainPage() {
         User user = (User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()

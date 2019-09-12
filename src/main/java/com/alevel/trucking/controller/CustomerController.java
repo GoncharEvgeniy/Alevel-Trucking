@@ -31,6 +31,6 @@ public class CustomerController {
     @PostMapping("/new-order")
     ResponseEntity newOrder(@RequestBody OrderForm orderForm) {
         Order order = OrderForm.fromDto(orderForm);
-        return ResponseEntity.ok(orderService.save(order));
+        return ResponseEntity.ok(orderService.saveNewOrder(order));
     }
 }

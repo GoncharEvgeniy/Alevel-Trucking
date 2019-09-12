@@ -13,13 +13,11 @@ public class TransportDto {
     @NotBlank
     private String name;
 
-    @NotBlank
     private TransportType type;
 
     @NotBlank
     private String licensePlateNumber;
 
-    @NotBlank
     @Positive
     private int loadCapacity;
 

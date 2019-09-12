@@ -1,9 +1,16 @@
 package com.alevel.trucking.model.transport;
 
-public enum TransportType {
+import java.io.Serializable;
+
+public enum TransportType implements Serializable {
     CONTAINER,
     COVERED,
     EVACUATOR,
     OPEN,
-    TANK
+    TANK;
+
+    @Override
+    public String toString() {
+        return name();
+    }
 }

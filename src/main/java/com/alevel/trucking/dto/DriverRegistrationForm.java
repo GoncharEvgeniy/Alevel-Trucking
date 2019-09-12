@@ -10,12 +10,10 @@ import java.util.Date;
 
 public class DriverRegistrationForm extends CustomerRegistrationForm {
 
-    @NotBlank
     @Past
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date birthday;
 
-    @NotBlank
     @PastOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date startWork;

@@ -6,6 +6,8 @@ import com.alevel.trucking.model.address.City;
 import com.alevel.trucking.model.address.Street;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 
 
@@ -17,7 +19,7 @@ public class AddressDto implements Serializable {
     @NotBlank
     private String street;
 
-    @NotBlank
+    @Positive
     private int building;
 
     private String suffix;

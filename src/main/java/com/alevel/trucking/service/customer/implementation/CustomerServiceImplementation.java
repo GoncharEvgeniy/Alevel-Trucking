@@ -1,5 +1,6 @@
 package com.alevel.trucking.service.customer.implementation;
 
+import com.alevel.trucking.error.exception.CustomerNotFoundException;
 import com.alevel.trucking.model.person.customer.Customer;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.CustomerRepository;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerServiceImplementation implements CustomerService {
@@ -46,31 +46,50 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Override
     public Customer findByUsername(String username) {
-        return customerRepository.findByUsername(username);
+        Customer customer = customerRepository.findByUsername(username);
+        if (customer == null) {
+            throw new CustomerNotFoundException(username);
+        } else {
+            return customer;
+        }
     }
 
     @Override
     public List<Customer> getAllCustomer() {
-        return customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAll();
+        if (customers.size() == 0) {
+            throw new CustomerNotFoundException();
+        } else {
+            return customers;
+        }
     }
 
     @Override
-    public Optional<Customer> getCustomerById(Long id) {
-        return customerRepository.findById(id);
+    public Customer getCustomerById(Long id) {
+        return customerRepository
+                .findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
     @Override
     public Customer getCurrentCustomer() {
-        Customer currentCustomer = (Customer) SecurityContextHolder
+        Customer currentCustomer = (Customer) SecurityContextHolder // TODO exception???
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        return customerRepository.findByUsername(currentCustomer.getUsername());
+        Customer customer = customerRepository.findByUsername(currentCustomer.getUsername());
+        if (customer == null) {
+            throw new CustomerNotFoundException(currentCustomer.getUsername());
+        } else {
+            return customer;
+        }
     }
 
     @Override
     public boolean deleteCustomer(Long id) {
-        Customer customer = customerRepository.findById(id).get(); //TODO exception
+        Customer customer = customerRepository
+                .findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
         customer.setAccountNonLocked(false);
         customer.setEnabled(false);
         customerRepository.save(customer);

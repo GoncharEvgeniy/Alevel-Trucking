@@ -19,6 +19,7 @@ public interface DriverService {
 
     Set<Order> getOrdersByDriver(Long driverId);
 
+
     Set<Order> getOrdersByCurrentDriver();
 
     Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status);
@@ -28,4 +29,7 @@ public interface DriverService {
     Order startOrder(Long orderId);
 
     Order finishOrder(Long orderId);
+
+    boolean deleteDriver(Long id);
+
 }

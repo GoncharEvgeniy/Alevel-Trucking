@@ -12,8 +12,12 @@ import com.alevel.trucking.service.cost.CostCalculator;
 import com.alevel.trucking.service.distance.Distance;
 import com.alevel.trucking.service.driver.DriverService;
 import com.alevel.trucking.service.manager.ManagerService;
+
 import com.alevel.trucking.service.order.OrderService;
 import com.alevel.trucking.service.transport.TransportService;
+
+import com.alevel.trucking.service.user.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +34,7 @@ public class ManagerServiceImplementation implements ManagerService {
 
     private final PasswordEncoder passwordEncoder;
 
+
     private final OrderService orderService;
 
     private final Distance distance;
@@ -40,6 +45,9 @@ public class ManagerServiceImplementation implements ManagerService {
 
     private final DriverService driverService;
 
+    private final UserService userService;
+
+
     @Autowired
     public ManagerServiceImplementation(ManagerRepository managerRepository,
                                         PasswordEncoder passwordEncoder,
@@ -47,7 +55,8 @@ public class ManagerServiceImplementation implements ManagerService {
                                         Distance distance,
                                         CostCalculator costCalculator,
                                         TransportService transportService,
-                                        DriverService driverService) {
+                                        DriverService driverService,
+                                        UserService userService) {
         this.managerRepository = managerRepository;
         this.passwordEncoder = passwordEncoder;
         this.orderService = orderService;
@@ -55,13 +64,15 @@ public class ManagerServiceImplementation implements ManagerService {
         this.costCalculator = costCalculator;
         this.transportService = transportService;
         this.driverService = driverService;
+        this.managerRepository = managerRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
+
     }
 
     @Override
     public boolean save(Manager manager) {
-        Manager managerFromDbByName = managerRepository.findByUsername(manager.getUsername());
-        Manager managerFromBbByEmail = managerRepository.findByEmail(manager.getEmail());
-        if (managerFromDbByName != null || managerFromBbByEmail != null) {
+        if (userService.isExist(manager.getUsername(), manager.getEmail())) {
             return false;
         }
         manager.setPassword(passwordEncoder.encode(manager.getPassword()));
@@ -97,4 +108,14 @@ public class ManagerServiceImplementation implements ManagerService {
                 .getPrincipal();
         return managerRepository.findByUsername(currentManager.getUsername());
     }
+  
+    @Override
+    public boolean deleteManager(Long id) {
+        Manager manager = managerRepository.findById(id).get(); //TODO exception
+        manager.setAccountNonLocked(false);
+        manager.setEnabled(false);
+        managerRepository.save(manager);
+        return true;
+    }
+  
 }

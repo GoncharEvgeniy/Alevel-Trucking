@@ -12,4 +12,7 @@ public interface ManagerService {
     Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId);
 
     Manager getCurrentManager();
+
+    boolean deleteManager(Long id);
+
 }

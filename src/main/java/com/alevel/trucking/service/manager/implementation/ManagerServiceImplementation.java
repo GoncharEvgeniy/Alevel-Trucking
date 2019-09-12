@@ -48,7 +48,6 @@ public class ManagerServiceImplementation implements ManagerService {
 
     private final UserService userService;
 
-
     @Autowired
     public ManagerServiceImplementation(ManagerRepository managerRepository,
                                         OrderService orderService,
@@ -57,11 +56,6 @@ public class ManagerServiceImplementation implements ManagerService {
                                         TransportService transportService,
                                         DriverService driverService,
                                         PasswordEncoder passwordEncoder,
-                                        OrderService orderService,
-                                        Distance distance,
-                                        CostCalculator costCalculator,
-                                        TransportService transportService,
-                                        DriverService driverService,
                                         UserService userService) {
         this.managerRepository = managerRepository;
         this.passwordEncoder = passwordEncoder;

@@ -20,4 +20,5 @@ public interface CustomerService {
     Customer getCurrentCustomer() throws CustomerNotFoundException;
 
     boolean deleteCustomer(Long id) throws CustomerNotFoundException;
+
 }

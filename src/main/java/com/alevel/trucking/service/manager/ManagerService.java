@@ -19,4 +19,5 @@ public interface ManagerService {
     Manager getCurrentManager() throws ManagerNotFoundException;
 
     boolean deleteManager(Long id) throws ManagerNotFoundException;
+
 }

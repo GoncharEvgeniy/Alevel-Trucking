@@ -4,6 +4,7 @@ import com.alevel.trucking.model.person.customer.Customer;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.CustomerRepository;
 import com.alevel.trucking.service.customer.CustomerService;
+import com.alevel.trucking.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,18 +21,20 @@ public class CustomerServiceImplementation implements CustomerService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final UserService userService;
+
     @Autowired
     public CustomerServiceImplementation(CustomerRepository customerRepository,
-                                         PasswordEncoder passwordEncoder) {
+                                         PasswordEncoder passwordEncoder,
+                                         UserService userService) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @Override
     public boolean save(Customer customer) {
-        Customer customerFromDbByName = customerRepository.findByUsername(customer.getUsername());
-        Customer customerFromBbByEmail = customerRepository.findByEmail(customer.getEmail());
-        if (customerFromDbByName != null || customerFromBbByEmail != null) {
+        if (userService.isExist(customer.getUsername(), customer.getEmail())) {
             return false;
         }
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
@@ -46,6 +49,7 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     @Override
+
     public List<Customer> getAllCustomer() {
         return customerRepository.findAll();
     }
@@ -53,5 +57,14 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Optional<Customer> getCustomerById(Long id) {
         return customerRepository.findById(id);
+    }
+
+    public boolean deleteCustomer(Long id) {
+        Customer customer = customerRepository.findById(id).get(); //TODO exception
+        customer.setAccountNonLocked(false);
+        customer.setEnabled(false);
+        customerRepository.save(customer);
+        return true;
+
     }
 }

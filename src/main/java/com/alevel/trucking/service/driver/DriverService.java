@@ -9,4 +9,7 @@ public interface DriverService {
     boolean save(Driver driver);
 
     List<Driver> getAllDriver();
+
+    boolean deleteDriver(Long id);
+
 }

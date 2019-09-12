@@ -2,7 +2,11 @@ package com.alevel.trucking.model.person.driver;
 
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +14,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "driver")
+@Data
+@EqualsAndHashCode(exclude = "orders")
+@ToString(exclude = "orders")
 @NoArgsConstructor
 public class Driver extends User {
 
@@ -32,6 +39,7 @@ public class Driver extends User {
     @Column(name = "status")
     private DriverStatus status;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "drivers")
     private List<Order> orders;
 

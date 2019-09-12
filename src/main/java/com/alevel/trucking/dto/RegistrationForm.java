@@ -20,22 +20,8 @@ public class RegistrationForm implements Serializable {
 
     private String phone;
 
-    public RegistrationForm() {
-    }
-
-    public RegistrationForm(String username, String password, String email,
-                            String firstName, String secondName, String lastName, String phone) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.lastName = lastName;
-        this.phone = phone;
-    }
-
     public static Customer fromDto(RegistrationForm registrationForm) {
-        Customer customer = Customer.customerBuilder()
+        return Customer.customerBuilder()
                 .username(registrationForm.getUsername())
                 .email(registrationForm.getEmail())
                 .password(registrationForm.getPassword())
@@ -48,7 +34,6 @@ public class RegistrationForm implements Serializable {
                 .isCredentialsNonExpired(true)
                 .isEnabled(true)
                 .build();
-        return customer;
     }
 
     public String getUsername() {

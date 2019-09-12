@@ -6,7 +6,5 @@ import java.util.List;
 
 public interface UserService {
 
-    boolean save(User user);
-
     List<User> getAllUser();
 }

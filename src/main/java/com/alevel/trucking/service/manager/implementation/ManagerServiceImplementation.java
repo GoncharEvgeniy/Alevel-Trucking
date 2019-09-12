@@ -12,9 +12,12 @@ import com.alevel.trucking.service.cost.CostCalculator;
 import com.alevel.trucking.service.distance.Distance;
 import com.alevel.trucking.service.driver.DriverService;
 import com.alevel.trucking.service.manager.ManagerService;
-import com.alevel.trucking.service.user.UserService;
+
 import com.alevel.trucking.service.order.OrderService;
 import com.alevel.trucking.service.transport.TransportService;
+
+import com.alevel.trucking.service.user.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,6 +46,7 @@ public class ManagerServiceImplementation implements ManagerService {
 
     private final UserService userService;
 
+
     @Autowired
     public ManagerServiceImplementation(ManagerRepository managerRepository,
                                         OrderService orderService,
@@ -51,6 +55,11 @@ public class ManagerServiceImplementation implements ManagerService {
                                         TransportService transportService,
                                         DriverService driverService,
                                         PasswordEncoder passwordEncoder,
+                                        OrderService orderService,
+                                        Distance distance,
+                                        CostCalculator costCalculator,
+                                        TransportService transportService,
+                                        DriverService driverService,
                                         UserService userService) {
         this.managerRepository = managerRepository;
         this.passwordEncoder = passwordEncoder;
@@ -109,4 +118,5 @@ public class ManagerServiceImplementation implements ManagerService {
         managerRepository.save(manager);
         return true;
     }
+  
 }

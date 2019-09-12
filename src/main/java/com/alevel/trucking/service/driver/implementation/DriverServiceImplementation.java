@@ -8,8 +8,11 @@ import com.alevel.trucking.model.person.driver.DriverStatus;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.repository.DriverRepository;
 import com.alevel.trucking.service.driver.DriverService;
+
 import com.alevel.trucking.service.order.OrderService;
+
 import com.alevel.trucking.service.user.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -120,13 +123,12 @@ public class DriverServiceImplementation implements DriverService {
     }
 
     @Override
-    public boolean deleteManager(Long id) {
+    public boolean deleteDriver(Long id) {
         Driver driver = driverRepository.findById(id).get(); //TODO exception
         driver.setAccountNonLocked(false);
         driver.setEnabled(false);
         driverRepository.save(driver);
         return true;
     }
-
 
 }

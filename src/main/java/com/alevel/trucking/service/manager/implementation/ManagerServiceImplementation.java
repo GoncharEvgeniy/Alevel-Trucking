@@ -76,7 +76,7 @@ public class ManagerServiceImplementation implements ManagerService {
             throw new UserEmailExistException(manager.getEmail());
         }
         manager.setPassword(passwordEncoder.encode(manager.getPassword()));
-        manager.setRoles(new HashSet<>(Collections.singleton(Role.MANAGER)));
+        manager.setRole(new Role("manager"));
         managerRepository.save(manager);
         return true;
     }

@@ -1,8 +1,12 @@
 package com.alevel.trucking.config.jwt;
 
+import com.alevel.trucking.dto.LoginForm;
 import com.alevel.trucking.model.user.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,8 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Map;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     private AuthenticationManager authenticationManager;
 
@@ -26,8 +34,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
+        LoginForm loginForm = null;
+        try {
+            loginForm = new ObjectMapper().readValue(request.getInputStream(), LoginForm.class);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage());
+        }
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                request.getParameter("username"), request.getParameter("password"), new ArrayList<>());
+                loginForm.getUsername(), loginForm.getPassword(), new ArrayList<>());
         Authentication authenticate = authenticationManager.authenticate(token);
         return authenticate;
     }

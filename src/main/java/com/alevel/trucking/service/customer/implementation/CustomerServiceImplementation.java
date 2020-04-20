@@ -44,7 +44,7 @@ public class CustomerServiceImplementation implements CustomerService {
             throw new UserEmailExistException(customer.getEmail());
         }
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
-        customer.setRoles(new HashSet<>(Collections.singleton(Role.CUSTOMER)));
+        customer.setRole(new Role("customer"));
         customerRepository.save(customer);
         return true;
     }

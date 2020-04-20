@@ -58,7 +58,7 @@ public class DriverServiceImplementation implements DriverService {
         driver.setPassword(passwordEncoder.encode(driver.getPassword()));
         DriverLicense driverLicense = driver.getDriverLicense();
         driverLicense.setDriver(driver);
-        driver.setRoles(new HashSet<>(Collections.singleton(Role.DRIVER)));
+        driver.setRole(new Role("driver"));
         driver.setStatus(DriverStatus.IN_BOX);
         driverRepository.save(driver);
         return true;

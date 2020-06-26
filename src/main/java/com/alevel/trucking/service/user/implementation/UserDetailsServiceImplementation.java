@@ -1,5 +1,6 @@
 package com.alevel.trucking.service.user.implementation;
 
+import com.alevel.trucking.config.SimplePasswordEncoder;
 import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class UserDetailsServiceImplementation implements UserDetailsService {
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder(8);
+//        return new BCryptPasswordEncoder(8);
+        return new SimplePasswordEncoder();
     }
 }

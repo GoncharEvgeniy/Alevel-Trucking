@@ -2,9 +2,11 @@ package com.alevel.trucking.controller;
 
 import com.alevel.trucking.dto.DriverRegistrationForm;
 import com.alevel.trucking.dto.ManagerRegistrationForm;
+import com.alevel.trucking.dto.UserDto;
 import com.alevel.trucking.error.exception.*;
 import com.alevel.trucking.model.person.driver.Driver;
 import com.alevel.trucking.model.person.manager.Manager;
+import com.alevel.trucking.service.admin.AdminService;
 import com.alevel.trucking.service.customer.CustomerService;
 import com.alevel.trucking.service.driver.DriverService;
 import com.alevel.trucking.service.manager.ManagerService;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/admin")
@@ -24,13 +27,24 @@ public class AdminController {
 
     private final CustomerService customerService;
 
+    private final AdminService adminService;
+
     @Autowired
     public AdminController(ManagerService managerService,
                            DriverService driverService,
-                           CustomerService customerService) {
+                           CustomerService customerService,
+                           AdminService adminService) {
         this.managerService = managerService;
         this.driverService = driverService;
         this.customerService = customerService;
+        this.adminService = adminService;
+    }
+
+    @GetMapping("/get-all-users")
+    ResponseEntity getAllUsers() {
+        Stream<UserDto> users = adminService.getAllUsers().stream()
+                .map(UserDto::new);
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping("/new-manager")

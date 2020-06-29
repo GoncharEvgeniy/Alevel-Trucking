@@ -4,6 +4,8 @@ import com.alevel.trucking.model.user.User;
 
 public class UserDto {
 
+    private Long id;
+
     private String login;
 
     private String firstName;
@@ -38,6 +40,7 @@ public class UserDto {
     }
 
     public UserDto(User user) {
+        this.id = user.getId();
         this.firstName = user.getFirstName();
         this.login = user.getUsername();
         this.lastName = user.getLastName();
@@ -102,5 +105,13 @@ public class UserDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

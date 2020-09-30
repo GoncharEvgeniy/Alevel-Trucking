@@ -18,6 +18,7 @@ import com.alevel.trucking.service.driver.DriverService;
 import com.alevel.trucking.service.manager.ManagerService;
 
 import com.alevel.trucking.service.order.OrderService;
+import com.alevel.trucking.service.role.RoleService;
 import com.alevel.trucking.service.transport.TransportService;
 import com.alevel.trucking.service.user.UserService;
 
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ManagerServiceImplementation implements ManagerService {
@@ -48,6 +50,8 @@ public class ManagerServiceImplementation implements ManagerService {
 
     private final UserService userService;
 
+    private final RoleService roleService;
+
     @Autowired
     public ManagerServiceImplementation(ManagerRepository managerRepository,
                                         OrderService orderService,
@@ -56,7 +60,8 @@ public class ManagerServiceImplementation implements ManagerService {
                                         TransportService transportService,
                                         DriverService driverService,
                                         PasswordEncoder passwordEncoder,
-                                        UserService userService) {
+                                        UserService userService,
+                                        RoleService roleService) {
         this.managerRepository = managerRepository;
         this.passwordEncoder = passwordEncoder;
         this.orderService = orderService;
@@ -65,6 +70,7 @@ public class ManagerServiceImplementation implements ManagerService {
         this.transportService = transportService;
         this.driverService = driverService;
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @Override
@@ -76,7 +82,12 @@ public class ManagerServiceImplementation implements ManagerService {
             throw new UserEmailExistException(manager.getEmail());
         }
         manager.setPassword(passwordEncoder.encode(manager.getPassword()));
-        manager.setRole(new Role("manager"));
+        Role role = roleService.findByName("manager");
+        if (Objects.isNull(role)) {
+            roleService.save(new Role("manager"));
+            role = roleService.findByName("manager");
+        }
+        manager.setRole(role);
         managerRepository.save(manager);
         return true;
     }

@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.transport.implementation;
 
-import com.alevel.trucking.error.exception.TransportExistException;
 import com.alevel.trucking.model.goods.Goods;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.transport.Transport;
@@ -26,11 +25,11 @@ public class TransportServiceImplementation implements TransportService {
     }
 
     @Override
-    public boolean save(Transport transport) throws TransportExistException {
+    public boolean save(Transport transport) {
         Transport transportFromDb = transportRepository
                 .findByLicensePlateNumber(transport.getLicensePlateNumber());
         if (transportFromDb != null) {
-            throw new TransportExistException(transport.getLicensePlateNumber());
+            return false;
         }
         transport.setStatus(TransportStatus.IN_BOX);
         transportRepository.save(transport);

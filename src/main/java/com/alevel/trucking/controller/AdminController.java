@@ -72,7 +72,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete-customer/{id}")
-    ResponseEntity deleteCustomer(@PathVariable Long id) throws CustomerNotFoundException {
+    ResponseEntity deleteCustomer(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.deleteCustomer(id));
     }
 }

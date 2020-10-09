@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.order;
 
-import com.alevel.trucking.error.exception.CustomerNotFoundException;
 import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
@@ -9,16 +8,15 @@ import java.util.List;
 
 public interface OrderService {
 
-    Order saveNewOrder(Order order) throws CustomerNotFoundException;
+    Order saveNewOrder(Order order);
 
-    List<Order> getAllOrdersByCurrentCustomer() throws CustomerNotFoundException;
+    List<Order> getAllOrdersByCurrentCustomer();
 
-    List<Order> getOrdersByCurrentCustomerAndStatus(String status)
-            throws CustomerNotFoundException, OrderNotFoundException;
+    List<Order> getOrdersByCurrentCustomerAndStatus(String status) throws OrderNotFoundException;
 
     List<Order> getAllOrder() throws OrderNotFoundException;
 
-    List<Order> getOrdersByCustomerId(Long customerId) throws CustomerNotFoundException, OrderNotFoundException;
+    List<Order> getOrdersByCustomerId(Long customerId) throws OrderNotFoundException;
 
     List<Order> getAllOrdersByStatus(OrderStatus status) throws OrderNotFoundException;
 

@@ -49,7 +49,7 @@ public class ManagerController {
     }
 
     @GetMapping("/all-orders-by-customer/{customerId}")
-    ResponseEntity getAllOrdersByCustomer(@PathVariable Long customerId) throws CustomerNotFoundException, OrderNotFoundException {
+    ResponseEntity getAllOrdersByCustomer(@PathVariable Long customerId) throws OrderNotFoundException {
         return ResponseEntity.ok(orderService.getOrdersByCustomerId(customerId));
     }
 
@@ -64,7 +64,7 @@ public class ManagerController {
     }
 
     @GetMapping("/all-customer")
-    ResponseEntity getAllCustomer() throws CustomerNotFoundException {
+    ResponseEntity getAllCustomer() {
         return ResponseEntity.ok(customerService.getAllCustomer());
     }
 

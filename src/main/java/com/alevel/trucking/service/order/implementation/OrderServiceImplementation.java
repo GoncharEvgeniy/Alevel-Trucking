@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.order.implementation;
 
-import com.alevel.trucking.error.exception.CustomerNotFoundException;
 import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
@@ -28,7 +27,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Order saveNewOrder(Order order) throws CustomerNotFoundException {
+    public Order saveNewOrder(Order order) {
         Customer customer = customerService.getCurrentCustomer();
         customer.addOrder(order);
         order.setStatus(OrderStatus.WAITING);
@@ -37,14 +36,13 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrdersByCurrentCustomer() throws CustomerNotFoundException {
+    public List<Order> getAllOrdersByCurrentCustomer() {
         Customer customer = customerService.getCurrentCustomer();
         return orderRepository.findByCustomer(customer);
     }
 
     @Override
-    public List<Order> getOrdersByCurrentCustomerAndStatus(String status)
-            throws CustomerNotFoundException, OrderNotFoundException {
+    public List<Order> getOrdersByCurrentCustomerAndStatus(String status) throws OrderNotFoundException {
         OrderStatus orderStatus = OrderStatus.valueOf(status);
         Customer customer = customerService.getCurrentCustomer();
         List<Order> orders = orderRepository.findByStatusAndCustomer(orderStatus, customer);
@@ -66,7 +64,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public List<Order> getOrdersByCustomerId(Long id) throws CustomerNotFoundException, OrderNotFoundException {
+    public List<Order> getOrdersByCustomerId(Long id) throws OrderNotFoundException {
         Customer customer = customerService.getCustomerById(id);
         List<Order> orders = orderRepository.findByCustomer(customer);
         if (orders.size() == 0) {

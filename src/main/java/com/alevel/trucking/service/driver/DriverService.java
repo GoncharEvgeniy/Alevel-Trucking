@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.driver;
 
-import com.alevel.trucking.error.exception.DriverNotFoundException;
 import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.error.exception.UserEmailExistException;
 import com.alevel.trucking.error.exception.UsernameExistException;
@@ -15,26 +14,25 @@ public interface DriverService {
 
     boolean save(Driver driver) throws UserEmailExistException, UsernameExistException;
 
-    List<Driver> getAllDriver() throws DriverNotFoundException;
+    List<Driver> getAllDriver();
 
-    List<Driver> getDriversByListId(List<Long> driversId) throws DriverNotFoundException;
+    List<Driver> getDriversByListId(List<Long> driversId);
 
-    List<Driver> getFreeDrivers() throws DriverNotFoundException;
+    List<Driver> getFreeDrivers();
 
-    Set<Order> getOrdersByDriver(Long driverId) throws DriverNotFoundException, OrderNotFoundException;
+    Set<Order> getOrdersByDriver(Long driverId) throws  OrderNotFoundException;
 
-    Set<Order> getOrdersByCurrentDriver() throws OrderNotFoundException, DriverNotFoundException;
+    Set<Order> getOrdersByCurrentDriver() throws OrderNotFoundException;
 
-    Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status)
-            throws OrderNotFoundException, DriverNotFoundException;
+    Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status) throws OrderNotFoundException;
 
-    Driver getCurrentDriver() throws DriverNotFoundException;
+    Driver getCurrentDriver();
 
     Order startOrder(Long orderId) throws OrderNotFoundException;
 
     Order finishOrder(Long orderId) throws OrderNotFoundException;
 
-    boolean deleteDriver(Long id) throws DriverNotFoundException;
+    boolean deleteDriver(Long id);
 
     String backToBox();
 

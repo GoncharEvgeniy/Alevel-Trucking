@@ -94,8 +94,7 @@ public class ManagerServiceImplementation implements ManagerService {
 
     @Override
     public Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId)
-            throws DriverNotFoundException,
-                    ManagerNotFoundException,
+            throws  ManagerNotFoundException,
                     OrderNotFoundException,
                     TransportNotFoundException {
         Order order = orderService.getOrderById(orderId);

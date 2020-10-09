@@ -67,7 +67,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete-driver/{id}")
-    ResponseEntity deleteDriver(@PathVariable Long id) throws DriverNotFoundException {
+    ResponseEntity deleteDriver(@PathVariable Long id) {
         return ResponseEntity.ok(driverService.deleteDriver(id));
     }
 

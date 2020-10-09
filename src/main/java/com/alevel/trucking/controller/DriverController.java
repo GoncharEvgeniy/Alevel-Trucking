@@ -1,6 +1,5 @@
 package com.alevel.trucking.controller;
 
-import com.alevel.trucking.error.exception.DriverNotFoundException;
 import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.service.driver.DriverService;
@@ -20,17 +19,17 @@ public class DriverController {
     }
 
     @GetMapping("/all-my-orders")
-    ResponseEntity getAllOrders() throws OrderNotFoundException, DriverNotFoundException {
+    ResponseEntity getAllOrders() throws OrderNotFoundException {
         return ResponseEntity.ok(driverService.getOrdersByCurrentDriver());
     }
 
     @GetMapping("/my-order-in-process")
-    ResponseEntity getOrder() throws OrderNotFoundException, DriverNotFoundException {
+    ResponseEntity getOrder() throws OrderNotFoundException {
         return ResponseEntity.ok(driverService.getOrdersByCurrentDriverAndByStatus(OrderStatus.ON_WAY));
     }
 
     @GetMapping("/my-accepted-order")
-    ResponseEntity getAcceptedOrder() throws OrderNotFoundException, DriverNotFoundException {
+    ResponseEntity getAcceptedOrder() throws OrderNotFoundException {
         return ResponseEntity.ok(driverService.getOrdersByCurrentDriverAndByStatus(OrderStatus.ACCEPTED));
     }
 

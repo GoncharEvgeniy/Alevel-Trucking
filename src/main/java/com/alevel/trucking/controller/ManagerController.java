@@ -54,7 +54,7 @@ public class ManagerController {
     }
 
     @GetMapping("/all-orders-by-driver/{driverId}")
-    ResponseEntity getAllOrdersByDriver(@PathVariable Long driverId) throws OrderNotFoundException, DriverNotFoundException {
+    ResponseEntity getAllOrdersByDriver(@PathVariable Long driverId) throws OrderNotFoundException {
         return ResponseEntity.ok(driverService.getOrdersByDriver(driverId));
     }
 
@@ -69,7 +69,7 @@ public class ManagerController {
     }
 
     @GetMapping("/all-driver")
-    ResponseEntity getAllDriver() throws DriverNotFoundException {
+    ResponseEntity getAllDriver() {
         return ResponseEntity.ok(driverService.getAllDriver());
     }
 
@@ -81,7 +81,7 @@ public class ManagerController {
     @PatchMapping("/accept-order/{orderId}")
     ResponseEntity acceptOrder(@PathVariable Long orderId,
                                @RequestBody AcceptOrderDto acceptOrderDto)
-            throws ManagerNotFoundException, DriverNotFoundException, OrderNotFoundException, TransportNotFoundException {
+            throws ManagerNotFoundException, OrderNotFoundException, TransportNotFoundException {
         return ResponseEntity.ok(managerService.acceptOrder(orderId,
                 acceptOrderDto.getTransportsId(), acceptOrderDto.getDriversId()));
     }
@@ -93,7 +93,7 @@ public class ManagerController {
     }
 
     @GetMapping("/get-free-driver")
-    ResponseEntity getFreeDrivers() throws DriverNotFoundException {
+    ResponseEntity getFreeDrivers() {
         return ResponseEntity.ok(driverService.getFreeDrivers());
     }
 

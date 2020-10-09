@@ -81,7 +81,7 @@ public class ManagerController {
     @PatchMapping("/accept-order/{orderId}")
     ResponseEntity acceptOrder(@PathVariable Long orderId,
                                @RequestBody AcceptOrderDto acceptOrderDto)
-            throws ManagerNotFoundException, OrderNotFoundException, TransportNotFoundException {
+            throws OrderNotFoundException, TransportNotFoundException {
         return ResponseEntity.ok(managerService.acceptOrder(orderId,
                 acceptOrderDto.getTransportsId(), acceptOrderDto.getDriversId()));
     }

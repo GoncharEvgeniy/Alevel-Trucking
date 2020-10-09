@@ -94,8 +94,7 @@ public class ManagerServiceImplementation implements ManagerService {
 
     @Override
     public Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId)
-            throws  ManagerNotFoundException,
-                    OrderNotFoundException,
+            throws  OrderNotFoundException,
                     TransportNotFoundException {
         Order order = orderService.getOrderById(orderId);
         Route route = order.getRoute();
@@ -117,24 +116,22 @@ public class ManagerServiceImplementation implements ManagerService {
     }
 
     @Override
-    public Manager getCurrentManager() throws ManagerNotFoundException {
+    public Manager getCurrentManager() {
         User currentUser = userService.getCurrentUser();
         Manager manager = managerRepository.findByUsername(currentUser.getUsername());
-        if (manager == null) {
-            throw new ManagerNotFoundException(currentUser.getUsername());
-        } else {
-            return manager;
-        }
+        return manager;
     }
 
     @Override
-    public boolean deleteManager(Long id) throws ManagerNotFoundException {
+    public boolean deleteManager(Long id) {
         Manager manager = managerRepository
                 .findById(id)
-                .orElseThrow(() -> new ManagerNotFoundException(id));
-        manager.setAccountNonLocked(false);
-        manager.setEnabled(false);
-        managerRepository.save(manager);
+                .orElseThrow(null);
+        if (manager != null) {
+            manager.setAccountNonLocked(false);
+            manager.setEnabled(false);
+            managerRepository.save(manager);
+        }
         return true;
     }
   

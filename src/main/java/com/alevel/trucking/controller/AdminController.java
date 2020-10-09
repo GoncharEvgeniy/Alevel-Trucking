@@ -62,7 +62,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete-manager/{id}")
-    ResponseEntity deleteManager(@PathVariable Long id) throws ManagerNotFoundException {
+    ResponseEntity deleteManager(@PathVariable Long id) {
         return ResponseEntity.ok(managerService.deleteManager(id));
     }
 

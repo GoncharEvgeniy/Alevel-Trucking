@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.driver.implementation;
 
-import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.error.exception.UserEmailExistException;
 import com.alevel.trucking.error.exception.UsernameExistException;
 import com.alevel.trucking.model.order.Order;
@@ -90,49 +89,37 @@ public class DriverServiceImplementation implements DriverService {
     }
 
     @Override
-    public Set<Order> getOrdersByDriver(Long driverId) throws OrderNotFoundException {
+    public Set<Order> getOrdersByDriver(Long driverId) {
         Driver driver = driverRepository
                 .findById(driverId)
                 .orElseThrow(null);
         Set<Order> orders = new HashSet<>();
         if (driver != null) {
             orders = driver.getOrders();
-            if (orders == null || orders.size() == 0) {
-                throw new OrderNotFoundException();
-            }
         }
         return orders;
     }
 
     @Override
-    public Set<Order> getOrdersByCurrentDriver() throws OrderNotFoundException {
+    public Set<Order> getOrdersByCurrentDriver() {
         Driver driver = getCurrentDriver();
         Set<Order> orders = new HashSet<>();
         if (driver != null) {
             orders = driver.getOrders();
-            if (orders == null || orders.size() == 0) {
-                throw new OrderNotFoundException();
-            }
         }
         return orders;
     }
 
     @Override
-    public Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status) throws OrderNotFoundException {
+    public Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status)  {
         Driver driver = getCurrentDriver();
         Set<Order> ordersByStatus = new HashSet<>();
         if (driver != null) {
             Set<Order> allOrders = driver.getOrders();
-            if (allOrders == null || allOrders.size() == 0) {
-                throw new OrderNotFoundException();
-            }
             ordersByStatus = allOrders
                     .stream()
                     .filter(order -> order.getStatus() == status)
                     .collect(Collectors.toSet());
-            if (ordersByStatus.size() == 0) {
-                throw new OrderNotFoundException(status);
-            }
         }
         return ordersByStatus;
     }
@@ -149,14 +136,14 @@ public class DriverServiceImplementation implements DriverService {
     }
 
     @Override
-    public Order startOrder(Long orderId) throws OrderNotFoundException {
+    public Order startOrder(Long orderId) {
         Order order = orderService.getOrderById(orderId);
         order.setStatus(OrderStatus.ON_WAY);
         return orderService.update(order);
     }
 
     @Override
-    public Order finishOrder(Long orderId) throws OrderNotFoundException {
+    public Order finishOrder(Long orderId) {
         Order order = orderService.getOrderById(orderId);
         order.setStatus(OrderStatus.DONE);
         return orderService.update(order);

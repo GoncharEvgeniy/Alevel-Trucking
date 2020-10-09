@@ -1,7 +1,6 @@
 package com.alevel.trucking.controller;
 
 import com.alevel.trucking.dto.OrderForm;
-import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,7 @@ public class CustomerController {
     }
 
     @GetMapping("/my-orders-by-status/{status}")
-    ResponseEntity getOrdersByStatus(@PathVariable String status)
-            throws OrderNotFoundException {
+    ResponseEntity getOrdersByStatus(@PathVariable String status) {
         return ResponseEntity.ok(orderService.getOrdersByCurrentCustomerAndStatus(status));
     }
 

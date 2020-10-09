@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.transport;
 
-import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.error.exception.TransportExistException;
 import com.alevel.trucking.error.exception.TransportNotFoundException;
 import com.alevel.trucking.model.transport.Transport;
@@ -11,7 +10,7 @@ public interface TransportService {
 
     boolean save(Transport transport) throws TransportExistException;
 
-    List<Transport> getValidTransportsForOrder(Long orderId) throws OrderNotFoundException, TransportNotFoundException;
+    List<Transport> getValidTransportsForOrder(Long orderId) throws TransportNotFoundException;
 
     List<Transport> getTransportByListId(List<Long> listId) throws TransportNotFoundException;
 

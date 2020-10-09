@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.order;
 
-import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 
@@ -12,15 +11,15 @@ public interface OrderService {
 
     List<Order> getAllOrdersByCurrentCustomer();
 
-    List<Order> getOrdersByCurrentCustomerAndStatus(String status) throws OrderNotFoundException;
+    List<Order> getOrdersByCurrentCustomerAndStatus(String status);
 
-    List<Order> getAllOrder() throws OrderNotFoundException;
+    List<Order> getAllOrder();
 
-    List<Order> getOrdersByCustomerId(Long customerId) throws OrderNotFoundException;
+    List<Order> getOrdersByCustomerId(Long customerId);
 
-    List<Order> getAllOrdersByStatus(OrderStatus status) throws OrderNotFoundException;
+    List<Order> getAllOrdersByStatus(OrderStatus status);
 
-    Order getOrderById(Long orderId) throws OrderNotFoundException;
+    Order getOrderById(Long orderId);
 
     Order update(Order order);
 }

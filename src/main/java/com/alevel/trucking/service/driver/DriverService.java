@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.driver;
 
-import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.error.exception.UserEmailExistException;
 import com.alevel.trucking.error.exception.UsernameExistException;
 import com.alevel.trucking.model.order.Order;
@@ -20,17 +19,17 @@ public interface DriverService {
 
     List<Driver> getFreeDrivers();
 
-    Set<Order> getOrdersByDriver(Long driverId) throws  OrderNotFoundException;
+    Set<Order> getOrdersByDriver(Long driverId);
 
-    Set<Order> getOrdersByCurrentDriver() throws OrderNotFoundException;
+    Set<Order> getOrdersByCurrentDriver();
 
-    Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status) throws OrderNotFoundException;
+    Set<Order> getOrdersByCurrentDriverAndByStatus(OrderStatus status);
 
     Driver getCurrentDriver();
 
-    Order startOrder(Long orderId) throws OrderNotFoundException;
+    Order startOrder(Long orderId);
 
-    Order finishOrder(Long orderId) throws OrderNotFoundException;
+    Order finishOrder(Long orderId);
 
     boolean deleteDriver(Long id);
 

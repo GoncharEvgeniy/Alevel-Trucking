@@ -44,22 +44,22 @@ public class ManagerController {
     }
 
     @GetMapping("/all-orders")
-    ResponseEntity getAllOrders() throws OrderNotFoundException {
+    ResponseEntity getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrder());
     }
 
     @GetMapping("/all-orders-by-customer/{customerId}")
-    ResponseEntity getAllOrdersByCustomer(@PathVariable Long customerId) throws OrderNotFoundException {
+    ResponseEntity getAllOrdersByCustomer(@PathVariable Long customerId) {
         return ResponseEntity.ok(orderService.getOrdersByCustomerId(customerId));
     }
 
     @GetMapping("/all-orders-by-driver/{driverId}")
-    ResponseEntity getAllOrdersByDriver(@PathVariable Long driverId) throws OrderNotFoundException {
+    ResponseEntity getAllOrdersByDriver(@PathVariable Long driverId) {
         return ResponseEntity.ok(driverService.getOrdersByDriver(driverId));
     }
 
     @GetMapping("/all-orders-by-status/{status}")
-    ResponseEntity getAllOrdersByStatus(@PathVariable String status) throws OrderNotFoundException {
+    ResponseEntity getAllOrdersByStatus(@PathVariable String status) {
         return ResponseEntity.ok(orderService.getAllOrdersByStatus(OrderStatus.valueOf(status)));
     }
 
@@ -81,14 +81,13 @@ public class ManagerController {
     @PatchMapping("/accept-order/{orderId}")
     ResponseEntity acceptOrder(@PathVariable Long orderId,
                                @RequestBody AcceptOrderDto acceptOrderDto)
-            throws OrderNotFoundException, TransportNotFoundException {
+            throws TransportNotFoundException {
         return ResponseEntity.ok(managerService.acceptOrder(orderId,
                 acceptOrderDto.getTransportsId(), acceptOrderDto.getDriversId()));
     }
 
     @GetMapping("/get-valid-transport-for-order/{orderId}")
-    ResponseEntity getValidTransportForOrder(@PathVariable Long orderId)
-            throws OrderNotFoundException, TransportNotFoundException {
+    ResponseEntity getValidTransportForOrder(@PathVariable Long orderId) throws TransportNotFoundException {
         return ResponseEntity.ok(transportService.getValidTransportsForOrder(orderId));
     }
 

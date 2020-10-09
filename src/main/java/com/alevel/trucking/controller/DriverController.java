@@ -1,6 +1,5 @@
 package com.alevel.trucking.controller;
 
-import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.service.driver.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,27 +18,27 @@ public class DriverController {
     }
 
     @GetMapping("/all-my-orders")
-    ResponseEntity getAllOrders() throws OrderNotFoundException {
+    ResponseEntity getAllOrders() {
         return ResponseEntity.ok(driverService.getOrdersByCurrentDriver());
     }
 
     @GetMapping("/my-order-in-process")
-    ResponseEntity getOrder() throws OrderNotFoundException {
+    ResponseEntity getOrder() {
         return ResponseEntity.ok(driverService.getOrdersByCurrentDriverAndByStatus(OrderStatus.ON_WAY));
     }
 
     @GetMapping("/my-accepted-order")
-    ResponseEntity getAcceptedOrder() throws OrderNotFoundException {
+    ResponseEntity getAcceptedOrder() {
         return ResponseEntity.ok(driverService.getOrdersByCurrentDriverAndByStatus(OrderStatus.ACCEPTED));
     }
 
     @PatchMapping("/start-doing-order/{orderId}")
-    ResponseEntity startOrder(@PathVariable Long orderId) throws OrderNotFoundException {
+    ResponseEntity startOrder(@PathVariable Long orderId) {
         return ResponseEntity.ok(driverService.startOrder(orderId));
     }
 
     @PatchMapping("/finish-doing-order/{orderId}")
-    ResponseEntity finishOrder(@PathVariable Long orderId) throws OrderNotFoundException {
+    ResponseEntity finishOrder(@PathVariable Long orderId) {
         return ResponseEntity.ok(driverService.finishOrder(orderId));
     }
 

@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.transport.implementation;
 
-import com.alevel.trucking.error.exception.OrderNotFoundException;
 import com.alevel.trucking.error.exception.TransportExistException;
 import com.alevel.trucking.error.exception.TransportNotFoundException;
 import com.alevel.trucking.model.goods.Goods;
@@ -40,8 +39,7 @@ public class TransportServiceImplementation implements TransportService {
     }
 
     @Override
-    public List<Transport> getValidTransportsForOrder(Long orderId)
-            throws OrderNotFoundException, TransportNotFoundException {
+    public List<Transport> getValidTransportsForOrder(Long orderId) throws TransportNotFoundException {
         Order order = orderService.getOrderById(orderId);
         List<Goods> goods = order.getGoods();
         List<Transport> list = new ArrayList<>();

@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface TransportService {
 
-    boolean save(Transport transport) throws TransportExistException;
+    boolean save(Transport transport);
 
-    List<Transport> getValidTransportsForOrder(Long orderId) throws TransportNotFoundException;
+    List<Transport> getValidTransportsForOrder(Long orderId);
 
-    List<Transport> getTransportByListId(List<Long> listId) throws TransportNotFoundException;
+    List<Transport> getTransportByListId(List<Long> listId);
 
-    List<Transport> getAllTransport() throws TransportNotFoundException;
+    List<Transport> getAllTransport();
 }

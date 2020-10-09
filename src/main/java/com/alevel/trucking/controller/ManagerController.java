@@ -74,20 +74,19 @@ public class ManagerController {
     }
 
     @PostMapping("/new-transport")
-    ResponseEntity addNewTransport(@RequestBody @Valid TransportDto transportDto) throws TransportExistException {
+    ResponseEntity addNewTransport(@RequestBody @Valid TransportDto transportDto) {
         return ResponseEntity.ok(transportService.save(TransportDto.fromDto(transportDto)));
     }
 
     @PatchMapping("/accept-order/{orderId}")
     ResponseEntity acceptOrder(@PathVariable Long orderId,
-                               @RequestBody AcceptOrderDto acceptOrderDto)
-            throws TransportNotFoundException {
+                               @RequestBody AcceptOrderDto acceptOrderDto) {
         return ResponseEntity.ok(managerService.acceptOrder(orderId,
                 acceptOrderDto.getTransportsId(), acceptOrderDto.getDriversId()));
     }
 
     @GetMapping("/get-valid-transport-for-order/{orderId}")
-    ResponseEntity getValidTransportForOrder(@PathVariable Long orderId) throws TransportNotFoundException {
+    ResponseEntity getValidTransportForOrder(@PathVariable Long orderId) {
         return ResponseEntity.ok(transportService.getValidTransportsForOrder(orderId));
     }
 
@@ -98,7 +97,7 @@ public class ManagerController {
 
 
     @GetMapping("/get-all-transport")
-    ResponseEntity getAllTransport() throws TransportNotFoundException {
+    ResponseEntity getAllTransport() {
         return ResponseEntity.ok(transportService.getAllTransport());
     }
 

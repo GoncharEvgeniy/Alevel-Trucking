@@ -39,7 +39,7 @@ public class TransportServiceImplementation implements TransportService {
     }
 
     @Override
-    public List<Transport> getValidTransportsForOrder(Long orderId) throws TransportNotFoundException {
+    public List<Transport> getValidTransportsForOrder(Long orderId) {
         Order order = orderService.getOrderById(orderId);
         List<Goods> goods = order.getGoods();
         List<Transport> list = new ArrayList<>();
@@ -51,28 +51,26 @@ public class TransportServiceImplementation implements TransportService {
     }
 
     @Override
-    public List<Transport> getTransportByListId(List<Long> listId) throws TransportNotFoundException {
+    public List<Transport> getTransportByListId(List<Long> listId) {
         List<Transport> transportList = new ArrayList<>();
         for (Long id : listId) {
             Transport transport = transportRepository
                     .findById(id)
-                    .orElseThrow(() -> new TransportNotFoundException(id));
-            transportList.add(transport);
+                    .orElseThrow(null);
+            if (transport != null) {
+                transportList.add(transport);
+            }
         }
         return transportList;
     }
 
     @Override
-    public List<Transport> getAllTransport() throws TransportNotFoundException {
+    public List<Transport> getAllTransport() {
         List<Transport> transports = transportRepository.findAll();
-        if (transports.size() == 0) {
-            throw new TransportNotFoundException();
-        } else {
-            return transports;
-        }
+        return transports;
     }
 
-    private Transport getTransportForGoods(Goods goods) throws TransportNotFoundException {
+    private Transport getTransportForGoods(Goods goods) {
         if (goods.getVolume() == 0) {
             List<Transport> transports = transportRepository.findAllByMaxWidthOfGoodsGreaterThanAndMaxHeightOfGoodsGreaterThanAndMaxLengthOfGoodsGreaterThanAndLoadCapacityGreaterThanAndStatusOrderByLoadCapacity(
                     goods.getWidth(),
@@ -81,21 +79,13 @@ public class TransportServiceImplementation implements TransportService {
                     goods.getWeight(),
                     TransportStatus.IN_BOX
             );
-            if (transports.size() == 0) {
-                throw new TransportNotFoundException();
-            } else {
-                return transports.get(0);
-            }
+            return transports.get(0);
         } else {
             List<Transport> transports = transportRepository.findAllByMaxVolumeOfGoodsGreaterThanEqualAndStatusOrderByLoadCapacity(
                     goods.getVolume(),
                     TransportStatus.IN_BOX
             );
-            if (transports.size() == 0) {
-                throw new TransportNotFoundException();
-            } else {
-                return transports.get(0);
+            return transports.get(0);
             }
-        }
     }
 }

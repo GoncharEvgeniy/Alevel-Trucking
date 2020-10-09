@@ -93,8 +93,7 @@ public class ManagerServiceImplementation implements ManagerService {
     }
 
     @Override
-    public Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId)
-            throws TransportNotFoundException {
+    public Order acceptOrder(Long orderId, List<Long> transportsId, List<Long> driversId) {
         Order order = orderService.getOrderById(orderId);
         Route route = order.getRoute();
         double routeDistance = distance.getDistance(route.getStart(), route.getEnd());

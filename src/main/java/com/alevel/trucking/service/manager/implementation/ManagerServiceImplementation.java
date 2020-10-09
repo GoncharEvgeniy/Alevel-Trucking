@@ -1,6 +1,8 @@
 package com.alevel.trucking.service.manager.implementation;
 
 import com.alevel.trucking.error.exception.*;
+import com.alevel.trucking.exception.UserEmailExistException;
+import com.alevel.trucking.exception.UsernameExistException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.driver.Driver;
@@ -26,8 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 

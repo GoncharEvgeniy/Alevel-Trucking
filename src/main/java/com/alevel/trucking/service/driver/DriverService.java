@@ -1,7 +1,7 @@
 package com.alevel.trucking.service.driver;
 
-import com.alevel.trucking.error.exception.UserEmailExistException;
-import com.alevel.trucking.error.exception.UsernameExistException;
+import com.alevel.trucking.exception.UserEmailExistException;
+import com.alevel.trucking.exception.UsernameExistException;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.order.OrderStatus;
 import com.alevel.trucking.model.person.driver.Driver;

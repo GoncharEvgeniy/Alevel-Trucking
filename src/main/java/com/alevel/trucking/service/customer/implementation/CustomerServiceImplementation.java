@@ -1,7 +1,7 @@
 package com.alevel.trucking.service.customer.implementation;
 
-import com.alevel.trucking.error.exception.UserEmailExistException;
-import com.alevel.trucking.error.exception.UsernameExistException;
+import com.alevel.trucking.exception.UserEmailExistException;
+import com.alevel.trucking.exception.UsernameExistException;
 import com.alevel.trucking.model.person.customer.Customer;
 import com.alevel.trucking.model.user.Role;
 import com.alevel.trucking.model.user.User;

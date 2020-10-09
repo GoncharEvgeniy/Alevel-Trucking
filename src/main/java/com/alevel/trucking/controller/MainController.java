@@ -1,14 +1,12 @@
 package com.alevel.trucking.controller;
 
 import com.alevel.trucking.dto.CustomerRegistrationForm;
-import com.alevel.trucking.error.exception.UserEmailExistException;
-import com.alevel.trucking.error.exception.UsernameExistException;
+import com.alevel.trucking.exception.UserEmailExistException;
+import com.alevel.trucking.exception.UsernameExistException;
 import com.alevel.trucking.model.person.customer.Customer;
-import com.alevel.trucking.model.user.User;
 import com.alevel.trucking.service.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

@@ -1,4 +1,4 @@
-package com.alevel.trucking.error.exception;
+package com.alevel.trucking.exception;
 
 public class UserEmailExistException extends Exception {
 

@@ -124,7 +124,7 @@ public class ManagerServiceImplementation implements ManagerService {
     public boolean deleteManager(Long id) {
         Manager manager = managerRepository
                 .findById(id)
-                .orElseThrow(null);
+                .orElse(null);
         if (manager != null) {
             manager.setAccountNonLocked(false);
             manager.setEnabled(false);

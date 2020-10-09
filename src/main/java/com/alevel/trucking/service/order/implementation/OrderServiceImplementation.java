@@ -71,7 +71,7 @@ public class OrderServiceImplementation implements OrderService {
     public Order getOrderById(Long orderId) {
         return orderRepository
                 .findById(orderId)
-                .orElseThrow(null);
+                .orElse(null);
     }
 
     @Override

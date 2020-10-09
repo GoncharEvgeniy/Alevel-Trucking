@@ -74,7 +74,7 @@ public class DriverServiceImplementation implements DriverService {
         for (Long id : listId) {
             Driver driver = driverRepository
                     .findById(id)
-                    .orElseThrow(null);
+                    .orElse(null);
             if (driver != null) {
                 driverList.add(driver);
             }
@@ -92,7 +92,7 @@ public class DriverServiceImplementation implements DriverService {
     public Set<Order> getOrdersByDriver(Long driverId) {
         Driver driver = driverRepository
                 .findById(driverId)
-                .orElseThrow(null);
+                .orElse(null);
         Set<Order> orders = new HashSet<>();
         if (driver != null) {
             orders = driver.getOrders();
@@ -153,7 +153,7 @@ public class DriverServiceImplementation implements DriverService {
     public boolean deleteDriver(Long id) {
         Driver driver = driverRepository
                 .findById(id)
-                .orElseThrow(null);
+                .orElse(null);
         if (driver == null) {
             return false;
         }

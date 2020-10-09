@@ -54,7 +54,7 @@ public class TransportServiceImplementation implements TransportService {
         for (Long id : listId) {
             Transport transport = transportRepository
                     .findById(id)
-                    .orElseThrow(null);
+                    .orElse(null);
             if (transport != null) {
                 transportList.add(transport);
             }

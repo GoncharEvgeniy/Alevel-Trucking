@@ -62,7 +62,7 @@ public class CustomerServiceImplementation implements CustomerService {
     public Customer getCustomerById(Long id) {
         return customerRepository
                 .findById(id)
-                .orElseThrow(() -> null);
+                .orElse(null);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class CustomerServiceImplementation implements CustomerService {
     public boolean deleteCustomer(Long id) {
         Customer customer = customerRepository
                 .findById(id)
-                .orElseThrow(() -> null);
+                .orElse(null);
         if (customer == null) {
             return false;
         }

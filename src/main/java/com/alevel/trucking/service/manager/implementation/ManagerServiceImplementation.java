@@ -1,6 +1,5 @@
 package com.alevel.trucking.service.manager.implementation;
 
-import com.alevel.trucking.error.exception.*;
 import com.alevel.trucking.exception.UserEmailExistException;
 import com.alevel.trucking.exception.UsernameExistException;
 import com.alevel.trucking.model.order.Order;

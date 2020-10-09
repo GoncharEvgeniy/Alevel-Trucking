@@ -1,7 +1,6 @@
 package com.alevel.trucking.service.transport.implementation;
 
 import com.alevel.trucking.error.exception.TransportExistException;
-import com.alevel.trucking.error.exception.TransportNotFoundException;
 import com.alevel.trucking.model.goods.Goods;
 import com.alevel.trucking.model.order.Order;
 import com.alevel.trucking.model.transport.Transport;

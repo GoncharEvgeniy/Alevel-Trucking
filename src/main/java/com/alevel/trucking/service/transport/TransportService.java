@@ -1,7 +1,5 @@
 package com.alevel.trucking.service.transport;
 
-import com.alevel.trucking.error.exception.TransportExistException;
-import com.alevel.trucking.error.exception.TransportNotFoundException;
 import com.alevel.trucking.model.transport.Transport;
 
 import java.util.List;

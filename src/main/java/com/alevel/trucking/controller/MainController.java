@@ -23,10 +23,17 @@ public class MainController {
     }
 
     @PostMapping("/reg")
-    public ResponseEntity newUser(@RequestBody @Valid CustomerRegistrationForm customerDto)
-            throws UsernameExistException, UserEmailExistException {
+    public ResponseEntity newUser(@RequestBody @Valid CustomerRegistrationForm customerDto) {
         Customer customer = CustomerRegistrationForm.fromDto(customerDto);
-        return ResponseEntity.ok(customerService.save(customer));
+        try {
+            return ResponseEntity.ok(customerService.save(customer));
+        } catch (UsernameExistException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(403).body("User exists");
+        } catch (UserEmailExistException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(403).body("Email exists");
+        }
     }
 
     @GetMapping()

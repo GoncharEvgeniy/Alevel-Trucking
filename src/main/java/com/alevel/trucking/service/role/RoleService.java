@@ -6,5 +6,5 @@ public interface RoleService {
 
     Role findByName(String name);
 
-    void save(Role role);
+    Role save(Role role);
 }

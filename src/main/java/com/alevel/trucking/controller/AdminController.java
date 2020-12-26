@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
@@ -43,8 +46,9 @@ public class AdminController {
 
     @GetMapping("/get-all-users")
     ResponseEntity getAllUsers() {
-        Stream<UserDto> users = adminService.getAllUsers().stream()
-                .map(UserDto::new);
+        List<UserDto> users = adminService.getAllUsers().stream()
+                .map(UserDto::new)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
 
